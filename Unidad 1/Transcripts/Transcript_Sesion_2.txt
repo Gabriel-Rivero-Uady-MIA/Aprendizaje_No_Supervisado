@@ -1,0 +1,3340 @@
+[00:00:37.070 - 00:00:42.770] Hola, ¿qué tal? Perdón, tenía el audio apagado. Ya empecé a grabar la sesión. ¿Me están viendo y me
+[00:00:42.770 - 00:00:52.240] escuchen todos bien? Están viendo mi cara ahorita, ¿verdad? Bien, pues vamos a... Creo que sí está
+[00:00:52.240 - 00:00:56.480] todo bien. Vamos a continuar. ¿Alguien puede hablar para ver si estoy recibiendo su voz?
+[00:00:59.240 - 00:01:07.080] Buenas tardes. Sí, te escucho muy bien. Está llegando bien tu voz. Perfecto. Bien, pues vamos
+[00:01:07.080 - 00:01:13.980] a empezar. La idea es... Vamos a continuar ya con el primer tema, que es clustering, y vamos a
+[00:01:13.980 - 00:01:19.320] ver el día de hoy lo que es el algoritmo de K-Medios. Vamos a empezar trabajando con el
+[00:01:19.320 - 00:01:25.020] algoritmo de K-Medios. Pero antes de comenzar, vamos con unas precisiones que surgieron después
+[00:01:25.020 - 00:01:33.620] de la sesión anterior, ¿no? En este tipo de cursos siempre como que cuesta trabajo un... Hay que hacer
+[00:01:33.620 - 00:01:39.020] un poco de esfuerzo entre la parte formal, digamos, del tema y la parte
+[00:01:39.020 - 00:01:46.100] intuitiva del tema, ¿no? Alguien me sugería que hiciera una explicación más intuitiva de algo,
+[00:01:46.500 - 00:01:51.500] que a mí se me hace... A mí siempre la intuición y las cuestiones gráficas para explicar cosas a
+[00:01:51.500 - 00:01:56.800] mí se me hacen lo mejor. Hay gente que es muy buena usando dibujos y gráficas para explicar
+[00:01:56.800 - 00:02:01.940] cosas, y yo estoy de acuerdo con eso. Esa maestría es una maestría profesionalizante, en el sentido
+[00:02:01.940 - 00:02:06.300] de que queremos que el objetivo es que ustedes sean capaces de utilizar herramientas de inteligencia
+[00:02:06.300 - 00:02:08.860] artificial, entiendan los métodos de inteligencia artificial,
+[00:02:09.020 - 00:02:15.560] para aplicarlo en cosas, ¿no? No es una maestría de investigación donde tengan que proponer nuevos
+[00:02:15.560 - 00:02:20.560] métodos o hacer nuevos métodos, aunque claro que siempre es necesario, ¿no? Entonces, como que cuesta
+[00:02:20.560 - 00:02:27.380] un poco de trabajo a veces encontrar el balance entre qué tan formal va a ser la explicación y
+[00:02:27.380 - 00:02:34.340] qué tan, digamos, únicamente intuitiva o únicamente un curso de cómo utilizar SK-Learn,
+[00:02:34.340 - 00:02:38.640] que es la principal herramienta que vamos a utilizar, es, ¿no? Entonces, yo lo que estoy
+[00:02:39.020 - 00:02:42.500] hablando es, sobre todo cuando estaba revisando las láminas que voy a utilizar para este curso,
+[00:02:42.980 - 00:02:49.200] es que muchas de las láminas tienen un contenido formal. Pensé en quitarlo y dejar unas láminas
+[00:02:49.200 - 00:02:55.760] un poco más, sin ese formalismo, pero prefiero dejarlo. Vamos a hacer una explicación rápida
+[00:02:55.760 - 00:03:01.900] de los temas formales, estos de las descripción matemática de los problemas que vamos a resolver.
+[00:03:01.900 - 00:03:07.800] ¿Por qué? Porque si a alguien le interesa, yo sé que hay gente que viene con un rango de, ¿cómo se llama?
+[00:03:08.000 - 00:03:09.000] ¿De qué? De bases de la idea, ¿no? Y yo creo que es un gran trabajo, porque si alguien le interesa,
+[00:03:09.020 - 00:03:10.760] previas de matemáticas
+[00:03:10.760 - 00:03:11.800] y de algunos temas
+[00:03:11.800 - 00:03:14.460] hay algunos que quizás digan
+[00:03:14.460 - 00:03:16.920] eso realmente me vuela
+[00:03:16.920 - 00:03:18.340] o no me acuerdo de eso
+[00:03:18.340 - 00:03:21.000] no crean que por eso van a perder
+[00:03:21.000 - 00:03:23.180] todo el curso, realmente lo importante
+[00:03:23.180 - 00:03:24.780] es conocer las propiedades de los métodos
+[00:03:24.780 - 00:03:26.800] para utilizarlos, son métodos que ya están
+[00:03:26.800 - 00:03:28.660] hechos y están probados, hay que entender
+[00:03:28.660 - 00:03:30.820] las propiedades y tener una intuición
+[00:03:30.820 - 00:03:32.820] adquirir una intuición de cómo funciona el método
+[00:03:32.820 - 00:03:34.720] no es necesario que demuestren
+[00:03:34.720 - 00:03:36.880] que los métodos funcionan, eso es un tema más
+[00:03:36.880 - 00:03:38.960] para un matemático o un científico
+[00:03:38.960 - 00:03:41.120] computacional que trabaje en esos temas
+[00:03:41.120 - 00:03:42.800] no necesariamente para
+[00:03:42.800 - 00:03:44.860] ustedes, entonces, pero quiero
+[00:03:44.860 - 00:03:46.860] dejar las matemáticas ahí para aquellas personas
+[00:03:46.860 - 00:03:47.860] que se interesan
+[00:03:47.860 - 00:03:50.760] se interesen en esos temas
+[00:03:50.760 - 00:03:52.380] y que digan, ah bueno, está ahí
+[00:03:52.380 - 00:03:54.940] quizás esta explicación yo me puedo clavar un poquito más
+[00:03:54.940 - 00:03:56.200] puedo aprender un poquito más
+[00:03:56.200 - 00:03:58.960] entonces, en la evaluación de los temas
+[00:03:58.960 - 00:04:00.200] en la evaluación del curso
+[00:04:00.200 - 00:04:02.300] no los voy a poner a resolver
+[00:04:02.300 - 00:04:04.740] fórmulas, ni a aplicar ecuaciones
+[00:04:04.740 - 00:04:06.660] ni nada de eso, es aplicar
+[00:04:06.660 - 00:04:08.260] algoritmos, vamos a usar algoritmos
+[00:04:08.260 - 00:04:10.560] cómo usar esos algoritmos y cómo elegir
+[00:04:10.560 - 00:04:12.780] los parámetros de esos algoritmos y cómo justificar
+[00:04:12.780 - 00:04:14.780] qué método vamos a elegir
+[00:04:14.780 - 00:04:16.860] y qué parámetros vamos a usar
+[00:04:16.860 - 00:04:18.560] y ese tipo de cosas
+[00:04:18.560 - 00:04:20.780] es lo más importante, que es la expertise
+[00:04:20.780 - 00:04:22.580] que uno adquiere en temas
+[00:04:22.580 - 00:04:23.740] de aprendizaje automático
+[00:04:23.740 - 00:04:26.380] en temas de inteligencia artificial
+[00:04:26.380 - 00:04:28.640] entonces, eso yo estaba pensando
+[00:04:28.640 - 00:04:30.740] que es la mejor manera de proceder
+[00:04:30.740 - 00:04:32.680] platiqué con algunos de los
+[00:04:32.680 - 00:04:34.500] profesores que han dado los módulos anteriores
+[00:04:34.500 - 00:04:36.440] al parecer creo que esa es la tónica general
+[00:04:36.440 - 00:04:38.940] no sé si alguno de ustedes esté de acuerdo
+[00:04:38.940 - 00:04:40.780] o tengan
+[00:04:40.780 - 00:04:42.320] alguna duda o algo
+[00:04:42.320 - 00:04:51.080] ¿todo bien?
+[00:04:51.800 - 00:04:53.180] totalmente de acuerdo con usted
+[00:04:53.180 - 00:04:56.460] muy bien, perfecto, entonces vamos a
+[00:04:56.460 - 00:04:57.660] seguir, y el tema
+[00:04:57.660 - 00:05:00.380] de la definición, llamando a
+[00:05:00.380 - 00:05:01.700] Gaby Rivero hasta unas
+[00:05:01.700 - 00:05:03.340] serpentinas
+[00:05:03.340 - 00:05:06.360] vamos a comenzar ahorita
+[00:05:06.360 - 00:05:07.980] de una manera platicadita
+[00:05:07.980 - 00:05:10.280] y una cosa en la que yo les voy a explicar
+[00:05:10.280 - 00:05:12.200] un problema básico
+[00:05:12.200 - 00:05:13.740] de procedimiento de imágenes
+[00:05:14.120 - 00:05:16.260] pero que es una forma en la cual
+[00:05:16.260 - 00:05:17.580] nosotros podemos entender
+[00:05:17.580 - 00:05:19.700] muy claramente qué significa
+[00:05:19.700 - 00:05:22.180] un problema básico
+[00:05:22.180 - 00:05:23.440] de procedimiento de imágenes
+[00:05:23.440 - 00:05:25.820] consiste en segmentar una imagen
+[00:05:25.820 - 00:05:27.700] ¿qué significa? tenemos una imagen
+[00:05:27.700 - 00:05:30.180] que tiene fondo y figura
+[00:05:30.180 - 00:05:32.360] y esa imagen
+[00:05:32.360 - 00:05:33.580] que tiene fondo y figura
+[00:05:33.580 - 00:05:36.060] nosotros la queremos segmentar
+[00:05:36.060 - 00:05:37.640] de alguna manera
+[00:05:37.640 - 00:05:40.180] y les voy a poner ahorita
+[00:05:40.180 - 00:05:41.800] la pantalla
+[00:05:41.800 - 00:05:42.920] del pizarrón
+[00:05:42.920 - 00:05:49.130] ¿qué es lo que está?
+[00:05:49.170 - 00:05:49.450] ¿están viendo?
+[00:05:49.550 - 00:05:50.370] ¿están viendo el pizarrón?
+[00:05:51.990 - 00:05:53.330] ¿se ve blanco o se ve algo?
+[00:05:54.090 - 00:05:55.010] sí, se ve blanco
+[00:05:55.010 - 00:05:58.170] ¿no me están viendo Emiliano Zapata?
+[00:06:01.600 - 00:06:02.640] ahí está Emiliano Zapata, ¿no?
+[00:06:03.680 - 00:06:04.120] ya
+[00:06:04.120 - 00:06:06.880] bien, lo que tenemos ahí es una fotografía
+[00:06:06.880 - 00:06:08.960] del general Emiliano Zapata, una fotografía en blanco
+[00:06:08.960 - 00:06:10.700] y negro, y lo que nosotros
+[00:06:10.700 - 00:06:12.560] que hacemos aquí es que una imagen
+[00:06:12.560 - 00:06:14.700] que es una colección de valores numéricos
+[00:06:14.700 - 00:06:16.860] y una imagen en tonos de gris como esta
+[00:06:16.860 - 00:06:19.100] cada pixel
+[00:06:19.100 - 00:06:20.960] que es un pixel, es un picture element
+[00:06:20.960 - 00:06:21.700] cada elemento
+[00:06:21.700 - 00:06:21.840] es un pixel, es un picture element
+[00:06:21.860 - 00:06:22.280] es una imagen
+[00:06:22.280 - 00:06:23.960] esa es una matriz que tiene
+[00:06:23.960 - 00:06:26.520] aproximadamente poco más de mil
+[00:06:26.520 - 00:06:27.700] mil doscientos quizás
+[00:06:27.700 - 00:06:30.760] por casi setecientos y algo
+[00:06:30.760 - 00:06:32.220] pixeles, es una matriz
+[00:06:32.220 - 00:06:33.880] y cada pixel tiene un valor numérico
+[00:06:33.880 - 00:06:35.660] que va entre cero y dos cincuenta y cinco
+[00:06:35.660 - 00:06:37.860] el valor de cero significa cero
+[00:06:37.860 - 00:06:40.000] el valor de doscientos cincuenta y cinco
+[00:06:40.000 - 00:06:41.900] representa blanco
+[00:06:41.900 - 00:06:44.640] y esta es la distribución
+[00:06:44.640 - 00:06:45.800] lo que vemos aquí a la derecha
+[00:06:45.800 - 00:06:48.300] es una distribución de los valores
+[00:06:48.300 - 00:06:50.700] de las pixeles, eso se le conoce como un histograma
+[00:06:50.700 - 00:06:50.840] ¿no?
+[00:06:50.840 - 00:06:53.160] aquí básicamente lo que hice
+[00:06:53.160 - 00:06:54.820] hay un programa que lo que hace
+[00:06:54.820 - 00:06:55.740] es que cuenta
+[00:06:55.740 - 00:06:58.720] cuántos pixeles con el valor cero hay
+[00:06:58.720 - 00:07:00.400] cuántos pixeles con el valor uno hay
+[00:07:00.400 - 00:07:02.560] cuántos pixeles con el valor dos hay
+[00:07:02.560 - 00:07:04.020] y nos crea esto ¿no?
+[00:07:04.760 - 00:07:07.020] la integral de toda esta curva
+[00:07:07.020 - 00:07:08.900] que tenemos aquí sería la suma de todos los
+[00:07:08.900 - 00:07:10.100] pixeles que hay en esta imagen
+[00:07:10.100 - 00:07:13.000] y vemos que cerca de dos cincuenta y cinco
+[00:07:13.000 - 00:07:14.060] cerca de dos cincuenta
+[00:07:14.060 - 00:07:16.760] hay un pico que es
+[00:07:16.760 - 00:07:18.600] pues básicamente es el blanco ¿no? porque la imagen
+[00:07:18.600 - 00:07:20.500] es principalmente blanco ¿no? o clara
+[00:07:20.500 - 00:07:21.880] toda esa parte clara de aquí
+[00:07:21.880 - 00:07:24.460] el cuello, hay partes muy claras
+[00:07:24.460 - 00:07:26.440] ¿no? y lo que nosotros quisiéramos
+[00:07:26.440 - 00:07:28.060] hacer es encontrar
+[00:07:28.060 - 00:07:30.540] un umbral, quisiéramos
+[00:07:30.540 - 00:07:32.040] partir el
+[00:07:32.040 - 00:07:34.340] problema de umbralizar o segmentar una imagen
+[00:07:34.340 - 00:07:35.680] es decir, bueno, esta figura
+[00:07:35.680 - 00:07:38.300] tiene un fondo y tiene
+[00:07:38.300 - 00:07:40.320] un frente ¿no? el fondo es
+[00:07:40.320 - 00:07:42.400] lo que está atrás, el frente es lo que
+[00:07:42.400 - 00:07:44.600] nos interesa, es un problema básico
+[00:07:44.600 - 00:07:46.740] de procedimiento de imágenes
+[00:07:46.740 - 00:07:48.520] de visión computacional y de muchos
+[00:07:48.520 - 00:07:50.260] temas, muchos temas en realidad en la
+[00:07:50.500 - 00:07:52.560] área automática nosotros queremos hacer
+[00:07:52.560 - 00:07:54.400] ¿no? es como un mecanismo de atención
+[00:07:54.400 - 00:07:56.480] queremos encontrar aquello que nos
+[00:07:56.480 - 00:07:58.320] interesa y aquello que no nos interesa
+[00:07:58.320 - 00:08:00.740] en procesamiento de imágenes lo que nos interesa
+[00:08:00.740 - 00:08:02.680] es el fondo, lo que nos interesa es la figura
+[00:08:02.680 - 00:08:04.360] y lo que no nos interesa es el fondo
+[00:08:04.360 - 00:08:06.740] entonces correr este
+[00:08:06.740 - 00:08:08.500] algoritmo eventualmente
+[00:08:08.500 - 00:08:10.540] nos va a llevar a algo que es una imagen
+[00:08:10.540 - 00:08:12.920] segmentada, esa segmentación
+[00:08:12.920 - 00:08:14.440] encontramos que hay un valor de umbral
+[00:08:14.440 - 00:08:16.300] donde lo que hicimos es que dijimos bueno
+[00:08:16.300 - 00:08:18.800] ese valor de umbral que está a ciento setenta
+[00:08:18.800 - 00:08:20.340] aproximadamente, ciento setenta y seis
+[00:08:20.500 - 00:08:22.900] todos los valores menores que ciento setenta
+[00:08:22.900 - 00:08:23.420] y seis
+[00:08:23.420 - 00:08:26.680] van a ser, los vamos a pintar de color negro
+[00:08:26.680 - 00:08:28.680] y todos los pixeles mayores que ciento
+[00:08:28.680 - 00:08:30.720] setenta y seis los vamos a pintar de color
+[00:08:30.720 - 00:08:32.460] negro, entonces esta
+[00:08:32.460 - 00:08:34.120] es una imagen umbralizada
+[00:08:34.120 - 00:08:36.580] donde reducimos la cantidad de información
+[00:08:36.580 - 00:08:38.760] de la
+[00:08:38.760 - 00:08:40.720] imagen, antes teníamos una imagen
+[00:08:40.720 - 00:08:41.580] que teníamos
+[00:08:41.580 - 00:08:44.620] cada pixel
+[00:08:44.620 - 00:08:46.620] eran ocho bits
+[00:08:46.620 - 00:08:48.620] era un byte, había doscientos
+[00:08:48.620 - 00:08:50.480] cincuenta y seis valores posibles y aquí
+[00:08:50.500 - 00:08:52.360] la reducimos a una imagen
+[00:08:52.360 - 00:08:54.480] donde hay un bit por pixel
+[00:08:54.480 - 00:08:56.140] o está prendido o está apagado
+[00:08:56.140 - 00:08:58.360] y si les mostraran esta imagen
+[00:08:58.360 - 00:09:00.560] creo que todos podríamos identificar
+[00:09:00.560 - 00:09:01.780] a pesar de que no se le ve el bigote
+[00:09:01.780 - 00:09:03.880] podríamos identificar a
+[00:09:03.880 - 00:09:05.900] ¿cómo se llama? a este
+[00:09:05.900 - 00:09:07.340] Emiliano Zapata
+[00:09:07.340 - 00:09:10.700] el problema de umbralización es el problema
+[00:09:10.700 - 00:09:11.380] de que
+[00:09:11.380 - 00:09:14.160] encontrar cuál es el umbral ideal
+[00:09:14.160 - 00:09:16.560] cuál es la forma directa de umbralizar
+[00:09:16.560 - 00:09:18.140] este ideal, de umbralizar
+[00:09:18.140 - 00:09:20.480] este problema, esta imagen
+[00:09:20.500 - 00:09:22.120] encontrar ese valor ideal de umbral
+[00:09:22.120 - 00:09:25.960] el algoritmo
+[00:09:25.960 - 00:09:28.500] general que se utiliza para eso
+[00:09:28.500 - 00:09:30.620] es un algoritmo que propuso en los años
+[00:09:30.620 - 00:09:32.440] finales de los, inicio de los años ochenta
+[00:09:32.440 - 00:09:34.640] creo que ochenta y uno o mil novecientos setenta y nueve
+[00:09:34.640 - 00:09:35.080] no me acuerdo
+[00:09:35.080 - 00:09:38.560] un investigador japonés se pide OTSU y es el método
+[00:09:38.560 - 00:09:40.520] de OTSU de encontrar el umbral
+[00:09:40.520 - 00:09:42.580] ideal, pero esto que vamos a
+[00:09:42.580 - 00:09:44.760] ver aquí es prácticamente lo mismo
+[00:09:44.760 - 00:09:46.680] que el método de OTSU
+[00:09:46.680 - 00:09:48.640] y es un
+[00:09:48.640 - 00:09:50.620] algoritmo muy simple, vamos a explicar
+[00:09:50.620 - 00:09:52.620] voy a explicar cómo funciona este algoritmo
+[00:09:52.640 - 00:09:54.960] tenemos una imagen y queremos encontrar
+[00:09:54.960 - 00:09:57.000] un umbral en el que
+[00:09:57.000 - 00:09:58.160] encontremos esta imagen
+[00:09:58.160 - 00:10:00.740] vamos a revisar este código
+[00:10:00.740 - 00:10:02.980] aquí lo que estamos
+[00:10:02.980 - 00:10:04.880] haciendo es que bueno aquí cargamos
+[00:10:04.880 - 00:10:07.020] la imagen de Emiliano Zapata que está almacenada
+[00:10:07.020 - 00:10:08.740] estos códigos se los voy a compartir después
+[00:10:08.740 - 00:10:11.140] aquí cargamos la imagen de Emiliano
+[00:10:11.140 - 00:10:12.720] Zapata que está almacenada en un archivo
+[00:10:12.720 - 00:10:14.920] y aquí eso simplemente
+[00:10:14.920 - 00:10:16.580] la convertimos a una imagen
+[00:10:16.580 - 00:10:18.600] esta es una imagen cuando se carga
+[00:10:18.600 - 00:10:20.940] se carga con una imagen que tiene canales de color
+[00:10:20.940 - 00:10:22.360] entonces
+[00:10:22.360 - 00:10:22.520] vamos a ver cómo funciona esto
+[00:10:22.520 - 00:10:22.560] entonces
+[00:10:22.640 - 00:10:24.640] para convertir la imagen en tonos de gris
+[00:10:24.640 - 00:10:26.620] hicimos una manera muy chafa
+[00:10:26.620 - 00:10:28.880] de hacer esto que es sacar el promedio
+[00:10:28.880 - 00:10:30.620] a lo largo del eje de los
+[00:10:30.620 - 00:10:32.520] canales, generalmente una imagen a colores
+[00:10:32.520 - 00:10:34.040] tiene un canal rojo, un verde y un azul
+[00:10:34.040 - 00:10:36.660] aquí promediamos la intensidad del rojo, el verde
+[00:10:36.660 - 00:10:37.080] y el azul
+[00:10:37.080 - 00:10:40.360] y la convertimos a enteros de 8 bits
+[00:10:40.360 - 00:10:41.840] que es lo que nosotros vamos a necesitar
+[00:10:41.840 - 00:10:44.720] y ya esta imagen es lo que yo les dije
+[00:10:44.720 - 00:10:46.260] después de que la cargamos
+[00:10:46.260 - 00:10:47.820] y que hacemos esta conversión
+[00:10:47.820 - 00:10:50.480] que es hacer el promedio de la imagen a lo largo
+[00:10:50.480 - 00:10:52.620] de la tercera dimensión
+[00:10:52.640 - 00:10:54.320] o sea la dimensión de los canales
+[00:10:54.320 - 00:10:56.620] si no lo entienden esto
+[00:10:56.620 - 00:10:58.440] es cosa de gente que maneja con imágenes
+[00:10:58.440 - 00:11:00.320] lo maneja muy bien, pero créanme
+[00:11:00.320 - 00:11:02.080] después de hacer eso simplemente nos queda una imagen
+[00:11:02.080 - 00:11:05.560] que nada más tiene valores entre 0 y 255
+[00:11:05.560 - 00:11:06.980] aquí lo redondeamos
+[00:11:06.980 - 00:11:08.760] porque al hacer este promedio nos quedan valores
+[00:11:08.760 - 00:11:10.500] fraccionarios y luego
+[00:11:10.500 - 00:11:13.140] lo convertimos como un entero de 8 bits
+[00:11:13.140 - 00:11:15.300] un valor entre 0
+[00:11:15.300 - 00:11:16.340] sin signo
+[00:11:16.340 - 00:11:18.020] entre 0 y 255
+[00:11:18.020 - 00:11:21.120] aquí encontramos cuántos renglones
+[00:11:21.120 - 00:11:22.520] y cuántas columnas tiene la imagen
+[00:11:22.520 - 00:11:24.880] y el tamaño de la imagen
+[00:11:24.880 - 00:11:26.020] cuántos pixeles hay
+[00:11:26.020 - 00:11:27.600] que serán renglones por columnas
+[00:11:27.600 - 00:11:32.100] aquí lo que hago es un algoritmo muy chafa
+[00:11:32.100 - 00:11:33.780] para calcular el histograma
+[00:11:33.780 - 00:11:34.960] no le hagan mucho caso a eso
+[00:11:34.960 - 00:11:38.720] va a ir pasando por cada uno de los pixeles
+[00:11:38.720 - 00:11:39.260] de la imagen
+[00:11:39.260 - 00:11:41.060] y tenemos una h
+[00:11:41.060 - 00:11:43.660] que es un arreglo de 256
+[00:11:43.660 - 00:11:46.440] y simplemente el valor de cada pixel
+[00:11:46.440 - 00:11:47.900] lo vamos a utilizar como un índice
+[00:11:47.900 - 00:11:50.340] para ir incrementando los valores de h
+[00:11:50.340 - 00:11:52.660] después de esto h va a ser un arreglo
+[00:11:52.660 - 00:11:54.260] que contiene todos los valores
+[00:11:54.480 - 00:11:55.400] de cuántos ceros hay
+[00:11:55.400 - 00:11:56.160] cuántos unos hay
+[00:11:56.160 - 00:11:56.880] cuántos dos hay
+[00:11:56.880 - 00:11:57.980] y así sucesivamente
+[00:11:57.980 - 00:12:02.380] después de que hacemos eso
+[00:12:02.380 - 00:12:03.720] bueno, esto es básicamente
+[00:12:03.720 - 00:12:06.240] una rutina de Map2D
+[00:12:06.240 - 00:12:08.180] para graficar las imágenes
+[00:12:08.180 - 00:12:09.920] aquí estamos graficando la imagen en general
+[00:12:09.920 - 00:12:10.740] Emiliano Zapata
+[00:12:10.740 - 00:12:13.660] que tiene tantos renglones por tantas columnas
+[00:12:13.660 - 00:12:15.900] y aquí vemos los valores de los pixeles
+[00:12:15.900 - 00:12:16.460] en la imagen
+[00:12:16.460 - 00:12:18.280] y el número de pixeles
+[00:12:18.280 - 00:12:21.900] asociados al valor del pixel
+[00:12:21.900 - 00:12:23.540] y está esto
+[00:12:23.540 - 00:12:24.920] todo está muy bien
+[00:12:24.920 - 00:12:27.020] ahora vamos a ver
+[00:12:27.040 - 00:12:30.760] vamos a explicar cómo funciona este algoritmo
+[00:12:30.760 - 00:12:32.440] pero antes de explicarles el código
+[00:12:32.440 - 00:12:35.500] se los voy a platicar en la pizarra
+[00:12:35.500 - 00:12:36.800] les voy a explicar más o menos
+[00:12:36.800 - 00:12:39.200] de qué se trata esto
+[00:12:39.200 - 00:12:40.240] permítanme un segundo
+[00:12:40.240 - 00:12:43.520] déjenme voy al pizarrón
+[00:12:43.520 - 00:12:44.380] está viendo el pizarrón
+[00:12:44.380 - 00:12:48.580] sí, muy bien
+[00:12:48.580 - 00:12:52.400] básicamente cuando nosotros tenemos nuestra imagen
+[00:12:52.400 - 00:12:55.520] o tenemos nuestro histograma
+[00:12:55.520 - 00:12:56.360] lo que nosotros
+[00:12:56.360 - 00:12:57.900] ay permítanme tantito
+[00:12:57.900 - 00:13:00.700] tengo que hacer una cosa rapidísima
+[00:13:00.780 - 00:13:03.200] es un problema técnico
+[00:13:03.200 - 00:13:04.940] que he tenido desde hace tiempo
+[00:13:04.940 - 00:13:36.390] ay permítanme un segundo
+[00:13:36.390 - 00:13:38.130] es un problema
+[00:13:38.130 - 00:14:12.670] ya está
+[00:14:12.670 - 00:14:13.870] muy bien, ahora sí
+[00:14:13.870 - 00:14:16.960] entonces
+[00:14:16.960 - 00:14:20.820] nos regresamos aquí a donde estábamos
+[00:14:20.820 - 00:14:21.980] entonces tenemos nuestra imagen
+[00:14:21.980 - 00:14:24.880] y lo que nosotros tenemos
+[00:14:24.880 - 00:14:27.060] en cierto modo es este histograma
+[00:14:27.060 - 00:14:28.280] de valores
+[00:14:28.280 - 00:14:30.660] donde tenemos un cierto valor
+[00:14:30.660 - 00:14:32.300] voy a poner una imagen un poco más
+[00:14:32.300 - 00:14:34.240] un histograma de una imagen un poco más simple
+[00:14:34.240 - 00:14:35.240] que este que acabamos de hacer
+[00:14:35.260 - 00:14:37.440] vamos a pensar que el histograma
+[00:14:37.440 - 00:14:38.840] tendría una forma
+[00:14:38.840 - 00:14:40.860] es un sistema bimodal
+[00:14:40.860 - 00:14:41.840] donde tenemos el fondo
+[00:14:41.840 - 00:14:42.700] y tenemos la figura
+[00:14:42.700 - 00:14:44.980] y lo que nosotros queremos hacer
+[00:14:44.980 - 00:14:45.680] es encontrar
+[00:14:45.680 - 00:14:48.260] cuál es el umbral ideal
+[00:14:48.260 - 00:14:50.920] el umbral ideal idealmente estaría por aquí
+[00:14:50.920 - 00:14:53.100] pero entonces
+[00:14:53.100 - 00:14:55.040] qué es lo que hacemos nosotros para hacer eso
+[00:14:55.040 - 00:14:56.860] lo que nosotros vamos a hacer
+[00:14:56.860 - 00:14:58.080] es decir, bueno, voy a proponer
+[00:14:58.080 - 00:14:59.740] yo sé que el valor mínimo es entre 0
+[00:14:59.740 - 00:15:01.400] y entre 2.55
+[00:15:01.400 - 00:15:03.780] y para encontrar su valor
+[00:15:03.780 - 00:15:04.640] umbral ideal
+[00:15:04.640 - 00:15:05.240] yo voy a elegir
+[00:15:05.260 - 00:15:05.840] un valor
+[00:15:05.840 - 00:15:08.720] arbitrario
+[00:15:08.720 - 00:15:10.400] voy a decir, bueno, voy a asumir que mi umbral
+[00:15:10.400 - 00:15:12.920] es un valor de 200
+[00:15:12.920 - 00:15:14.840] que vamos a suponer que el 200 está por acá
+[00:15:14.840 - 00:15:15.660] este es mi umbral
+[00:15:15.660 - 00:15:18.360] y ya que tengo ese umbral 200
+[00:15:18.360 - 00:15:21.380] lo que yo empiezo a hacer es que empiezo a contar
+[00:15:21.380 - 00:15:22.700] cuántos valores
+[00:15:22.700 - 00:15:25.280] hay abajo de este umbral
+[00:15:25.280 - 00:15:26.880] si este fuera el umbral
+[00:15:26.880 - 00:15:29.300] cuántos valores tiene
+[00:15:29.300 - 00:15:31.180] el, cómo se dice
+[00:15:31.180 - 00:15:33.400] o el valor promedio de los valores que están abajo
+[00:15:33.400 - 00:15:34.320] del umbral
+[00:15:34.320 - 00:15:34.400] y el valor promedio de los valores que están abajo del umbral
+[00:15:34.400 - 00:15:34.640] y el valor promedio de los valores que están abajo del umbral
+[00:15:34.640 - 00:15:37.060] y el valor promedio de los valores que están arriba del umbral
+[00:15:37.060 - 00:15:38.460] entonces
+[00:15:38.460 - 00:15:40.520] si yo calculo el valor promedio
+[00:15:40.520 - 00:15:43.160] de los pixeles que tenemos aquí abajo
+[00:15:43.160 - 00:15:45.060] quizás obtenga que hay un valor
+[00:15:45.060 - 00:15:46.220] que es
+[00:15:46.220 - 00:15:48.620] el centro del, digamos
+[00:15:48.620 - 00:15:50.600] del fondo, voy a poner
+[00:15:50.600 - 00:15:51.520] B de background
+[00:15:51.520 - 00:15:54.080] porque en español sería fondo y figura
+[00:15:54.080 - 00:15:55.280] ambas comienzan con F
+[00:15:55.280 - 00:15:58.180] en cambio en inglés fondo, background es con B
+[00:15:58.180 - 00:16:00.860] y figura es con F, entonces es más fácil pensarlo así
+[00:16:00.860 - 00:16:02.620] y el promedio
+[00:16:02.620 - 00:16:03.680] de la figura
+[00:16:04.640 - 00:16:04.840] sería
+[00:16:04.840 - 00:16:08.420] esto, calculo el promedio
+[00:16:08.420 - 00:16:09.600] de los que están abajo del umbral
+[00:16:09.600 - 00:16:12.100] y promedio de los que están arriba del umbral
+[00:16:12.100 - 00:16:14.500] ese promedio
+[00:16:14.500 - 00:16:16.480] me da esto, y ya que calculo
+[00:16:16.480 - 00:16:17.120] ese promedio
+[00:16:17.120 - 00:16:20.600] digo bueno, yo esperaría que el umbral
+[00:16:20.600 - 00:16:22.220] estuviera, fuera el punto medio
+[00:16:22.220 - 00:16:23.560] entre estos dos valores
+[00:16:23.560 - 00:16:26.220] entonces, ¿qué es lo que pasa?
+[00:16:26.660 - 00:16:28.640] que ese 200 ya no va a ser
+[00:16:28.640 - 00:16:30.320] mi umbral que voy a ocupar
+[00:16:30.320 - 00:16:32.580] voy, en lugar de eso
+[00:16:32.580 - 00:16:34.100] voy a calcular el promedio
+[00:16:34.100 - 00:16:34.500] y voy a calcular el umbral
+[00:16:34.500 - 00:16:34.620] y voy a calcular el promedio
+[00:16:34.840 - 00:16:37.280] de esos dos valores
+[00:16:37.280 - 00:16:38.640] vamos a decir
+[00:16:38.640 - 00:16:40.480] este es el promedio
+[00:16:40.480 - 00:16:44.000] y ya que calculo ese promedio
+[00:16:44.000 - 00:16:45.500] ¿qué es lo que voy a hacer?
+[00:16:45.980 - 00:16:47.200] pues vuelvo a hacer lo mismo
+[00:16:47.200 - 00:16:50.180] vuelvo a calcular el promedio
+[00:16:50.180 - 00:16:51.640] de los que están abajo
+[00:16:51.640 - 00:16:53.980] y el promedio de los que están arriba
+[00:16:53.980 - 00:16:55.800] del umbral, y entonces el promedio
+[00:16:55.800 - 00:16:58.040] se va a mover ahora, quizás
+[00:16:58.040 - 00:16:59.460] hacia el promedio para acá
+[00:16:59.460 - 00:17:02.040] y en este caso el promedio se va a mover
+[00:17:02.040 - 00:17:03.720] un poquito para acá
+[00:17:03.720 - 00:17:07.830] y otra vez, calculo
+[00:17:08.350 - 00:17:10.190] el
+[00:17:10.190 - 00:17:13.470] ya borré la línea que teníamos acá
+[00:17:13.470 - 00:17:16.190] pero no importa, ahorita la relleno
+[00:17:16.190 - 00:17:17.110] con color rosa
+[00:17:17.110 - 00:17:19.750] lo que dije mal
+[00:17:19.750 - 00:17:21.970] muy bien, calculamos el promedio
+[00:17:21.970 - 00:17:23.650] de esos dos
+[00:17:23.650 - 00:17:25.130] y se va acercando para acá
+[00:17:25.130 - 00:17:27.750] si seguimos este procedimiento
+[00:17:27.750 - 00:17:30.170] eventualmente el sistema va a alcanzar
+[00:17:30.170 - 00:17:30.730] estabilidad
+[00:17:30.730 - 00:17:33.130] y esa estabilidad nos va a dar
+[00:17:33.130 - 00:17:34.690] exactamente en el punto
+[00:17:34.690 - 00:17:37.850] donde el peso de la izquierda y el peso de la derecha
+[00:17:37.850 - 00:17:39.310] son equivalentes
+[00:17:39.310 - 00:17:42.310] no sé si captan la idea
+[00:17:42.310 - 00:17:43.630] más que nada, cómo es eso
+[00:17:43.630 - 00:17:46.150] definimos un umbral
+[00:17:46.150 - 00:17:48.290] calculamos el promedio de los que están abajo
+[00:17:48.290 - 00:17:50.190] del umbral, calculamos
+[00:17:50.190 - 00:17:52.070] el promedio de los que están arriba
+[00:17:52.070 - 00:17:52.650] del umbral
+[00:17:52.650 - 00:17:56.290] calculamos el promedio de los que están abajo
+[00:17:56.290 - 00:17:57.470] el promedio de los que están arriba
+[00:17:57.470 - 00:17:59.910] y ya que tenemos
+[00:17:59.910 - 00:18:02.050] los dos promedios, calculamos el promedio
+[00:18:02.050 - 00:18:03.590] de los promedios que será como el punto medio
+[00:18:03.590 - 00:18:04.310] entre ellos dos
+[00:18:04.310 - 00:18:07.370] y volvemos a calcular
+[00:18:07.850 - 00:18:09.770] los promedios de los que están abajo y los que están arriba,
+[00:18:10.250 - 00:18:14.150] y eso vamos haciéndolo hasta que convergen eventualmente estas cosas.
+[00:18:15.190 - 00:18:17.230] ¿Sí queda clara la idea de cómo funciona?
+[00:18:17.290 - 00:18:18.530] Es un algoritmo muy, muy simple.
+[00:18:21.070 - 00:18:25.830] ¿Puedo definir el umbral en algo o puedo poner un umbral en cualquier?
+[00:18:26.010 - 00:18:28.690] En este caso estamos definiendo un umbral cualquiera,
+[00:18:29.490 - 00:18:30.970] pero como vamos a ver más adelante,
+[00:18:31.730 - 00:18:34.010] ¿cuál es el umbral inicial con el que yo voy a comenzar?
+[00:18:35.190 - 00:18:36.710] Es una cosa crucial.
+[00:18:37.390 - 00:18:38.610] En este caso es un caso muy simple,
+[00:18:38.610 - 00:18:41.530] es un caso donde tenemos dos clases, fondo y figura,
+[00:18:42.010 - 00:18:44.130] y tenemos un solo umbral y es relativamente fácil.
+[00:18:44.350 - 00:18:46.930] Puedes elegir cualquiera y en menos de 10 iteraciones
+[00:18:46.930 - 00:18:50.550] alcanzas este algoritmo muy rápido para trabajar con esto.
+[00:18:51.370 - 00:18:54.830] Pero bien, vamos a regresar a ver el código.
+[00:18:56.850 - 00:18:58.290] Profe, hay una consulta.
+[00:18:59.070 - 00:19:04.350] Entonces, cuando alcanza la estabilidad o encuentra ese umbral,
+[00:19:05.110 - 00:19:06.670] ¿ese va a ser como una partición?
+[00:19:07.470 - 00:19:08.590] Sí, es como una partición.
+[00:19:08.610 - 00:19:12.450] Estamos partiendo, digamos que cada píxel le estamos asignando una clase.
+[00:19:12.870 - 00:19:16.710] Si un píxel pertenece a la clase fondo o un píxel pertenece a la clase figura.
+[00:19:17.410 - 00:19:20.090] Entonces, estamos haciendo, si decimos que el conjunto,
+[00:19:20.270 - 00:19:21.970] la imagen es un conjunto de píxeles,
+[00:19:22.530 - 00:19:25.870] estamos particionando los píxeles en función de su valor.
+[00:19:26.850 - 00:19:29.650] Y aquellos que son menor de un valor es una partición,
+[00:19:30.450 - 00:19:32.170] hay una relación de equivalencia, ¿no?
+[00:19:32.170 - 00:19:33.810] De hecho, sí, es una partición de un conjunto
+[00:19:33.810 - 00:19:37.290] y hay una relación de equivalencia que se define para esto, ¿no?
+[00:19:37.290 - 00:19:37.370] Sí.
+[00:19:38.610 - 00:19:39.530] En función del umbral.
+[00:19:41.290 - 00:19:41.690] De acuerdo.
+[00:19:41.870 - 00:19:44.390] Y ahí, por ejemplo, ahí tendríamos dos clases, ¿no?
+[00:19:44.990 - 00:19:45.830] Dos clusters.
+[00:19:46.510 - 00:19:48.390] Lo mismo pasaría con tres.
+[00:19:49.750 - 00:19:50.950] Vamos, vamos con carnal.
+[00:19:51.030 - 00:19:53.210] Te estoy explicando lo con dos porque es procedimiento de imágenes.
+[00:19:53.330 - 00:19:53.550] De acuerdo.
+[00:19:53.770 - 00:19:55.970] Ahorita vamos a brincar a cuando veamos con tres.
+[00:19:57.870 - 00:19:58.570] Pero sí lo vamos a ver.
+[00:19:58.830 - 00:20:00.270] Tranquilos, vamos a llegar ahorita a eso.
+[00:20:01.050 - 00:20:04.290] Bien, entonces, el caso, este es un caso de dos dimensiones.
+[00:20:04.330 - 00:20:04.810] Es muy simple.
+[00:20:04.930 - 00:20:05.790] Vamos a ver el código.
+[00:20:06.910 - 00:20:08.330] Lo hice un código.
+[00:20:08.610 - 00:20:08.850] Simple.
+[00:20:09.490 - 00:20:10.310] Déjenme ver dónde está.
+[00:20:10.450 - 00:20:11.050] Debe estar aquí.
+[00:20:12.530 - 00:20:14.150] Y el código es un código en Python.
+[00:20:14.330 - 00:20:15.390] Tenemos aquí nuestra imagen.
+[00:20:16.010 - 00:20:19.050] Cuando haga la imagen, le voy a poner imagen.reshape tama
+[00:20:19.050 - 00:20:22.250] para que sea como una colección unidimensional de todos los píxeles.
+[00:20:22.710 - 00:20:26.210] Este reshape lo único que hace es que cambia el tamaño de la imagen.
+[00:20:26.470 - 00:20:27.850] En realidad no hace nada a la imagen,
+[00:20:27.970 - 00:20:29.690] únicamente cambia el encabezado de la imagen.
+[00:20:30.250 - 00:20:32.430] Eso no le da mucho caso a eso de la matriz.
+[00:20:34.310 - 00:20:34.810] Bueno, y aquí lo verás.
+[00:20:34.810 - 00:20:37.710] ¿El profe puede cambiar al pizarrón?
+[00:20:38.090 - 00:20:38.430] Es que está...
+[00:20:38.430 - 00:20:39.330] No, no lo cambié, perdón.
+[00:20:39.990 - 00:20:41.030] Qué bueno que me avisas.
+[00:20:41.470 - 00:20:44.730] Es que lo cambio aquí localmente y no lo cambio globalmente.
+[00:20:45.090 - 00:20:45.570] Una pregunta.
+[00:20:45.710 - 00:20:46.990] ¿Alcanzan a ver ahí las letras bien?
+[00:20:50.330 - 00:20:53.450] Se ve algo borroso el texto.
+[00:20:54.310 - 00:20:54.530] Ok.
+[00:20:54.830 - 00:20:57.970] Como está el código aquí, lo estoy haciendo en Colab.
+[00:20:58.690 - 00:21:01.970] Voy a copiar el código a un editor para que lo pueda poner más grande.
+[00:21:05.210 - 00:21:07.130] Y eso nos va a servir.
+[00:21:09.530 - 00:21:10.450] Permítanme tantito.
+[00:21:18.300 - 00:21:18.920] ¿Así lo ven bien?
+[00:21:25.020 - 00:21:25.740] Se ve mejor.
+[00:21:25.900 - 00:21:26.480] Sí, gracias.
+[00:21:30.340 - 00:21:32.540] Ok, entonces aquí tenemos el código.
+[00:21:33.260 - 00:21:35.740] Entonces comenzamos y definimos un umbral.
+[00:21:36.880 - 00:21:38.660] En este caso lo definimos como un umbral,
+[00:21:39.240 - 00:21:41.920] como un número aleatorio entre 0 y 256.
+[00:21:42.340 - 00:21:43.020] Ignoren esa línea.
+[00:21:43.700 - 00:21:44.500] Están haciendo unas pruebas.
+[00:21:45.280 - 00:21:47.260] Lo definimos como esta función RAMINT.
+[00:21:47.260 - 00:21:53.040] Lo regresamos entero en el intervalo entre 0 inclusive hasta 256 no inclusive.
+[00:21:53.260 - 00:21:54.180] O sea, entre 0 y 256.
+[00:21:55.600 - 00:21:58.900] Y lo que hacemos es que tenemos esta rutina,
+[00:21:59.000 - 00:22:04.620] que va a calcular el promedio de los que están en el fondo y las que son en la figura, ¿no?
+[00:22:04.620 - 00:22:08.640] Entonces tenemos cuatro variables, una que va a almacenar el promedio del fondo,
+[00:22:08.900 - 00:22:10.180] una que va a ser el promedio de la figura,
+[00:22:10.740 - 00:22:13.840] una que va a ser cuántos contamos que pertenecen al fondo,
+[00:22:14.040 - 00:22:17.140] cuántos contamos que pertenecen a la figura, un contador general.
+[00:22:17.520 - 00:22:19.420] Y todos son igualados a 0 al principio, ¿no?
+[00:22:20.240 - 00:22:21.440] ¿Y qué es lo que hacemos aquí?
+[00:22:21.860 - 00:22:23.440] Que para cada píxel de la imagen,
+[00:22:25.620 - 00:22:28.980] lo que vamos a hacer es que vamos a decir si el píxel es mayor que el umbral,
+[00:22:29.000 - 00:22:33.300] vamos, ese valor del píxel lo vamos a añadir al promedio del fondo
+[00:22:33.300 - 00:22:35.400] y vamos a incrementar el contador del fondo.
+[00:22:36.680 - 00:22:40.340] Y si no, pues vamos a añadir el píxel al promedio de la figura
+[00:22:40.340 - 00:22:42.840] e incluimos el contador de la figura.
+[00:22:44.100 - 00:22:47.280] Y ya que terminamos este ciclo, ya que cada píxel lo analizamos así,
+[00:22:47.980 - 00:22:51.300] lo que hacemos es que decimos, bueno, el promedio de la figura es la sumatoria
+[00:22:51.300 - 00:22:55.080] de todos los píxeles que fueron figura, que están aquí,
+[00:22:55.620 - 00:22:57.380] entre el número de píxeles, ¿no?
+[00:22:57.380 - 00:22:58.620] Es la definición del promedio, ¿no?
+[00:22:58.620 - 00:23:00.620] Sumamos, si tenemos un promedio de n valores,
+[00:23:01.000 - 00:23:04.240] el promedio es la suma de los valores entre el número de valores que sumamos.
+[00:23:04.960 - 00:23:06.720] Y aquí lo que tenemos es el promedio.
+[00:23:07.580 - 00:23:10.220] En base a eso, definimos un nuevo umbral.
+[00:23:11.560 - 00:23:14.440] En ese umbral, como es un entero, aquí lo que estoy haciendo es
+[00:23:14.440 - 00:23:16.320] el promedio de la figura,
+[00:23:17.200 - 00:23:23.960] lo redondeo y lo convierto a un entero en el intervalo de 0 y 256.
+[00:23:24.420 - 00:23:28.400] Eso más que nada es para, me facilita hacer las cosas al momento de comparar,
+[00:23:28.620 - 00:23:31.700] es una imagen no de números flotantes, sino de enteros, ¿no?
+[00:23:31.700 - 00:23:34.800] Si hubiera dejado la imagen como números flotantes, podría haberlo hecho,
+[00:23:35.080 - 00:23:37.520] no tendría que haber hecho esto, pero como lo hice así, pues,
+[00:23:38.040 - 00:23:39.220] es un detalle nada más, ¿no?
+[00:23:39.380 - 00:23:40.680] Imprimimos aquí el valor del umbral.
+[00:23:41.680 - 00:23:45.300] Y esta es una rutina que umbraliza el valor de la imagen.
+[00:23:46.920 - 00:23:50.740] Agarramos la imagen U, creamos una imagen, que es una copia de la imagen original.
+[00:23:51.860 - 00:23:56.660] Y lo que hacemos es que, si el valor de la imagen, esta imagen U,
+[00:23:56.740 - 00:23:58.120] es igual a una copia de la imagen,
+[00:23:58.620 - 00:24:03.760] si la imagen, si la imagen U de I es mayor que el umbral,
+[00:24:03.940 - 00:24:06.700] hacemos que sea 255, y si es menor, es igual que 0.
+[00:24:07.400 - 00:24:10.640] Y aquí la convertimos otra vez a que sea una imagen de renglones por columnas.
+[00:24:11.400 - 00:24:13.540] Bueno, este es el código que lo puse aquí en el editor.
+[00:24:14.200 - 00:24:16.520] Vamos a ver cómo se vería cuando lo ejecutamos acá.
+[00:24:17.180 - 00:24:19.860] Cuando ejecutamos este fragmento,
+[00:24:22.420 - 00:24:24.660] creo que tengo que empezar desde el principio.
+[00:24:26.520 - 00:24:27.480] Permítanme tantito.
+[00:24:28.620 - 00:24:30.320] ¡Ah! ¡Qué un error!
+[00:24:32.120 - 00:24:34.140] No encuentro mi archivo de Zapata.
+[00:24:35.760 - 00:24:37.900] Ah, creo que tengo que añadir aquí el archivo.
+[00:24:47.600 - 00:24:47.820] Ah, no.
+[00:24:48.560 - 00:24:50.040] Sí, por ejemplo, umbralización.
+[00:25:07.380 - 00:25:09.460] Como cerré la ventana y luego la voy a abrir,
+[00:25:09.780 - 00:25:11.680] no sé si vaya a cargar a Emiliano Zapata.
+[00:25:12.320 - 00:25:13.900] No, no encuentro a Emiliano Zapata.
+[00:25:14.220 - 00:25:14.920] Déjame ver cómo lo cargo.
+[00:25:15.040 - 00:25:15.660] Permítanme un segundo.
+[00:25:16.220 - 00:25:20.800] ¡Ah! ¡Qué desastre!
+[00:25:23.440 - 00:25:26.120] Hay una forma aquí que le puedo cargar archivos, ¿no?
+[00:25:26.720 - 00:25:27.980] A subir.
+[00:25:28.160 - 00:25:28.880] Le pongo subir.
+[00:25:29.260 - 00:25:30.260] Aquí está Emiliano Zapata.
+[00:25:30.360 - 00:25:31.200] Creo que si lo subo aquí.
+[00:25:33.900 - 00:25:34.220] Ahí está.
+[00:25:34.320 - 00:25:35.380] Ya debe estar funcionando.
+[00:25:38.990 - 00:25:40.290] Ya, ya lo hizo.
+[00:25:40.490 - 00:25:41.510] Y aquí lo graficamos, ¿no?
+[00:25:42.250 - 00:25:45.490] Aquí estamos graficando a Emiliano Zapata y su histograma.
+[00:25:45.890 - 00:25:47.130] Y este código que está aquí,
+[00:25:47.390 - 00:25:49.470] déjenme quitar esto para que no nos ocupe espacio.
+[00:25:49.670 - 00:25:50.570] ¿Cómo lo hago, chiquito?
+[00:25:50.910 - 00:25:51.390] Cerro aquí.
+[00:25:51.530 - 00:25:51.710] Ahí está.
+[00:25:52.630 - 00:25:54.490] Es el código que les expliqué ahorita en el editor.
+[00:25:55.050 - 00:25:55.770] Lo ejecutamos.
+[00:25:57.950 - 00:26:00.270] Nos encuentra que el valor de umbral es 187.
+[00:26:00.270 - 00:26:02.470] Y encontró que este es el valor.
+[00:26:05.290 - 00:26:07.710] La siguiente celda de esto es exactamente el mismo código,
+[00:26:08.010 - 00:26:10.570] excepto la primera línea donde definíamos un umbral aleatorio.
+[00:26:11.050 - 00:26:12.870] O sea, va a continuar con el antiguo valor del umbral.
+[00:26:13.290 - 00:26:15.610] Y es exactamente el mismo código que vimos ahorita.
+[00:26:16.330 - 00:26:18.750] Esta sería la segunda iteración de correr el algoritmo.
+[00:26:21.420 - 00:26:25.740] Y ahora el umbral pasó de 187 a 180.
+[00:26:26.060 - 00:26:30.560] Hubo un movimiento y el umbral se fue moviendo de 187 a 180.
+[00:26:32.920 - 00:26:34.060] Lo volvemos a ejecutar.
+[00:26:34.060 - 00:26:35.020] Es el mismo código.
+[00:26:35.020 - 00:26:38.820] Y ahora se movió a 176.
+[00:26:40.440 - 00:26:44.880] Y bueno, así lo podemos seguir haciendo hasta que ejerce en un solo lado.
+[00:26:45.420 - 00:26:50.440] Como obviamente este código, aquí estoy corriendo a más iteración por iteración.
+[00:26:50.940 - 00:26:55.240] Lo único que hice aquí en esta función que les voy a poner ahorita en el editor
+[00:26:55.240 - 00:27:00.890] para que lo podamos ver bien, es esto.
+[00:27:02.730 - 00:27:04.130] ¿Dónde está mi mouse?
+[00:27:04.210 - 00:27:04.510] Aquí está.
+[00:27:06.010 - 00:27:08.130] Podemos meter todo este código cerca de aquí.
+[00:27:08.130 - 00:27:11.970] De una función que se llama calcula umbral.
+[00:27:12.170 - 00:27:16.050] Donde recibe una imagen y tiene un número de iteraciones máxima que va a ser igual a 20.
+[00:27:16.550 - 00:27:18.910] Definimos el umbral igual que lo hicimos arriba.
+[00:27:19.330 - 00:27:26.490] Solo que esto lo metimos adentro de una rutina while que va a ejecutarse iterativamente.
+[00:27:26.630 - 00:27:28.450] Tenemos una banda de ejecución que es verdadera.
+[00:27:29.050 - 00:27:30.390] Tenemos un contador de iteraciones.
+[00:27:30.390 - 00:27:37.050] Y este código se va a repetir una y otra vez hasta que si el número de iteraciones es mayor que n,
+[00:27:37.170 - 00:27:38.050] que en este caso es el número.
+[00:27:38.130 - 00:27:39.970] Máximo de iteraciones que podríamos elegir.
+[00:27:41.030 - 00:27:42.770] O cuando no hay cambio.
+[00:27:42.910 - 00:27:48.250] Cuando no cambia, cuando el umbral anterior siempre es igual al umbral que se acaba de calcular.
+[00:27:48.250 - 00:27:51.230] Antes de calcular el umbral, que es en esta línea que está aquí.
+[00:27:52.430 - 00:27:55.310] Declaro una nueva, bueno, defino una nueva variable que se llama umbral old.
+[00:27:55.670 - 00:27:56.750] Que tiene el umbral previo.
+[00:27:58.070 - 00:28:02.570] Entonces si tenemos una rutina y cuando calculamos el umbral y el umbral es igual al umbral anterior.
+[00:28:03.330 - 00:28:04.630] Significa que ya convergimos.
+[00:28:04.770 - 00:28:07.750] Convergió a una solución y en ese caso terminamos.
+[00:28:07.930 - 00:28:08.110] Entonces.
+[00:28:08.130 - 00:28:11.850] Si esto es igual o si rebasamos un número máximo de iteraciones.
+[00:28:12.330 - 00:28:14.710] Decimos la bandera de ejecución es igual a falsa.
+[00:28:15.150 - 00:28:17.890] Cuando entre al while ya no va a continuar.
+[00:28:18.810 - 00:28:25.130] Porque el while era mientras la bandera de ejecución fuera un valor verdadero.
+[00:28:26.470 - 00:28:27.550] Y le dijimos que era falsa.
+[00:28:27.870 - 00:28:28.770] Y regresamos el umbral.
+[00:28:30.330 - 00:28:31.930] Cuando ejecutamos este código.
+[00:28:32.870 - 00:28:34.390] Aquí tengo la declaración de la función.
+[00:28:34.390 - 00:28:37.110] Y aquí le estoy invocando.
+[00:28:38.130 - 00:28:40.750] ¿Dónde está?
+[00:28:45.780 - 00:28:46.800] Permítanme tantito.
+[00:28:47.080 - 00:28:47.800] Aquí está el while.
+[00:28:48.100 - 00:28:48.300] Ok.
+[00:28:52.520 - 00:28:53.240] Aquí le invoco.
+[00:28:53.400 - 00:28:54.200] Aquí invoco la función.
+[00:28:54.340 - 00:28:54.880] Calculo umbral.
+[00:28:56.240 - 00:28:57.480] Y cuando hacemos esto.
+[00:28:59.770 - 00:29:00.870] ¿Qué es lo que pasa?
+[00:29:02.190 - 00:29:03.410] Esa es la serie de iteraciones.
+[00:29:03.670 - 00:29:05.110] ¿Cómo fue variando el umbral?
+[00:29:05.490 - 00:29:07.650] Hasta que eventualmente llegó a 171.
+[00:29:07.990 - 00:29:08.690] Y ahí se quedó.
+[00:29:10.740 - 00:29:13.180] No sé por qué aquí se impone con 176.
+[00:29:14.400 - 00:29:15.840] Ah, porque le puse aquí umbral.
+[00:29:15.840 - 00:29:17.840] Y aquí era cuando lo invocamos.
+[00:29:18.720 - 00:29:22.040] Lo invocamos con umbral con mayúscula.
+[00:29:22.780 - 00:29:26.740] Entonces tendría que haber sido aquí umbral con mayúscula.
+[00:29:31.350 - 00:29:32.810] Ahora empezó de 170.
+[00:29:33.690 - 00:29:35.230] Y terminó inmediatamente.
+[00:29:36.410 - 00:29:38.410] Y llegamos a la solución.
+[00:29:38.530 - 00:29:40.170] En este rato 171, 170.
+[00:29:41.170 - 00:29:41.970] Más o menos es lo mismo.
+[00:29:42.290 - 00:29:44.850] Como estamos usando números enteros.
+[00:29:45.290 - 00:29:46.270] Es básicamente lo mismo.
+[00:29:49.020 - 00:29:49.240] Bien.
+[00:29:49.240 - 00:29:51.580] Este algoritmo que acabamos de hacer.
+[00:29:51.660 - 00:29:53.940] O este algoritmo que acabamos de utilizar para umbralizar.
+[00:29:54.040 - 00:29:54.660] Este objeto.
+[00:29:54.740 - 00:29:57.040] Este, esta figura de Zapata.
+[00:29:57.660 - 00:29:59.560] Se le conoce como el algoritmo de Lloyd.
+[00:30:00.960 - 00:30:03.540] Y es la base del algoritmo de Capri.
+[00:30:04.000 - 00:30:05.400] El algoritmo de Lloyd.
+[00:30:05.900 - 00:30:07.900] Esto que tenemos aquí es el algoritmo de Lloyd.
+[00:30:18.810 - 00:30:19.750] Creo que así con doble L.
+[00:30:20.630 - 00:30:22.930] Que básicamente consta de dos etapas.
+[00:30:23.070 - 00:30:25.370] Una etapa en la cual primero nosotros.
+[00:30:27.010 - 00:30:27.610] Calculamos.
+[00:30:28.110 - 00:30:30.790] A qué clase pertenece cada elemento.
+[00:30:31.610 - 00:30:32.850] Y después calculamos.
+[00:30:32.850 - 00:30:33.850] Y después calculamos.
+[00:30:33.850 - 00:30:35.970] Cuál es el valor de cada elemento.
+[00:30:36.370 - 00:30:38.030] En sí el problema de K medios.
+[00:30:38.270 - 00:30:39.870] Es que tenemos un conjunto de datos.
+[00:30:40.050 - 00:30:40.870] El cual no conocemos.
+[00:30:45.010 - 00:30:46.990] Y queremos clasificarlo en K clases.
+[00:30:54.600 - 00:30:58.080] Queremos clasificarlo.
+[00:31:03.460 - 00:31:05.180] En K clases.
+[00:31:10.060 - 00:31:10.960] Y lo que nosotros hacemos.
+[00:31:11.200 - 00:31:12.580] Es que cuando comenzamos con el algoritmo.
+[00:31:12.720 - 00:31:14.840] Tenemos esta lista grandísima de datos.
+[00:31:15.000 - 00:31:15.700] Una lista muy grande.
+[00:31:15.820 - 00:31:17.700] En este caso de la umbralización.
+[00:31:18.160 - 00:31:19.740] Los datos eran los valores de los pixeles.
+[00:31:20.620 - 00:31:22.040] Y nosotros queríamos clasificarlo.
+[00:31:22.040 - 00:31:23.060] En K clases.
+[00:31:23.180 - 00:31:23.960] En el caso de la imagen.
+[00:31:24.080 - 00:31:26.700] Es una clasificación.
+[00:31:27.260 - 00:31:29.940] Que nosotros la hacíamos con K igual a 2.
+[00:31:31.440 - 00:31:32.900] Entonces el algoritmo de Lloyd.
+[00:31:33.080 - 00:31:33.960] Básicamente decimos.
+[00:31:34.120 - 00:31:37.020] Bueno a cada elemento de nuestras clases.
+[00:31:37.300 - 00:31:39.160] Vamos a definirle un valor inicial.
+[00:31:40.800 - 00:31:42.260] A cada una de las clases.
+[00:31:42.580 - 00:31:44.140] Definimos que cada una de las clases.
+[00:31:44.500 - 00:31:45.480] Va a ser representada.
+[00:31:46.280 - 00:31:47.060] Por un valor.
+[00:31:47.820 - 00:31:48.860] Ese valor en sí.
+[00:31:48.860 - 00:31:50.760] Es el valor del promedio.
+[00:31:51.000 - 00:31:52.060] De los miembros de la clase.
+[00:31:54.230 - 00:31:55.670] El valor con el que iniciamos.
+[00:31:55.770 - 00:31:56.430] Cada clase.
+[00:31:57.430 - 00:31:58.150] Cada clase.
+[00:32:01.900 - 00:32:02.780] Se representa.
+[00:32:07.870 - 00:32:08.730] Con el promedio.
+[00:32:13.990 - 00:32:15.130] De los miembros de la clase.
+[00:32:24.690 - 00:32:25.990] Entonces imaginemos que tenemos.
+[00:32:26.930 - 00:32:27.690] Un arreglo.
+[00:32:28.690 - 00:32:29.310] De datos.
+[00:32:29.610 - 00:32:30.450] De sumarle T.
+[00:32:30.990 - 00:32:32.330] Son n dimensionales.
+[00:32:34.990 - 00:32:36.390] Es una matriz.
+[00:32:38.190 - 00:32:41.550] Donde vamos desde cero hasta n menos uno datos.
+[00:32:42.490 - 00:32:44.330] Y acá esta matriz vamos a crearle.
+[00:32:45.190 - 00:32:45.870] Una etiqueta.
+[00:32:45.870 - 00:32:47.430] A cada dato de nuestra matriz.
+[00:32:47.430 - 00:32:48.430] Le vamos a crear una etiqueta.
+[00:32:48.430 - 00:32:49.430] La etiqueta de clase.
+[00:32:49.430 - 00:32:50.430] Eso que significa.
+[00:32:50.430 - 00:32:56.520] Que si tenemos.
+[00:32:56.520 - 00:32:57.520] Por ejemplo.
+[00:32:57.520 - 00:32:58.520] K clases.
+[00:32:58.520 - 00:32:59.520] Tenemos un conjunto de cuatro clases.
+[00:32:59.520 - 00:33:00.520] Si decimos.
+[00:33:00.520 - 00:33:01.520] K es igual a cuatro.
+[00:33:01.520 - 00:33:02.520] Cada una de esas etiquetas.
+[00:33:02.520 - 00:33:03.520] Esos son los datos.
+[00:33:03.520 - 00:33:04.520] Esas son las etiquetas.
+[00:33:04.520 - 00:33:05.520] También va de cero.
+[00:33:05.520 - 00:33:06.520] Hasta n menos uno.
+[00:33:06.520 - 00:33:07.520] Lo que nosotros queremos hacer.
+[00:33:07.520 - 00:33:08.520] Es que a cada una de estas.
+[00:33:08.520 - 00:33:09.520] A cada una de estas etiquetas.
+[00:33:09.520 - 00:33:10.520] Le vamos a asignar.
+[00:33:10.520 - 00:33:11.520] A qué clase pertenece cada dato.
+[00:33:11.520 - 00:33:12.520] Por ejemplo.
+[00:33:12.520 - 00:33:13.520] Si el dato cero pertenece a la clase.
+[00:33:13.520 - 00:33:17.650] Tres.
+[00:33:17.650 - 00:33:18.650] Y si el dato cero pertenece a la clase.
+[00:33:18.650 - 00:33:19.650] A cada uno de estos datos.
+[00:33:19.650 - 00:33:20.650] A cada una de estas etiquetas.
+[00:33:20.650 - 00:33:21.650] Le vamos a asignar.
+[00:33:21.650 - 00:33:23.650] A qué clase pertenece cada dato.
+[00:33:23.650 - 00:33:24.650] Por ejemplo.
+[00:33:24.650 - 00:33:25.650] Si el dato cero pertenece a la clase.
+[00:33:25.650 - 00:33:26.650] Tres.
+[00:33:26.650 - 00:33:27.650] Vamos a ponerle aquí.
+[00:33:27.650 - 00:33:28.650] Tres.
+[00:33:28.650 - 00:33:29.650] Si este clase pertenece a la clase.
+[00:33:29.650 - 00:33:30.650] Uno.
+[00:33:30.650 - 00:33:31.650] Va uno.
+[00:33:31.650 - 00:33:32.650] Y así sucesivamente.
+[00:33:32.650 - 00:33:33.650] ¿No?
+[00:33:33.650 - 00:33:34.650] Esa.
+[00:33:34.650 - 00:33:35.650] Este.
+[00:33:35.650 - 00:33:36.650] Columna de datos.
+[00:33:36.650 - 00:33:37.650] De etiquetas.
+[00:33:37.650 - 00:33:38.650] Va a decir.
+[00:33:38.650 - 00:33:39.650] A qué clase.
+[00:33:39.650 - 00:33:40.650] Pertenece.
+[00:33:40.650 - 00:33:41.650] ¿No?
+[00:33:41.650 - 00:33:42.650] Que en este caso.
+[00:33:42.650 - 00:33:43.650] Como K es igual a cuatro.
+[00:33:43.650 - 00:33:44.650] Y como los índices.
+[00:33:44.650 - 00:33:45.650] Comenzamos a contarlos.
+[00:33:45.650 - 00:33:46.650] Desde cero.
+[00:33:46.650 - 00:33:47.650] Va a ser un valor.
+[00:33:47.650 - 00:33:48.650] Entre cero.
+[00:33:48.650 - 00:33:49.650] Uno.
+[00:33:49.650 - 00:33:50.650] Dos.
+[00:33:50.650 - 00:33:51.650] Y tres.
+[00:33:51.650 - 00:33:52.650] Asignamos aleatoriamente.
+[00:33:52.650 - 00:33:53.650] Esos valores.
+[00:33:53.650 - 00:33:54.650] De cada clase.
+[00:33:54.650 - 00:33:55.650] Yo no sé.
+[00:33:55.650 - 00:33:56.650] A qué valor.
+[00:33:56.650 - 00:33:57.650] Pertenece cada uno.
+[00:33:57.650 - 00:33:58.650] De esos elementos.
+[00:33:58.650 - 00:33:59.650] Pero le asignamos.
+[00:33:59.650 - 00:34:02.160] Una clase.
+[00:34:02.160 - 00:34:03.160] De manera aleatoria.
+[00:34:03.160 - 00:34:04.160] Y ya que hacemos.
+[00:34:04.160 - 00:34:05.160] Esa asignación.
+[00:34:05.160 - 00:34:06.160] Aleatoria.
+[00:34:06.160 - 00:34:07.160] Lo que hacemos.
+[00:34:07.160 - 00:34:10.720] Es que calculamos.
+[00:34:10.720 - 00:34:11.720] El promedio.
+[00:34:11.720 - 00:34:12.720] De cada clase.
+[00:34:12.720 - 00:34:15.480] Y ya que calculamos.
+[00:34:15.480 - 00:34:16.480] El promedio.
+[00:34:16.480 - 00:34:17.480] De cada clase.
+[00:34:17.480 - 00:34:18.480] Entonces.
+[00:34:18.480 - 00:34:24.150] Tenemos una primera etapa.
+[00:34:24.150 - 00:34:25.150] En la que calculamos.
+[00:34:25.150 - 00:34:26.150] El promedio.
+[00:34:26.150 - 00:34:27.150] Bueno.
+[00:34:27.150 - 00:34:28.150] Déjame ponerlo en orden.
+[00:34:28.150 - 00:34:29.150] Porque.
+[00:34:29.150 - 00:34:30.150] No era realmente así.
+[00:34:30.150 - 00:34:31.150] Lo primero que hacemos.
+[00:34:31.150 - 00:34:35.990] Es que.
+[00:34:35.990 - 00:34:36.990] Hacemos.
+[00:34:36.990 - 00:34:37.990] Clases.
+[00:34:37.990 - 00:34:38.990] De manera.
+[00:34:38.990 - 00:34:39.990] Aleatoria.
+[00:34:39.990 - 00:34:46.460] La segunda parte.
+[00:34:46.460 - 00:34:47.460] Es que vamos a.
+[00:34:47.460 - 00:34:48.460] Calcular.
+[00:34:48.460 - 00:34:53.520] Los promedios.
+[00:34:53.520 - 00:34:54.520] De cada clase.
+[00:34:54.520 - 00:34:55.520] Como.
+[00:34:55.520 - 00:34:56.520] Seguramente.
+[00:34:56.520 - 00:35:04.720] Los datos.
+[00:35:04.720 - 00:35:05.720] Con los que vamos a trabajar.
+[00:35:05.720 - 00:35:06.720] Son multidimensionales.
+[00:35:06.720 - 00:35:07.720] Cuando hablamos.
+[00:35:07.720 - 00:35:08.720] Del promedio.
+[00:35:08.720 - 00:35:09.720] Nos referimos.
+[00:35:09.720 - 00:35:10.720] A un vector promedio.
+[00:35:10.720 - 00:35:11.720] No.
+[00:35:11.720 - 00:35:12.720] La suma.
+[00:35:12.720 - 00:35:13.720] De todos los datos.
+[00:35:13.720 - 00:35:14.720] Y el promedio.
+[00:35:14.720 - 00:35:15.720] De esa suma.
+[00:35:15.720 - 00:35:16.720] De esos datos.
+[00:35:16.720 - 00:35:17.720] No se sume.
+[00:35:17.720 - 00:35:18.720] Si son arreglos.
+[00:35:18.720 - 00:35:19.720] De tamaño cinco.
+[00:35:19.720 - 00:35:20.720] Pues van a ser.
+[00:35:20.720 - 00:35:21.720] Suma de vectores.
+[00:35:21.720 - 00:35:22.720] Con cinco elementos.
+[00:35:22.720 - 00:35:23.720] Vamos a dividir.
+[00:35:23.720 - 00:35:24.720] Entre cinco.
+[00:35:24.720 - 00:35:25.720] Ya que calculamos.
+[00:35:25.720 - 00:35:26.720] Los promedios.
+[00:35:26.720 - 00:35:27.720] Tenemos que.
+[00:35:27.720 - 00:35:28.720] Reasignar.
+[00:35:28.720 - 00:35:29.720] La parte.
+[00:35:29.720 - 00:35:30.720] Interesante.
+[00:35:30.720 - 00:35:33.520] Reasignar.
+[00:35:33.520 - 00:35:34.520] Los datos.
+[00:35:34.520 - 00:35:35.520] La mejor clase.
+[00:35:35.520 - 00:35:40.930] Eso.
+[00:35:40.930 - 00:35:41.930] De reasignar.
+[00:35:41.930 - 00:35:46.680] Los datos.
+[00:35:46.680 - 00:35:47.680] A la mejor clase.
+[00:35:47.680 - 00:35:48.680] Consiste.
+[00:35:48.680 - 00:35:49.680] En que.
+[00:35:49.680 - 00:35:50.680] Para cada dato.
+[00:35:50.680 - 00:35:51.680] Vamos a calcular.
+[00:35:51.680 - 00:35:52.680] Su distancia.
+[00:35:52.680 - 00:35:53.680] Entre ese dato.
+[00:35:53.680 - 00:35:54.680] Y todos los datos.
+[00:35:54.680 - 00:35:55.680] De las clases.
+[00:35:55.680 - 00:35:56.680] Si tenemos.
+[00:35:56.680 - 00:35:57.680] Cuatro clases.
+[00:35:57.680 - 00:35:58.680] Vamos a calcular.
+[00:35:58.680 - 00:35:59.680] Su distancia.
+[00:35:59.680 - 00:36:00.680] Entre ese.
+[00:36:00.680 - 00:36:01.680] Y las cuatro clases.
+[00:36:01.680 - 00:36:02.680] Y aquel.
+[00:36:02.680 - 00:36:03.680] Que está.
+[00:36:03.680 - 00:36:04.680] Más cercano.
+[00:36:04.680 - 00:36:05.680] A la clase.
+[00:36:05.680 - 00:36:06.680] Que se encuentre.
+[00:36:06.680 - 00:36:09.050] Más cercana.
+[00:36:09.050 - 00:36:10.050] A esa clase.
+[00:36:10.050 - 00:36:11.050] Lo vamos a asignar.
+[00:36:11.050 - 00:36:12.050] En el caso.
+[00:36:12.050 - 00:36:13.050] De la.
+[00:36:13.050 - 00:36:14.050] De la.
+[00:36:14.050 - 00:36:15.050] Umbralización.
+[00:36:15.050 - 00:36:16.050] De la imagen.
+[00:36:16.050 - 00:36:17.050] Nosotros.
+[00:36:17.050 - 00:36:18.050] No calculamos.
+[00:36:18.050 - 00:36:19.050] Si está.
+[00:36:19.050 - 00:36:20.050] Más cerca.
+[00:36:20.050 - 00:36:21.050] Del fondo.
+[00:36:21.050 - 00:36:22.050] O la figura.
+[00:36:22.050 - 00:36:23.050] Sino.
+[00:36:23.050 - 00:36:24.050] Lo que hacíamos.
+[00:36:24.050 - 00:36:25.050] Es que.
+[00:36:25.050 - 00:36:26.050] Encontramos.
+[00:36:26.050 - 00:36:27.050] Un umbral.
+[00:36:27.050 - 00:36:28.050] Y ese umbral.
+[00:36:28.050 - 00:36:29.050] Era.
+[00:36:29.050 - 00:36:30.050] Un punto.
+[00:36:30.050 - 00:36:31.050] Medio.
+[00:36:31.050 - 00:36:32.050] Decimos.
+[00:36:32.050 - 00:36:33.050] Si está.
+[00:36:33.050 - 00:36:34.050] De un lado.
+[00:36:34.050 - 00:36:35.050] Y si.
+[00:36:35.050 - 00:36:36.050] Teníamos.
+[00:36:36.050 - 00:36:37.050] Que.
+[00:36:37.050 - 00:36:38.050] El promedio.
+[00:36:38.050 - 00:36:39.050] Del fondo.
+[00:36:39.050 - 00:36:40.050] Era este.
+[00:36:40.050 - 00:36:41.050] El promedio.
+[00:36:41.050 - 00:36:42.050] De la figura.
+[00:36:42.050 - 00:36:43.050] Era este.
+[00:36:43.050 - 00:36:44.050] Si tenemos.
+[00:36:44.050 - 00:36:45.050] Un pixel.
+[00:36:45.050 - 00:36:46.050] Que caía.
+[00:36:46.050 - 00:36:47.050] Por aquí.
+[00:36:47.050 - 00:36:48.050] Podríamos.
+[00:36:48.050 - 00:36:49.050] Haber calculado.
+[00:36:49.050 - 00:36:50.050] La diferencia.
+[00:36:50.050 - 00:36:51.050] Entre este.
+[00:36:51.050 - 00:36:52.050] Y este.
+[00:36:52.050 - 00:36:53.050] O la diferencia.
+[00:36:53.050 - 00:36:54.050] Entre este.
+[00:36:54.050 - 00:36:55.050] Y este.
+[00:36:55.050 - 00:36:56.050] Y ver.
+[00:36:56.050 - 00:36:57.050] Cuál era.
+[00:36:57.050 - 00:36:58.050] El mayor.
+[00:36:58.050 - 00:36:59.050] Pero.
+[00:36:59.050 - 00:37:00.050] Es simple.
+[00:37:00.050 - 00:37:01.050] Es más fácil.
+[00:37:01.050 - 00:37:02.050] Calcular.
+[00:37:02.050 - 00:37:03.050] El punto.
+[00:37:03.050 - 00:37:04.050] Medio.
+[00:37:04.050 - 00:37:05.050] Entre.
+[00:37:05.050 - 00:37:06.050] Este.
+[00:37:06.050 - 00:37:07.050] Y este.
+[00:37:07.050 - 00:37:08.050] Va a ser.
+[00:37:08.050 - 00:37:09.050] Una cosa.
+[00:37:09.050 - 00:37:10.050] Como esta.
+[00:37:10.050 - 00:37:11.050] El punto.
+[00:37:11.050 - 00:37:12.050] Medio.
+[00:37:12.050 - 00:37:13.050] Entre este.
+[00:37:13.050 - 00:37:14.050] Y este.
+[00:37:14.050 - 00:37:15.050] Pues.
+[00:37:15.050 - 00:37:16.050] Va a ser.
+[00:37:16.050 - 00:37:17.050] Otra línea.
+[00:37:17.050 - 00:37:18.050] Que va.
+[00:37:18.050 - 00:37:19.050] A salir.
+[00:37:19.050 - 00:37:20.050] Por acá.
+[00:37:20.050 - 00:37:21.050] El punto.
+[00:37:21.050 - 00:37:22.050] Medio.
+[00:37:22.050 - 00:37:23.050] Entre este.
+[00:37:23.050 - 00:37:24.050] Y este.
+[00:37:24.050 - 00:37:25.050] Va a ser.
+[00:37:25.050 - 00:37:26.050] Otra línea.
+[00:37:26.050 - 00:37:27.050] Que va.
+[00:37:27.050 - 00:37:28.050] A salir.
+[00:37:28.050 - 00:37:29.050] Por acá.
+[00:37:29.050 - 00:37:30.050] Y de hecho.
+[00:37:30.050 - 00:37:31.050] Cuando vamos.
+[00:37:31.050 - 00:37:32.050] Creando.
+[00:37:32.050 - 00:37:34.170] esto es lo que se llama, es una cosa que se llama
+[00:37:34.170 - 00:37:35.150] un diagrama de Voronoi
+[00:37:35.150 - 00:37:37.950] el diagrama de Voronoi y K medios están
+[00:37:37.950 - 00:37:40.050] íntimamente ligados, de hecho el algoritmo de
+[00:37:40.050 - 00:37:42.270] Lloyd se plantea, ahorita lo vamos a ver en las láminas
+[00:37:42.270 - 00:37:44.110] se plantea originalmente en
+[00:37:44.110 - 00:37:46.230] términos del algoritmo
+[00:37:46.230 - 00:37:48.170] de Voronoi, del diagrama de Voronoi
+[00:37:48.170 - 00:37:50.010] pero bueno, a lo que voy
+[00:37:50.010 - 00:37:52.170] es esto, a lo que voy es
+[00:37:52.170 - 00:37:52.670] a
+[00:37:52.670 - 00:37:56.370] que reasignamos los datos a cada clase
+[00:37:56.370 - 00:37:57.950] para cada elemento
+[00:37:57.950 - 00:38:00.330] buscamos cuál es el más cercano y lo reasignamos
+[00:38:00.330 - 00:38:01.630] y ya que hacemos eso
+[00:38:01.630 - 00:38:04.270] volvemos al paso anterior, calculamos
+[00:38:04.270 - 00:38:05.930] los promedios, reasignamos
+[00:38:05.930 - 00:38:08.130] los datos, y eso que va a pasar
+[00:38:08.130 - 00:38:10.310] es que los promedios se van a ir moviendo, van a ir
+[00:38:10.310 - 00:38:11.530] migrando de un lado a otro
+[00:38:11.530 - 00:38:13.850] hasta que eventualmente convergen
+[00:38:13.850 - 00:38:15.990] dejan de cambiar los promedios, cuando los promedios
+[00:38:15.990 - 00:38:18.270] dejan de cambiar o cuando alcanzamos un número máximo
+[00:38:18.270 - 00:38:20.490] de iteraciones, el algoritmo se detiene
+[00:38:20.490 - 00:38:22.310] y hemos
+[00:38:22.310 - 00:38:23.810] terminado con el problema
+[00:38:23.810 - 00:38:26.170] es un algoritmo realmente muy
+[00:38:26.170 - 00:38:28.270] simple, el algoritmo de K medios, la parte
+[00:38:28.270 - 00:38:29.710] más delicada es cómo
+[00:38:29.710 - 00:38:32.350] tiene mucho
+[00:38:32.350 - 00:38:33.850] que ver con el desempeño del algoritmo
+[00:38:33.850 - 00:38:35.830] es esto, cómo asignamos
+[00:38:35.830 - 00:38:38.010] la clase de manera aleatoria
+[00:38:38.010 - 00:38:39.910] esa es digamos
+[00:38:39.910 - 00:38:42.330] la explicación platicadita
+[00:38:42.330 - 00:38:43.070] del algoritmo
+[00:38:43.070 - 00:38:46.350] les voy a pasar un código
+[00:38:46.350 - 00:38:48.290] simple, vamos a ir a un código, hay una implementación
+[00:38:48.290 - 00:38:50.230] simple del algoritmo al final de las
+[00:38:50.230 - 00:38:52.130] láminas, yo tengo otra implementación
+[00:38:52.130 - 00:38:53.970] que se las voy a compartir, para que vean
+[00:38:53.970 - 00:38:56.010] cómo se puede hacer un algoritmo simple de K medios
+[00:38:56.010 - 00:38:58.110] se puede hacer en menos de 100 líneas
+[00:38:58.110 - 00:38:59.390] de código en
+[00:38:59.390 - 00:39:01.690] C, en C++, y eso si lo hacemos así
+[00:39:01.690 - 00:39:03.750] con mucha talacha, en realidad es muy
+[00:39:03.750 - 00:39:05.650] muy compacto, es un algoritmo muy simple
+[00:39:05.650 - 00:39:07.450] pero que es muy útil y funciona
+[00:39:07.450 - 00:39:09.530] bien, una pregunta antes
+[00:39:09.530 - 00:39:11.650] de que pasemos a la parte de las
+[00:39:11.650 - 00:39:13.110] láminas, empezamos a revisar las láminas
+[00:39:13.110 - 00:39:20.540] creo que no, siguen ahí todos
+[00:39:20.540 - 00:39:22.200] muy bien
+[00:39:22.200 - 00:39:23.220] vamos a ver
+[00:39:23.220 - 00:39:25.780] a ver qué pasó
+[00:39:25.780 - 00:39:27.400] sí, tengo una duda
+[00:39:27.400 - 00:39:30.500] en este algoritmo solo estamos variables
+[00:39:30.500 - 00:39:31.380] continuos, ¿verdad?
+[00:39:32.320 - 00:39:34.320] no te escuché bien, puedes hablar un poquito
+[00:39:34.320 - 00:39:34.780] más claro
+[00:39:34.780 - 00:39:38.420] ¿en este algoritmo solo estamos variables
+[00:39:38.420 - 00:39:39.100] continuos?
+[00:39:40.720 - 00:39:41.480] ¿solo qué?
+[00:39:44.900 - 00:39:46.220] sí, solo con valores
+[00:39:46.220 - 00:39:48.420] no podemos trabajar con cosas
+[00:39:48.420 - 00:39:50.100] cuantificadas, o sea, son
+[00:39:50.100 - 00:39:52.540] valores numéricos, a eso nos referimos
+[00:39:52.540 - 00:39:54.040] asumimos que todos los
+[00:39:54.040 - 00:39:56.480] datos que tenemos son
+[00:39:56.480 - 00:39:58.220] datos numéricos, si tuviéramos
+[00:39:58.220 - 00:39:59.740] datos que no fueran numéricos
+[00:39:59.740 - 00:40:02.380] como colecciones o categorías, tendríamos
+[00:40:02.380 - 00:40:04.220] que hacer una conversión de esos datos
+[00:40:04.320 - 00:40:06.500] categorías a una representación numérica
+[00:40:06.500 - 00:40:07.480] para poderlos utilizar
+[00:40:07.480 - 00:40:10.060] no puede trabajar directamente con datos
+[00:40:10.060 - 00:40:12.520] categóricos, sino simplemente con datos numéricos
+[00:40:12.520 - 00:40:14.420] ya sean
+[00:40:14.420 - 00:40:15.680] continuos o discretos
+[00:40:15.680 - 00:40:17.320] o con
+[00:40:17.320 - 00:40:20.080] realmente es mientras la métrica, en principio
+[00:40:20.080 - 00:40:21.920] podría funcionar con cualquier cosa
+[00:40:21.920 - 00:40:24.140] siempre y cuando definas una métrica
+[00:40:24.140 - 00:40:26.080] adecuada, en general trabajamos
+[00:40:26.080 - 00:40:28.000] con métrica euclidiana y
+[00:40:28.000 - 00:40:30.220] así es como funciona, más adelante
+[00:40:30.220 - 00:40:32.060] vamos a ver una variante de este
+[00:40:32.060 - 00:40:34.060] algoritmo que se llama el algoritmo
+[00:40:34.320 - 00:40:35.120] de
+[00:40:35.120 - 00:40:37.640] mezcla de gaussianas
+[00:40:37.640 - 00:40:39.900] que es muy similar a K-medios
+[00:40:39.900 - 00:40:42.200] pero en vez de utilizar distancias calcula
+[00:40:42.200 - 00:40:42.940] probabilidades
+[00:40:42.940 - 00:40:46.060] y que básicamente es lo mismo que si
+[00:40:46.060 - 00:40:48.240] hiciéramos el algoritmo de K-medios pero usando
+[00:40:48.240 - 00:40:50.320] distancia en Maharanovis, pero bueno, eso lo vamos a ver
+[00:40:50.320 - 00:40:52.200] más adelante, pero sí, tienen que ser
+[00:40:52.200 - 00:40:54.160] datos numéricos para poder
+[00:40:54.160 - 00:40:56.200] funcionar, esa es una premisa básica
+[00:40:56.200 - 00:40:58.260] del algoritmo, bien, vamos
+[00:40:58.260 - 00:41:00.040] a pasar a las láminas, si no hay más preguntas
+[00:41:00.040 - 00:41:03.740] déjenme
+[00:41:03.740 - 00:41:04.600] abro la lámina
+[00:41:09.020 - 00:41:32.540] ok
+[00:41:32.540 - 00:41:35.180] vamos al inicio
+[00:41:35.180 - 00:41:39.040] están viendo todos la presentación
+[00:41:39.040 - 00:41:43.620] ahí están, bien, entonces
+[00:41:43.620 - 00:41:45.480] el algoritmo de K-medios
+[00:41:45.480 - 00:41:48.000] la presentación va más o menos así
+[00:41:48.000 - 00:41:50.100] esto es básicamente una descripción general
+[00:41:50.100 - 00:41:50.880] de lo que vamos a ver
+[00:41:50.880 - 00:41:53.940] y vamos a ir explicando
+[00:41:53.940 - 00:41:55.080] cómo funciona más o menos
+[00:41:55.080 - 00:41:57.880] comenzamos primero con el problema de
+[00:41:57.880 - 00:41:58.380] agrupamiento
+[00:41:58.380 - 00:42:01.840] este problema de agrupamiento, vamos a usar como
+[00:42:01.840 - 00:42:03.860] ejemplo el conjunto de iris
+[00:42:03.860 - 00:42:04.960] que es un conjunto
+[00:42:04.960 - 00:42:06.460] de un señor
+[00:42:06.460 - 00:42:06.960] Fischer
+[00:42:06.960 - 00:42:10.220] que recolectó en 1936
+[00:42:10.220 - 00:42:11.980] 150 flores
+[00:42:11.980 - 00:42:13.460] con cuatro medidas
+[00:42:13.460 - 00:42:15.040] en centímetros
+[00:42:15.040 - 00:42:18.160] de largo y el ancho del sépalo
+[00:42:18.160 - 00:42:19.820] y el pétalo de las flores
+[00:42:19.820 - 00:42:22.700] sépalo y pétalo son dos partes de las flores
+[00:42:22.700 - 00:42:24.320] yo me acuerdo que
+[00:42:24.320 - 00:42:26.280] en la prepa, no llevé biología
+[00:42:26.280 - 00:42:28.280] la última vez que llevé biología, pero son dos partes
+[00:42:28.280 - 00:42:29.400] de la
+[00:42:29.400 - 00:42:32.440] fisionomía, digamos, de la forma
+[00:42:32.440 - 00:42:34.480] de las flores, y él hizo una clasificación
+[00:42:34.480 - 00:42:36.780] hay un tipo de plantas que son irises
+[00:42:36.780 - 00:42:39.220] y lo que les medía, hizo 150 flores
+[00:42:39.220 - 00:42:40.080] y se puso a medir
+[00:42:40.080 - 00:42:42.020] los pétalos y los sépalos
+[00:42:42.020 - 00:42:43.760] con tal de tratar de encontrar
+[00:42:43.760 - 00:42:46.180] si había diferencias, podía clasificar
+[00:42:46.180 - 00:42:47.840] diferentes variedades de la misma flor
+[00:42:47.840 - 00:42:48.900] en función de los datos
+[00:42:48.900 - 00:42:52.540] y tenemos cuatro medidas, son cuatro dimensiones
+[00:42:52.540 - 00:42:54.380] que no podemos fácilmente visualizar
+[00:42:54.380 - 00:42:55.700] en un espacio tridimensional
+[00:42:55.700 - 00:42:58.200] y en ese caso
+[00:42:58.200 - 00:43:00.620] básicamente aquí grafica
+[00:43:00.620 - 00:43:02.960] el largo del sépalo, el largo del pétalo
+[00:43:02.960 - 00:43:03.860] en centímetros
+[00:43:04.480 - 00:43:07.580] faltaría el ancho del pétalo y el ancho del sépalo
+[00:43:07.580 - 00:43:09.520] para sacar diferentes gráficas
+[00:43:09.520 - 00:43:10.900] entonces la pregunta es
+[00:43:10.900 - 00:43:13.820] por lo que en los pétalos vemos que claramente aquí hay un grupo
+[00:43:13.820 - 00:43:16.060] cuando vemos únicamente una medición
+[00:43:16.060 - 00:43:17.460] que es el largo del pétalo
+[00:43:17.460 - 00:43:19.840] vemos claramente que hay un grupo
+[00:43:19.840 - 00:43:20.960] en el largo del sépalo
+[00:43:20.960 - 00:43:22.900] posiblemente vemos que hay dos grupos aquí
+[00:43:22.900 - 00:43:24.300] posiblemente más
+[00:43:24.300 - 00:43:27.360] y la pregunta es cómo podemos distinguir esto
+[00:43:27.360 - 00:43:29.900] él sabía que la especie estaba registrada
+[00:43:29.900 - 00:43:32.060] y había tres variedades
+[00:43:32.060 - 00:43:32.620] iris cetosa, iris versicolor, iris virginica, etc.
+[00:43:32.620 - 00:43:32.640] y él sabía que la especie estaba registrada y había tres variedades
+[00:43:32.640 - 00:43:34.460] iris cetosa, iris versicolor, iris virginica, etc.
+[00:43:34.480 - 00:43:37.540] él sabía y él lo registró
+[00:43:37.540 - 00:43:39.540] cuando capturó esa base de datos de flores
+[00:43:39.540 - 00:43:41.480] pero no lo va a utilizar esa información
+[00:43:41.480 - 00:43:43.740] o sea, conocemos las etiquetas de eso
+[00:43:43.740 - 00:43:45.800] y en base a eso nosotros podemos
+[00:43:45.800 - 00:43:47.660] determinar que también funciona eso
+[00:43:47.660 - 00:43:50.240] en SCAT Learn lo pueden cargar
+[00:43:50.240 - 00:43:51.500] el dataset poniendo
+[00:43:51.500 - 00:43:53.500] SCAT Learn Datasets Load Iris
+[00:43:53.500 - 00:43:56.180] y funciona muy bien
+[00:43:56.180 - 00:43:59.240] entonces, ¿qué es agrupar?
+[00:43:59.540 - 00:44:01.560] tenemos un conjunto, dado un conjunto
+[00:44:01.560 - 00:44:03.660] x subíndice 1, x subíndice 2
+[00:44:03.660 - 00:44:04.460] hasta x subíndice 3
+[00:44:04.480 - 00:44:06.480] hasta x subíndice 4
+[00:44:06.480 - 00:44:08.480] hasta x subíndice 5
+[00:44:08.480 - 00:44:10.480] hasta x subíndice 6
+[00:44:10.480 - 00:44:12.480] hasta x subíndice 7
+[00:44:12.480 - 00:44:14.480] y lo que queremos es
+[00:44:14.480 - 00:44:16.480] que este conjunto sea
+[00:44:16.480 - 00:44:18.480] un conjunto de reales
+[00:44:18.480 - 00:44:20.480] en d dimensiones
+[00:44:20.480 - 00:44:22.480] ¿qué significa?
+[00:44:22.480 - 00:44:24.480] que tenemos n vectores
+[00:44:24.480 - 00:44:26.480] y cada vector tiene d componentes
+[00:44:26.480 - 00:44:28.480] d dimensiones
+[00:44:28.480 - 00:44:30.480] y lo que queremos es
+[00:44:30.480 - 00:44:32.480] particionar este conjunto
+[00:44:32.480 - 00:44:34.480] en k grupos
+[00:44:34.480 - 00:44:44.860] Nosotros tenemos un conjunto, imagínense que tenemos aquí un conjunto de letras A, B, C, D, E, F, G,
+[00:44:44.860 - 00:44:55.480] y decimos que una partición de ese conjunto es agrupar a los miembros de este conjunto en partes.
+[00:44:56.060 - 00:45:03.360] Entonces tenemos una parte que contiene al BC, otra parte que contiene a la D, otra parte que contiene a la E, y otra parte que contiene a la FG.
+[00:45:03.360 - 00:45:07.480] Bien, la suma de todas las partes tiene que ser igual al conjunto original.
+[00:45:07.620 - 00:45:14.200] Cuando hacemos una partición de un conjunto, estamos encontrando, dividiendo el conjunto en varios subconjuntos,
+[00:45:14.360 - 00:45:22.120] tal que los subconjuntos no se intersectan, son independientes, y que la unión de todos los conjuntos es igual al conjunto original.
+[00:45:22.640 - 00:45:34.660] Bien, entonces aquí nos está diciendo, me equivoqué, aquí está, aquí nos está diciendo que queremos una partición de este conjunto X, conjunto de los datos,
+[00:45:34.740 - 00:45:48.180] en un conjunto de K grupos, el conjunto C1, C2, C3, hasta Z, tal que los objetos del mismo grupo sean parecidos entre sí, y los grupos distintos sean diferentes.
+[00:45:49.020 - 00:45:52.340] Bueno, esto está implícito en el hecho que es una partición.
+[00:45:54.980 - 00:45:59.740] K medias concreta lo que se refiere a qué significa estar parecido.
+[00:46:00.360 - 00:46:06.380] Cada grupo se representa con un centro, y es el prototipo, o centroide, o el promedio.
+[00:46:06.960 - 00:46:15.560] O el centro de masa, hay muchas formas de llamarlo, dependiendo, el centro de masa lo hacen los físicos, porque es como que, como representan cosas,
+[00:46:15.560 - 00:46:17.700] pero muchas cosas, hay muchas formas de llamarlo.
+[00:46:17.820 - 00:46:23.340] No es el centroide, yo solo llamarlo como el centroide, o centro, que vamos a conocer como miujota,
+[00:46:24.080 - 00:46:28.960] y decimos que un objeto pertenece a un grupo cuyo centro está más cercano en distancia eclidiana.
+[00:46:29.100 - 00:46:36.420] Esto es si tenemos un objeto X, Y, y encontramos que pertenece al grupo C3,
+[00:46:36.440 - 00:46:43.100] significa que la distancia entre ese objeto y el C3 es la más cercana.
+[00:46:44.300 - 00:46:54.510] Esa es una parte un poquito fea de notación, voy a explicarla más o menos fácilmente.
+[00:46:55.390 - 00:46:59.990] Lo que nosotros queremos encontrar son estas MUSE, es lo que queremos encontrar.
+[00:47:00.130 - 00:47:01.070] ¿Cuáles son las MUSE?
+[00:47:02.270 - 00:47:06.130] Y queremos encontrar esas asignaciones, que serían las clases, es básicamente,
+[00:47:06.130 - 00:47:10.950] para cada elemento de datos queremos encontrar,
+[00:47:11.330 - 00:47:14.030] si pertenece a una clase o no pertenece a otra clase.
+[00:47:16.120 - 00:47:17.560] Entonces, aquí nos están diciendo,
+[00:47:18.260 - 00:47:20.800] queremos minimizar es esta cosa,
+[00:47:21.460 - 00:47:28.040] que es básicamente, X menos XY menos MUSE ZY elevado al cuadrado,
+[00:47:28.420 - 00:47:32.280] donde iba desde 1 hasta N, N es el número de elementos que nosotros tenemos,
+[00:47:32.580 - 00:47:37.080] este es un centroide particular, y lo que queremos es minimizar esto.
+[00:47:40.010 - 00:47:41.850] Eso también lo podemos escribir así,
+[00:47:42.970 - 00:47:44.810] esa es una sumatoria, donde ya,
+[00:47:44.910 - 00:47:46.730] lo estamos separando en vectores.
+[00:47:46.910 - 00:47:49.070] Este, la sumatoria que estamos...
+[00:47:49.070 - 00:47:50.990] la sumatoria que estamos viendo aquí a la derecha,
+[00:47:51.570 - 00:47:53.230] es básicamente, esa es la distancia euclidiana,
+[00:47:53.490 - 00:47:58.250] básicamente, el promedio de las vectores euclidianas del vector a cada uno de los centroides,
+[00:47:58.810 - 00:47:59.650] y esa es la sumatoria.
+[00:48:02.030 - 00:48:05.450] Esta ecuación, para un grupo fijo,
+[00:48:05.550 - 00:48:08.630] la inercia equivale a las diferencias entre todos los pares de puntos.
+[00:48:09.030 - 00:48:12.070] Aquí tenemos una I que pertenece al conjunto CJ,
+[00:48:13.690 - 00:48:15.790] y decíamos que la suma de los promedios,
+[00:48:15.810 - 00:48:16.550] de las distancias,
+[00:48:16.570 - 00:48:24.570] para cada punto x y con respecto a un a un conjunto lo podemos expresar de esta manera
+[00:48:24.570 - 00:48:33.350] como la sumatoria de y que pertenece al conjunto j como y prima que pertenece al conjunto j esto
+[00:48:33.350 - 00:48:39.810] que significa que y y j son índices del mismo dentro del mismo conjunto pero que son diferentes
+[00:48:39.810 - 00:48:46.810] y estamos calculando las distancias entre elementos del mismo objeto qué significa esto
+[00:48:46.810 - 00:48:52.770] vamos a hacer un dibujo y básicamente lo que significa es esto imagínese que tenemos un
+[00:48:52.770 - 00:48:59.910] conjunto y decimos que tenemos un conjunto de puntos y todos estos juntos estos puntos
+[00:48:59.910 - 00:49:05.810] pertenecen a un cierto conjunto que digamos es una clase aquí hay otra clase por este lado y
+[00:49:05.810 - 00:49:13.170] esta va a ser x1 esta va a ser x6 esta va a ser x9 esta va a ser x3 y así sucesivamente son varios
+[00:49:13.170 - 00:49:16.770] valores de x x8 x160
+[00:49:16.810 - 00:49:25.650] x9 y x10 entonces esta es una partición que tenemos digamos del conjunto y cada uno de esos
+[00:49:25.650 - 00:49:36.310] puntitos es un punto que pertenece a una clase entonces esa sumatoria que tenemos aquí a la
+[00:49:36.310 - 00:49:42.570] derecha esa sumatoria que tenemos aquí a la derecha la sumatoria de x y menos x y prima
+[00:49:42.570 - 00:49:49.000] al cuadrado nj es el número de elementos que hay en la clase j
+[00:49:51.000 - 00:49:52.900] s�ипut password xanco
+[00:49:52.900 - 00:49:54.680] xux
+[00:49:54.680 - 00:49:55.980] xxt
+[00:49:55.980 - 00:49:57.320] x Champé
+[00:49:57.320 - 00:49:58.820] x interrupción
+[00:49:58.820 - 00:50:01.280] xx
+[00:50:01.280 - 00:50:02.820] e
+[00:50:02.820 - 00:50:05.660] xz
+[00:50:05.660 - 00:50:08.040] 8
+[00:50:08.040 - 00:50:09.760] e
+[00:50:09.760 - 00:50:11.560] o
+[00:50:11.560 - 00:50:13.500] xx
+[00:50:13.500 - 00:50:14.940] xx
+[00:50:14.940 - 00:50:17.140] xx
+[00:50:17.140 - 00:50:18.240] y
+[00:50:18.240 - 00:50:18.640] xx
+[00:50:18.640 - 00:50:20.000] xx
+[00:50:20.000 - 00:50:20.620] xx xxx
+[00:50:20.620 - 00:50:20.760] y
+[00:50:20.760 - 00:50:20.920] y
+[00:50:20.920 - 00:50:20.980] xx
+[00:50:21.000 - 00:50:31.130] distancias que pertenecen a una clase y aquí lo estamos haciendo y lo estamos dividiendo entre
+[00:50:31.130 - 00:50:37.490] 2nj. ¿Por qué entre 2nj? Porque le estamos haciendo todas las cis contra todas las cis y entonces
+[00:50:37.490 - 00:50:43.530] calculamos la distancia de, por ejemplo, estamos calculando la distancia dos veces, conocemos eso,
+[00:50:43.650 - 00:50:49.490] calculamos la distancia de x1 a x5 y lo volvemos a calcular de x5 a x1. Es por la forma en que se
+[00:50:49.490 - 00:50:55.310] escrita la fórmula, pero básicamente cuando vemos esto de aquí, lo que estamos viendo es el promedio
+[00:50:55.310 - 00:51:09.980] de todos los elementos que existen en una clase. Y lo que queremos es, cuando queremos
+[00:51:09.980 - 00:51:15.260] minimizar j, es que queremos buscar grupos que son internamente compactos. Lo que queremos hacer es
+[00:51:15.260 - 00:51:23.520] que esta distancia promedio sea una distancia pequeña. En base a eso, podemos decir que la
+[00:51:23.520 - 00:51:28.240] distancia promedio es la sumatoria de la distancia de cada uno de los elementos que existen en una
+[00:51:28.240 - 00:51:30.300] clase. Y la distancia promedio de los elementos, de todos los elementos que tenemos en nuestros
+[00:51:30.300 - 00:51:36.880] datos con respecto al promedio, la distancia promedio al cuadrado, la podemos dividir entre
+[00:51:36.880 - 00:51:44.500] la sumatoria de aquellos elementos que pertenecen al promedio de una clase en particular, más la
+[00:51:44.500 - 00:51:51.800] sumatoria de aquellos que no pertenecen a esa clase. El número de particiones que podríamos
+[00:51:51.800 - 00:51:58.420] hacer es realmente grande, es un número que es np complejo, es igual a k elevado a la n entre k
+[00:51:58.420 - 00:52:01.100] factorial. Y es una cosa que es,
+[00:52:01.280 - 00:52:07.280] crece, es un problema que es np difícil, es una computacionalmente, mientras aumenta el número de
+[00:52:07.280 - 00:52:11.820] datos y aumenta el número de clases, el problema se vuelve más y más complejo. Entonces no es un
+[00:52:11.820 - 00:52:19.940] problema realmente simple. Lo que realmente queremos es hacer una asignación óptima. Lo
+[00:52:19.940 - 00:52:25.320] que queremos encontrar es cuáles son, este es el planteamiento ya en sí del problema, si queremos
+[00:52:25.320 - 00:52:31.180] resolver el problema, lo que queremos encontrar cuáles son las z y a, en este caso z son las
+[00:52:31.280 - 00:52:35.900] asignaciones que nosotros tenemos, la clase en la que pertenece cada elemento, queremos encontrar
+[00:52:35.900 - 00:52:45.450] cuál es el argumento que minimiza las distancias entre cada elemento y una clase. Como esto es una
+[00:52:45.450 - 00:52:50.530] distancia cuadrática, eso se puede resolver, plantear de esta manera, y podemos plantear que
+[00:52:50.530 - 00:52:57.270] la solución ideal, el promedio, es igual a la sumatoria de los elementos hasta aquí. Esto es
+[00:52:57.270 - 00:53:00.630] un poco obvio, básicamente nos está diciendo el promedio es igual a la sumatoria de los elementos,
+[00:53:00.630 - 00:53:03.870] el promedio de la clase j es igual a la sumatoria de los elementos.
+[00:53:03.870 - 00:53:24.180] Entonces, el valor de los elementos que pertenecen a la clase j entre el número de elementos en la clase j es un paso obvio, y básicamente eso es. El algoritmo de Lloyd que habíamos comentado es esto, inicializamos con valores iniciales, en este caso, en el caso que habíamos visto, era le asignamos clases de manera aleatoria a nuestro programa,
+[00:53:26.580 - 00:53:35.720] le asignamos a cada elemento el más cercano, la clase a la que pertenezca más, a la clase más
+[00:53:35.760 - 00:54:05.600] cercana, y luego recalculamos el promedio. ¿Cambió alguna asignación? Si cambió, volvemos a empezar y repetimos una y otra vez. En esta iteración viene, tenemos en la iteración cero, comenzamos que los tres centroides se encuentran aquí, en la iteración una, vemos que rápidamente los centroides se acomodaron rápidamente en alguna de las clases, y luego recalculamos el promedio.
+[00:54:05.760 - 00:54:24.760] Y en una segunda iteración hubo un cambio, pero dentro de la clase, hasta que eventualmente el sistema deja de iterar. El algoritmo funciona y nos da un resultado que es relativamente bueno.
+[00:54:28.490 - 00:54:32.470] Bueno, relativamente bueno, ¿no? Es bueno, ¿no? Identificó cada una de las clases.
+[00:54:37.850 - 00:54:39.370] Las regiones de asignación, ya que
+[00:54:39.370 - 00:54:39.550] definitivamente,
+[00:54:39.570 - 00:54:56.530] si definimos esto, eso lo que nos define es una celda de Voronoi, o la región a la que pertenecen los miembros de una clase, tenemos varias clases, lo que se define, se define un diagrama de Voronoi, y se define como unas celdas de Voronoi. Vamos a explicar eso un poquito más en el pizarrón.
+[00:54:58.970 - 00:55:18.200] Cuando nosotros tenemos una serie de puntos en el espacio, nosotros podemos encontrar algo que se llama el diagrama de Voronoi. Una manera simple de entender el diagrama de
+[00:55:18.200 - 00:55:48.000] Voronoi es que decimos, bueno, si cada uno de estos es un centroide de nuestro sistema, quisiéramos dividir el espacio de tal manera que el centroide fuera el promedio de una región en el espacio. Y una forma de hacerlo es encontrar los puntos medios, decimos, entre este punto y este punto encontramos una línea. En esa línea encontramos, encontramos una línea que va más o menos así. En esa línea encontramos un, en el punto medio y en el punto medio atrás.
+[00:55:48.000 - 00:55:49.560] trazamos una línea perpendicular
+[00:55:49.560 - 00:55:53.540] y esa línea perpendicular divide el espacio
+[00:55:53.540 - 00:55:57.880] en dos mitades.
+[00:55:58.840 - 00:56:00.520] Así medio derecha mi flecha,
+[00:56:00.700 - 00:56:01.800] pero no salió muy bonita,
+[00:56:01.920 - 00:56:03.320] pero bueno, vamos a tratar de hacerla mejor.
+[00:56:04.560 - 00:56:05.520] No, quedó muy fea.
+[00:56:06.800 - 00:56:08.180] Voy a traer una regla aquí a trabajar.
+[00:56:08.420 - 00:56:09.320] Aquí está, un poco mejor.
+[00:56:10.220 - 00:56:13.440] Y eso lo repetimos para cada uno de los objetos.
+[00:56:13.580 - 00:56:15.020] Hicimos, bueno, entre este y este
+[00:56:15.020 - 00:56:17.940] hay un punto medio que está más o menos por aquí
+[00:56:17.940 - 00:56:20.400] y trazamos también una línea,
+[00:56:20.760 - 00:56:23.260] ese punto medio perpendicular a esta línea
+[00:56:23.260 - 00:56:24.020] que une a los dos,
+[00:56:24.440 - 00:56:27.700] nos va a quedar una cosa más o menos así
+[00:56:27.700 - 00:56:28.520] que divide el espacio
+[00:56:28.520 - 00:56:31.880] y repetimos esto para cada uno de los elementos
+[00:56:31.880 - 00:56:33.440] que tenemos aquí.
+[00:56:34.420 - 00:56:36.780] Nos queda el punto medio otra vez aquí
+[00:56:36.780 - 00:56:38.480] y encontramos en línea perpendicular
+[00:56:38.480 - 00:56:39.860] a esta línea que une a los dos
+[00:56:39.860 - 00:56:41.380] y trazamos otra línea.
+[00:56:42.960 - 00:56:44.340] Trazamos entre este y este,
+[00:56:44.820 - 00:56:45.620] pues va a ser lo mismo.
+[00:56:46.340 - 00:56:47.800] Trazamos una serie de puntos
+[00:56:47.800 - 00:56:50.320] y encontramos el punto medio.
+[00:56:51.120 - 00:56:53.320] Trazamos una línea perpendicular a ese punto medio
+[00:56:53.320 - 00:56:55.760] y nos va a quedar una línea más o menos así.
+[00:56:56.480 - 00:56:57.480] Trazamos entre este y este.
+[00:56:57.560 - 00:56:58.780] Ya no voy a dibujar los puntos medios.
+[00:56:59.000 - 00:56:59.940] Está más o menos por aquí
+[00:56:59.940 - 00:57:02.900] y sería más o menos una cosa así.
+[00:57:03.080 - 00:57:05.940] Entre este y este trazamos el punto medio
+[00:57:05.940 - 00:57:12.200] y esta sería más o menos una cosa así.
+[00:57:12.560 - 00:57:14.460] Entonces, esto que tenemos aquí,
+[00:57:14.460 - 00:57:17.140] si unimos esas intersecciones que nosotros tenemos aquí,
+[00:57:17.800 - 00:57:20.100] esta es la celda de Voronoi
+[00:57:20.100 - 00:57:23.880] que corresponde a ese centroide
+[00:57:23.880 - 00:57:26.360] y ese centroide va a ser el centro geométrico
+[00:57:26.360 - 00:57:28.360] de este polígono que tenemos aquí.
+[00:57:28.460 - 00:57:30.720] Esos polígonos siempre van a ser convexos
+[00:57:30.720 - 00:57:35.890] y así podemos ir partiendo los demás
+[00:57:35.890 - 00:57:38.510] y al final de cuentas nos queda un diagrama
+[00:57:38.510 - 00:57:41.790] que es bastante bonito y divide el espacio.
+[00:57:42.510 - 00:57:44.870] El tema de calcular diagramas de Voronoi
+[00:57:44.870 - 00:57:46.070] es un tema muy interesante.
+[00:57:46.270 - 00:57:47.310] Se utiliza en muchas gentes.
+[00:57:47.310 - 00:57:51.410] La gente que hace gráficas por computadora le interesa,
+[00:57:51.510 - 00:57:54.870] porque si tienes una nube de puntos en tres dimensiones
+[00:57:54.870 - 00:57:56.770] y quieres definir los voxeles
+[00:57:56.770 - 00:57:58.750] con los cuales vas a dibujar una figura gráfica,
+[00:57:58.790 - 00:57:59.170] por ejemplo,
+[00:58:00.030 - 00:58:01.450] el calcular los diagramas de Voronoi
+[00:58:01.450 - 00:58:03.030] te puede permitir suavizar
+[00:58:03.030 - 00:58:04.870] o encontrar una mejor distribución de los puntos
+[00:58:04.870 - 00:58:06.690] para que estén uniformemente distribuidos.
+[00:58:07.370 - 00:58:10.350] La gente que hace GIS,
+[00:58:11.130 - 00:58:12.490] Sistema de Información Geográfica,
+[00:58:12.590 - 00:58:14.450] y tienen, por ejemplo, es un problema típico.
+[00:58:14.610 - 00:58:16.170] Yo estoy en una localidad
+[00:58:16.170 - 00:58:18.610] y quiero encontrar dónde poner OXXOS
+[00:58:18.610 - 00:58:21.430] o dónde poner, ¿cómo se llama?
+[00:58:21.510 - 00:58:23.330] Oficinas de correo.
+[00:58:23.550 - 00:58:25.230] Y quisiéramos que las oficinas de correo
+[00:58:25.230 - 00:58:27.470] estuvieran distribuidas de la mejor manera
+[00:58:27.470 - 00:58:28.730] para que todas las personas tuvieran
+[00:58:28.730 - 00:58:31.490] una oficina de correo cercana
+[00:58:31.490 - 00:58:34.190] y así minimizar el número de oficinas de correo
+[00:58:34.190 - 00:58:38.390] que pudiéramos satisfacer a toda la población.
+[00:58:39.410 - 00:58:40.950] O, si fuera el caso de los OXXOS,
+[00:58:41.130 - 00:58:43.030] con una dinámica más capitalista,
+[00:58:43.130 - 00:58:44.150] dónde ponemos un OXXO
+[00:58:44.150 - 00:58:45.830] de tal manera que los OXXOS no compitan
+[00:58:45.830 - 00:58:50.790] y que maximicen la ganancia de FEMSA
+[00:58:50.790 - 00:58:51.450] o los dueños.
+[00:58:51.510 - 00:58:55.570] Entonces, encontrar ese tipo de cosas
+[00:58:55.570 - 00:58:57.070] se puede resolver con este tipo de problemas
+[00:58:57.070 - 00:58:58.110] de diagramas de Voronoi.
+[00:58:58.390 - 00:58:59.510] La gente que hace cristalografía,
+[00:59:00.130 - 00:59:01.950] los físicos también utilizan diagramas de Voronoi
+[00:59:01.950 - 00:59:04.310] para analizar cómo se conectan los cristales
+[00:59:04.310 - 00:59:06.910] con varios compuestos químicos
+[00:59:06.910 - 00:59:08.050] y muchas otras cosas, ¿no?
+[00:59:08.410 - 00:59:10.230] Y los diagramas de Voronoi
+[00:59:10.230 - 00:59:13.190] están íntimamente ligados al, ¿cómo se dice?
+[00:59:15.310 - 00:59:17.350] Al problema de camellos.
+[00:59:17.510 - 00:59:19.110] Por el problema de camellos decimos, bueno,
+[00:59:19.110 - 00:59:20.830] si yo tengo un punto,
+[00:59:21.510 - 00:59:23.270] tengo dos puntos y quiero saber,
+[00:59:23.990 - 00:59:25.010] cuando encontramos los dos puntos
+[00:59:25.010 - 00:59:28.150] y encontramos el punto medio, la línea que dividía esto,
+[00:59:29.370 - 00:59:30.270] aquí estamos dividiendo,
+[00:59:30.390 - 00:59:31.530] si un punto está de este lado,
+[00:59:31.630 - 00:59:33.870] va a estar más cercano a este que a este.
+[00:59:36.640 - 00:59:38.620] Cada comparación que hacemos con la distancia mínima,
+[00:59:38.760 - 00:59:41.420] estamos, en cierto modo, comprobando varias cosas.
+[00:59:41.680 - 00:59:42.840] Y eso nos lleva un poquito a cosas
+[00:59:42.840 - 00:59:44.500] que seguramente vieron en Regresión Lineal
+[00:59:44.500 - 00:59:46.720] y en métodos de clasificación,
+[00:59:47.000 - 00:59:49.220] donde lo que hacía muchos métodos
+[00:59:49.220 - 00:59:50.860] es dividir al espacio en dos mitades.
+[00:59:51.700 - 00:59:53.180] A la derecha o a la izquierda,
+[00:59:53.560 - 00:59:55.020] lo que estamos diciendo ahí es diciendo
+[00:59:55.020 - 00:59:57.160] cuál está de un lado o cuál está del otro.
+[00:59:58.220 - 00:59:59.900] En camellos hacemos eso también.
+[01:00:00.440 - 01:00:02.320] Cada vez que encontramos una distancia,
+[01:00:02.620 - 01:00:04.960] estamos dividiendo el espacio en dos
+[01:00:04.960 - 01:00:07.160] y el más cercano y cercano nos va a...
+[01:00:07.160 - 01:00:09.080] En sí, globalmente se va definiendo
+[01:00:09.080 - 01:00:11.700] estos conjuntos, estas líneas rectas divisorias.
+[01:00:12.700 - 01:00:14.560] El algoritmo en dos dimensiones
+[01:00:14.560 - 01:00:17.840] para dibujar los diagramas de Voronoi
+[01:00:17.840 - 01:00:19.160] es un algoritmo muy elegante
+[01:00:19.160 - 01:00:22.580] porque funciona haciendo un barrido.
+[01:00:22.800 - 01:00:23.160] Bueno, hay muchos algoritmos,
+[01:00:23.560 - 01:00:25.180] pero el que yo conozco hace un barrido
+[01:00:25.180 - 01:00:27.200] y hay una relación con las parábolas.
+[01:00:27.380 - 01:00:29.520] Ir bajando y haciendo el barrido
+[01:00:29.520 - 01:00:30.840] de los centros que te vas encontrando,
+[01:00:31.220 - 01:00:32.340] vas dibujando parábolas
+[01:00:32.340 - 01:00:34.480] y los lugares donde se aceptan las parábolas
+[01:00:34.480 - 01:00:36.220] son los puntos de intersecciones
+[01:00:36.220 - 01:00:37.980] que corresponden a estas cosas.
+[01:00:38.380 - 01:00:40.260] Es un algoritmo muy, muy bonito.
+[01:00:40.940 - 01:00:42.280] Pero no nos da tiempo de verlo aquí.
+[01:00:42.500 - 01:00:44.360] Pero si quieren, busquen algoritmos de...
+[01:00:44.360 - 01:00:47.620] No de gráficas por computadoras,
+[01:00:47.660 - 01:00:49.040] sino de geometría computacional.
+[01:00:49.220 - 01:00:51.020] Es un algoritmo clásico de geometría computacional
+[01:00:51.020 - 01:00:52.260] y lo van a encontrar.
+[01:00:52.400 - 01:00:53.320] Muy simple el algoritmo.
+[01:00:53.560 - 01:00:55.380] Pero bueno, esos son diagramas de Voronoi.
+[01:00:55.580 - 01:00:58.220] Es simplemente un efecto secundario.
+[01:00:58.400 - 01:01:00.360] Digamos que es la otra cara de la moneda
+[01:01:00.360 - 01:01:03.400] de ver nuestro algoritmo de K-medios.
+[01:01:03.800 - 01:01:04.680] Así como...
+[01:01:04.680 - 01:01:05.820] Digamos que el diagrama de Voronoi
+[01:01:05.820 - 01:01:09.000] es como yo planteé el algoritmo de umbralización.
+[01:01:09.320 - 01:01:10.740] Cuando hacíamos el algoritmo de umbralización
+[01:01:10.740 - 01:01:12.460] queríamos calcular un umbral.
+[01:01:13.340 - 01:01:14.880] El algoritmo de K-medios
+[01:01:14.880 - 01:01:16.100] no calcula el umbral,
+[01:01:16.240 - 01:01:18.520] sino que calcula el promedio del centro.
+[01:01:20.000 - 01:01:21.660] Y es un poco más difícil usar
+[01:01:21.660 - 01:01:23.480] esa analogía del umbral,
+[01:01:23.560 - 01:01:25.480] porque cuando tenemos más de una dimensión
+[01:01:25.480 - 01:01:26.880] tenemos múltiples umbrales, ¿no?
+[01:01:27.200 - 01:01:28.820] Cada par de puntos nos definen un umbral.
+[01:01:29.280 - 01:01:30.700] Entonces es más difícil plantearlo
+[01:01:30.700 - 01:01:31.820] como umbrales el problema
+[01:01:31.820 - 01:01:34.320] y es más fácil dividirlo como centroides
+[01:01:34.320 - 01:01:35.980] y la distancia entre los elementos
+[01:01:35.980 - 01:01:36.840] y esos centroides.
+[01:01:37.780 - 01:01:38.100] Pero bien.
+[01:01:40.100 - 01:01:41.460] Vamos a lo que sigue.
+[01:01:46.450 - 01:01:47.810] Es lo que estaba comentando ahorita.
+[01:01:47.970 - 01:01:49.070] El frontend entre dos centros
+[01:01:49.070 - 01:01:50.250] es un hiperplano mediador,
+[01:01:50.390 - 01:01:51.270] el segmento que los une.
+[01:01:51.830 - 01:01:53.810] Por eso K-medios solo produce grupos convexos
+[01:01:53.810 - 01:01:55.070] separados por fronteras libres.
+[01:01:59.120 - 01:02:02.420] ¿Por qué termina?
+[01:02:02.460 - 01:02:04.860] Porque ningún paso aumenta esa masa
+[01:02:04.860 - 01:02:06.440] o esa inercia de la que estábamos hablando.
+[01:02:07.740 - 01:02:08.660] Cada uno es óptimo
+[01:02:08.660 - 01:02:11.140] para su problema
+[01:02:11.140 - 01:02:13.040] y es verdad, el algoritmo de K-medios
+[01:02:13.040 - 01:02:15.500] en sí es óptimo.
+[01:02:16.540 - 01:02:17.740] Ahora, hay una cosa
+[01:02:17.740 - 01:02:19.340] que es óptimo,
+[01:02:20.060 - 01:02:22.040] pero hay veces que el algoritmo de K-medios
+[01:02:22.040 - 01:02:24.020] puede fallar.
+[01:02:25.680 - 01:02:27.560] Podemos encontrar mínimos locales
+[01:02:27.560 - 01:02:28.340] donde el problema
+[01:02:28.340 - 01:02:28.580] no es óptimo.
+[01:02:28.580 - 01:02:28.600] Pero hay veces que el algoritmo de K-medios
+[01:02:28.600 - 01:02:28.660] puede fallar.
+[01:02:28.660 - 01:02:28.760] Y es verdad, el algoritmo de K-medios
+[01:02:28.760 - 01:02:28.780] puede fallar.
+[01:02:28.780 - 01:02:28.880] Y es verdad, el algoritmo de K-medios
+[01:02:28.880 - 01:02:28.940] puede fallar.
+[01:02:28.940 - 01:02:29.080] Y es verdad, el algoritmo de K-medios
+[01:02:29.080 - 01:02:29.720] no converja.
+[01:02:30.060 - 01:02:31.820] O puede ocurrir que dos algoritmos,
+[01:02:32.880 - 01:02:35.080] dos centroides,
+[01:02:36.060 - 01:02:37.180] converjan en la misma clase.
+[01:02:37.280 - 01:02:39.660] Y es una cosa que puede suceder.
+[01:02:40.120 - 01:02:41.060] Un ejemplo de eso,
+[01:02:41.580 - 01:02:42.720] imagínense que tenemos
+[01:02:42.720 - 01:02:47.810] una distribución de valores
+[01:02:47.810 - 01:02:49.870] donde tenemos aquí
+[01:02:49.870 - 01:02:52.590] una serie de puntos
+[01:02:52.590 - 01:02:54.070] que pertenecen a una clase.
+[01:02:54.670 - 01:02:56.950] Tenemos aquí otra serie de puntos
+[01:02:56.950 - 01:02:58.790] que pertenecen a otra clase.
+[01:02:58.790 - 01:03:00.610] Y tenemos aquí,
+[01:03:00.610 - 01:03:00.630] y tenemos aquí,
+[01:03:00.630 - 01:03:01.570] otra serie de puntos
+[01:03:01.570 - 01:03:02.930] que pertenecen a otra clase.
+[01:03:05.500 - 01:03:06.860] Y queremos usar
+[01:03:06.860 - 01:03:09.200] K igual a 3.
+[01:03:09.960 - 01:03:11.160] Entonces, definimos
+[01:03:11.160 - 01:03:12.780] tres centroides originales
+[01:03:12.780 - 01:03:14.340] que queremos que converjan
+[01:03:14.340 - 01:03:15.720] a los centros de esos datos.
+[01:03:17.220 - 01:03:19.380] Si definimos que el centroide 1
+[01:03:19.380 - 01:03:21.160] va a ser, voy a ponerlo con una X,
+[01:03:21.520 - 01:03:23.580] con otra X y con otra X,
+[01:03:24.080 - 01:03:24.920] el problema es muy simple.
+[01:03:25.340 - 01:03:26.600] Porque va a converger rápidamente,
+[01:03:26.760 - 01:03:27.260] porque obviamente
+[01:03:27.260 - 01:03:29.440] los más cercanos a ese centroide
+[01:03:29.440 - 01:03:30.120] van a ser estos,
+[01:03:30.680 - 01:03:32.140] los más centrados a ese centroide
+[01:03:32.140 - 01:03:32.340] van a ser estos,
+[01:03:32.340 - 01:03:34.600] los más cercanos a ese centroide
+[01:03:34.600 - 01:03:35.340] van a ser estos.
+[01:03:36.240 - 01:03:37.940] ¿Y qué es lo que va a pasar?
+[01:03:38.680 - 01:03:41.040] Que rápidamente van a llegar
+[01:03:41.040 - 01:03:42.180] al centro
+[01:03:42.180 - 01:03:45.100] que es donde corresponde el estado.
+[01:03:49.080 - 01:03:49.380] Pero,
+[01:03:49.920 - 01:03:51.980] ¿qué pasa si no los definimos
+[01:03:51.980 - 01:03:53.060] así?
+[01:03:56.650 - 01:03:58.930] ¿Qué pasa si al inicializar las cosas
+[01:03:58.930 - 01:03:59.990] ponemos
+[01:03:59.990 - 01:04:02.450] que un centroide va a estar aquí,
+[01:04:03.570 - 01:04:05.090] otro centroide va a estar acá
+[01:04:05.090 - 01:04:07.350] y otro centroide va a estar acá?
+[01:04:08.610 - 01:04:09.370] Eventualmente,
+[01:04:09.450 - 01:04:11.410] este centroide seguramente va a converger acá
+[01:04:11.410 - 01:04:12.510] porque este es el más cercano.
+[01:04:13.330 - 01:04:14.330] Este va a converger acá
+[01:04:14.330 - 01:04:15.330] porque es el más cercano.
+[01:04:15.470 - 01:04:16.310] Este va a converger acá
+[01:04:16.310 - 01:04:17.390] porque es el más cercano.
+[01:04:17.910 - 01:04:18.870] Estos van a competir
+[01:04:18.870 - 01:04:19.970] y seguramente
+[01:04:19.970 - 01:04:23.030] o los dos van a converger
+[01:04:23.030 - 01:04:23.830] al mismo elemento
+[01:04:23.830 - 01:04:26.410] o
+[01:04:26.410 - 01:04:28.610] alguno de ellos
+[01:04:28.610 - 01:04:29.630] no va a converger
+[01:04:29.630 - 01:04:30.310] a ningún elemento
+[01:04:30.310 - 01:04:30.810] y se va a ir.
+[01:04:31.230 - 01:04:32.710] Se queda con cero elementos.
+[01:04:34.010 - 01:04:34.950] Entonces puede ocurrir
+[01:04:34.950 - 01:04:36.730] que al momento de hacer la convergencia
+[01:04:36.730 - 01:04:38.210] se nos quede una clase.
+[01:04:38.210 - 01:04:39.230] Y eso no es tan raro
+[01:04:39.230 - 01:04:40.130] que suceda
+[01:04:40.130 - 01:04:41.210] porque un problema
+[01:04:41.210 - 01:04:42.770] que nosotros tenemos en K-Medios
+[01:04:42.770 - 01:04:44.110] es que nunca sabemos
+[01:04:44.110 - 01:04:46.210] cuál es el valor de K adecuado.
+[01:04:47.050 - 01:04:47.730] En este caso,
+[01:04:47.930 - 01:04:48.830] vemos estos ejemplos
+[01:04:48.830 - 01:04:49.510] que tenemos aquí
+[01:04:49.510 - 01:04:50.870] y es muy fácil verlo
+[01:04:50.870 - 01:04:51.690] porque visualmente
+[01:04:51.690 - 01:04:52.330] nosotros vemos
+[01:04:52.330 - 01:04:53.310] que tenemos
+[01:04:53.310 - 01:04:55.030] tres conjuntos de datos.
+[01:04:55.850 - 01:04:57.130] Pero en la vida real
+[01:04:57.130 - 01:04:59.050] tenemos datos que están en
+[01:04:59.050 - 01:05:01.010] dimensiones mucho más altas
+[01:05:01.010 - 01:05:01.430] que tres,
+[01:05:01.730 - 01:05:03.350] cuatro, cinco, seis, diez, cien.
+[01:05:03.710 - 01:05:03.910] No sé,
+[01:05:04.450 - 01:05:05.210] puede ser muchísimas dimensiones.
+[01:05:06.830 - 01:05:07.890] No podemos visualizar
+[01:05:07.890 - 01:05:09.070] exactamente cuántas clases
+[01:05:09.070 - 01:05:09.210] son
+[01:05:09.230 - 01:05:09.890] las que hay
+[01:05:09.890 - 01:05:11.990] y entonces tenemos
+[01:05:11.990 - 01:05:12.970] que andar adivinando
+[01:05:12.970 - 01:05:14.670] cuántas clases
+[01:05:14.670 - 01:05:16.270] de más tenemos.
+[01:05:16.690 - 01:05:17.470] Entonces puede ocurrir
+[01:05:17.470 - 01:05:18.610] que si en este caso
+[01:05:18.610 - 01:05:19.210] tenemos tres
+[01:05:19.210 - 01:05:20.150] pero no sabemos nada
+[01:05:20.150 - 01:05:20.670] dijimos bueno
+[01:05:20.670 - 01:05:22.170] voy a ponerle
+[01:05:22.170 - 01:05:23.230] que haya cinco clases
+[01:05:23.230 - 01:05:24.130] y entonces yo defino
+[01:05:24.130 - 01:05:25.070] cinco
+[01:05:25.070 - 01:05:27.250] cinco
+[01:05:27.250 - 01:05:28.510] diferentes centroides
+[01:05:28.510 - 01:05:30.190] pues tres centroides
+[01:05:30.190 - 01:05:31.090] van a seguramente
+[01:05:31.090 - 01:05:32.410] van a converger a uno
+[01:05:32.410 - 01:05:33.070] y es posible
+[01:05:33.070 - 01:05:34.330] que algunos otros centroides
+[01:05:34.330 - 01:05:35.650] o converjan al mismo
+[01:05:35.650 - 01:05:36.170] o algunos
+[01:05:36.170 - 01:05:37.510] no converjan a nada.
+[01:05:38.830 - 01:05:39.210] Entonces
+[01:05:39.210 - 01:05:40.290] el algoritmo
+[01:05:40.290 - 01:05:41.190] siempre converge
+[01:05:41.190 - 01:05:42.850] pero como decían
+[01:05:42.850 - 01:05:43.570] aquí en las láminas
+[01:05:43.570 - 01:05:44.450] puede convergir
+[01:05:44.450 - 01:05:45.770] a un mínimo local
+[01:05:45.770 - 01:05:47.170] que sería una solución
+[01:05:47.170 - 01:05:47.970] que no sea ideal.
+[01:05:52.390 - 01:05:52.690] Entonces
+[01:05:52.690 - 01:05:53.870] generalmente
+[01:05:53.870 - 01:05:54.610] lo que se hace
+[01:05:54.610 - 01:05:55.270] con el algoritmo
+[01:05:55.270 - 01:05:55.850] de K-Medios
+[01:05:55.850 - 01:05:56.790] es que
+[01:05:56.790 - 01:05:57.810] como es rápido
+[01:05:57.810 - 01:05:58.390] como es barato
+[01:05:58.390 - 01:05:59.190] realmente el algoritmo
+[01:05:59.190 - 01:06:00.050] no es muy costoso
+[01:06:00.050 - 01:06:01.310] lo que se suele hacer
+[01:06:01.310 - 01:06:02.150] es que se pueden
+[01:06:02.150 - 01:06:03.290] hacer varias ejecuciones
+[01:06:03.290 - 01:06:04.610] hacer varias corridas
+[01:06:04.610 - 01:06:05.210] del algoritmo
+[01:06:05.210 - 01:06:06.750] con un número
+[01:06:06.750 - 01:06:07.850] limitado de pasos
+[01:06:07.850 - 01:06:09.650] y determinar
+[01:06:09.650 - 01:06:10.670] con varias
+[01:06:10.670 - 01:06:11.530] varios inicios
+[01:06:11.530 - 01:06:12.610] hasta que
+[01:06:12.610 - 01:06:13.230] encontremos uno
+[01:06:13.230 - 01:06:14.610] que tenga una convergencia
+[01:06:14.610 - 01:06:15.350] mucho más suave
+[01:06:15.350 - 01:06:17.230] que llegue a una solución
+[01:06:17.230 - 01:06:18.550] ideal
+[01:06:18.550 - 01:06:20.770] el que converja mejor
+[01:06:20.770 - 01:06:21.470] el que converja
+[01:06:21.470 - 01:06:22.270] el que
+[01:06:22.270 - 01:06:23.710] represente mejor
+[01:06:23.710 - 01:06:24.530] el número de clases
+[01:06:24.530 - 01:06:25.890] y como definimos
+[01:06:25.890 - 01:06:26.670] cuál es el que
+[01:06:26.670 - 01:06:27.390] converge mejor
+[01:06:27.390 - 01:06:28.510] hay métricas
+[01:06:28.510 - 01:06:29.090] para hacer eso
+[01:06:29.090 - 01:06:29.770] que vamos a ver
+[01:06:29.770 - 01:06:30.290] más adelante
+[01:06:30.290 - 01:06:31.610] pero tiene mucho que ver
+[01:06:31.610 - 01:06:31.930] con eso
+[01:06:31.930 - 01:06:32.610] con esa medida
+[01:06:32.610 - 01:06:33.410] de compacidad
+[01:06:33.410 - 01:06:34.750] que estábamos calculando aquí
+[01:06:34.750 - 01:06:36.070] queremos que estos
+[01:06:36.070 - 01:06:37.610] conjuntos sean compactos
+[01:06:37.610 - 01:06:38.490] y queremos
+[01:06:38.490 - 01:06:39.250] que los números
+[01:06:39.250 - 01:06:40.350] que estén
+[01:06:40.350 - 01:06:41.410] los que estén adentro
+[01:06:41.410 - 01:06:42.290] comparados con los que estén afuera
+[01:06:42.610 - 01:06:43.890] sean
+[01:06:43.890 - 01:06:45.690] suficientemente diferentes
+[01:06:45.690 - 01:06:46.630] pero vamos a ver eso
+[01:06:46.630 - 01:06:47.150] más adelante
+[01:06:47.150 - 01:06:48.670] cuando veamos mediciones
+[01:06:48.670 - 01:06:54.060] en la práctica
+[01:06:54.060 - 01:06:55.420] hay un costo
+[01:06:55.420 - 01:06:55.940] por iteración
+[01:06:55.940 - 01:06:56.860] que es
+[01:06:56.860 - 01:06:57.240] de
+[01:06:57.240 - 01:06:58.920] la complejidad de esto
+[01:06:58.920 - 01:06:59.340] es básicamente
+[01:06:59.340 - 01:07:00.660] depende del número de datos
+[01:07:00.660 - 01:07:01.900] del número de clases
+[01:07:01.900 - 01:07:02.640] que tengamos
+[01:07:02.640 - 01:07:03.740] y de la
+[01:07:03.740 - 01:07:04.600] y de la
+[01:07:04.600 - 01:07:05.920] métrica que tengamos
+[01:07:05.920 - 01:07:06.580] para utilizar
+[01:07:06.580 - 01:07:07.980] y generalmente
+[01:07:07.980 - 01:07:08.920] en pocos
+[01:07:08.920 - 01:07:09.720] pocas decenas
+[01:07:09.720 - 01:07:10.260] de iteraciones
+[01:07:10.260 - 01:07:11.000] se puede resolver
+[01:07:11.000 - 01:07:11.600] en este caso
+[01:07:11.600 - 01:07:12.940] con un ejemplo
+[01:07:12.940 - 01:07:13.560] que hicimos
+[01:07:13.560 - 01:07:14.800] con unas dos dimensiones
+[01:07:14.800 - 01:07:15.280] una dimensión
+[01:07:15.300 - 01:07:16.680] que era el caso
+[01:07:16.680 - 01:07:16.940] de la
+[01:07:16.940 - 01:07:17.780] ¿cómo se llama?
+[01:07:18.600 - 01:07:19.220] en el caso
+[01:07:19.220 - 01:07:19.920] que hicimos
+[01:07:19.920 - 01:07:20.700] de la
+[01:07:20.700 - 01:07:22.300] de la segmentación
+[01:07:22.940 - 01:07:23.240] era
+[01:07:23.240 - 01:07:24.360] una dimensión
+[01:07:24.360 - 01:07:25.560] n era un número grande
+[01:07:25.560 - 01:07:25.860] eran
+[01:07:25.860 - 01:07:27.760] más de
+[01:07:27.760 - 01:07:28.640] un millón de
+[01:07:28.640 - 01:07:28.960] bueno
+[01:07:28.960 - 01:07:29.460] no como
+[01:07:29.460 - 01:07:31.300] eran mil
+[01:07:31.300 - 01:07:32.540] por setecientos
+[01:07:32.540 - 01:07:33.460] setecientos mil
+[01:07:33.460 - 01:07:34.820] setecientos mil
+[01:07:34.820 - 01:07:36.360] aproximadamente valores
+[01:07:36.360 - 01:07:37.560] ochocientos mil valores
+[01:07:37.560 - 01:07:39.240] pero la
+[01:07:39.240 - 01:07:40.000] cálculo de
+[01:07:40.000 - 01:07:40.720] la diferencia
+[01:07:40.720 - 01:07:41.780] era una restitución
+[01:07:41.780 - 01:07:42.320] era muy simple
+[01:07:42.320 - 01:07:43.240] el algoritmo
+[01:07:43.240 - 01:07:43.940] convergía
+[01:07:43.940 - 01:07:44.740] rápidamente
+[01:07:44.740 - 01:07:45.200] a pesar de que
+[01:07:45.200 - 01:07:45.820] la implementación
+[01:07:45.820 - 01:07:46.340] que puse aquí
+[01:07:46.340 - 01:07:47.460] era sumamente ineficiente
+[01:07:47.460 - 01:07:48.320] porque
+[01:07:48.320 - 01:07:49.580] estaba mucha fita hecha
+[01:07:49.580 - 01:07:50.500] pero
+[01:07:50.500 - 01:07:51.220] lo hice así
+[01:07:51.220 - 01:07:52.080] para que fuera más legible
+[01:07:52.080 - 01:07:52.920] pero
+[01:07:52.920 - 01:07:54.220] el algoritmo
+[01:07:54.220 - 01:07:55.280] convergía más o menos
+[01:07:55.280 - 01:07:55.860] rápidamente
+[01:07:55.860 - 01:07:56.200] y no
+[01:07:56.200 - 01:07:56.760] y era
+[01:07:56.760 - 01:07:57.380] era barato
+[01:07:57.380 - 01:07:58.480] es un algoritmo barato
+[01:07:58.480 - 01:07:59.300] y el algoritmo
+[01:07:59.300 - 01:07:59.600] también
+[01:07:59.600 - 01:08:01.380] una cosa importante
+[01:08:01.380 - 01:08:02.220] si se fijan aquí
+[01:08:02.220 - 01:08:03.140] todas las ecuaciones
+[01:08:03.140 - 01:08:04.540] cuando nosotros
+[01:08:04.540 - 01:08:05.120] otra nota
+[01:08:05.120 - 01:08:06.100] cosa que es importante
+[01:08:06.100 - 01:08:07.400] conocemos
+[01:08:07.400 - 01:08:08.080] todas las ecuaciones
+[01:08:08.080 - 01:08:08.780] hablamos
+[01:08:08.780 - 01:08:09.720] de la
+[01:08:09.720 - 01:08:11.640] esto es la norma
+[01:08:11.640 - 01:08:12.360] o la diferencia
+[01:08:12.360 - 01:08:13.780] del vector
+[01:08:13.780 - 01:08:14.840] mu j
+[01:08:14.840 - 01:08:16.600] con x barra
+[01:08:16.600 - 01:08:17.280] al cuadrado
+[01:08:17.280 - 01:08:18.860] cuando
+[01:08:18.860 - 01:08:20.460] utilizamos
+[01:08:20.460 - 01:08:21.140] cosas
+[01:08:21.140 - 01:08:21.480] que
+[01:08:21.480 - 01:08:22.440] que medimos
+[01:08:22.440 - 01:08:23.180] distancias
+[01:08:23.180 - 01:08:24.140] generalmente
+[01:08:24.140 - 01:08:24.800] la distancia
+[01:08:24.800 - 01:08:25.000] de
+[01:08:25.000 - 01:08:26.000] la distancia
+[01:08:26.000 - 01:08:26.180] más
+[01:08:26.180 - 01:08:26.640] novia
+[01:08:26.640 - 01:08:27.940] está definida
+[01:08:27.940 - 01:08:29.060] a partir
+[01:08:29.060 - 01:08:29.740] de
+[01:08:29.740 - 01:08:30.380] de la siguiente
+[01:08:30.380 - 01:08:30.740] manera
+[01:08:30.740 - 01:08:32.500] la distancia
+[01:08:32.500 - 01:08:33.320] euclidiana
+[01:08:33.320 - 01:08:35.120] la definíamos
+[01:08:35.120 - 01:08:35.960] como sigue
+[01:08:35.960 - 01:08:36.520] decíamos que
+[01:08:36.520 - 01:08:36.940] la distancia
+[01:08:36.940 - 01:08:37.480] euclidiana
+[01:08:37.480 - 01:08:39.500] entre
+[01:08:39.500 - 01:08:40.740] x
+[01:08:40.740 - 01:08:41.800] coma y
+[01:08:41.800 - 01:08:42.900] era igual
+[01:08:42.900 - 01:08:43.560] a la raíz
+[01:08:43.560 - 01:08:44.660] cuadrada
+[01:08:44.840 - 01:08:45.340] voy a poner
+[01:08:45.340 - 01:08:46.600] notación matricial
+[01:08:46.600 - 01:08:48.040] que es más sencilla
+[01:08:48.040 - 01:08:49.400] que sería
+[01:08:49.400 - 01:08:51.120] x menos
+[01:08:51.120 - 01:08:53.020] y
+[01:08:53.020 - 01:08:54.020] respuesta
+[01:08:54.020 - 01:08:54.920] por
+[01:08:54.920 - 01:08:55.600] x menos
+[01:08:55.600 - 01:09:00.040] y
+[01:09:00.040 - 01:09:00.560] y la distancia
+[01:09:00.560 - 01:09:01.420] más a la novice
+[01:09:01.420 - 01:09:02.160] es la distancia
+[01:09:02.160 - 01:09:03.360] euclidiana
+[01:09:03.360 - 01:09:04.000] la distancia
+[01:09:04.000 - 01:09:05.800] de más a la novice
+[01:09:05.800 - 01:09:06.480] y entre
+[01:09:06.480 - 01:09:07.220] los vectores
+[01:09:07.220 - 01:09:07.620] x y
+[01:09:07.620 - 01:09:08.320] y
+[01:09:08.320 - 01:09:08.740] es igual
+[01:09:08.740 - 01:09:09.300] a la raíz
+[01:09:09.300 - 01:09:10.340] cuadrada
+[01:09:10.340 - 01:09:11.140] de
+[01:09:11.140 - 01:09:12.500] x menos
+[01:09:12.500 - 01:09:13.900] y
+[01:09:13.900 - 01:09:15.440] respuesta
+[01:09:15.440 - 01:09:16.080] por la matriz
+[01:09:16.080 - 01:09:16.600] de covariance
+[01:09:16.600 - 01:09:17.020] a la menos
+[01:09:17.020 - 01:09:17.920] 1
+[01:09:17.920 - 01:09:18.760] por x
+[01:09:18.760 - 01:09:19.980] menos
+[01:09:19.980 - 01:09:22.080] y
+[01:09:22.080 - 01:09:23.220] y en ambos casos
+[01:09:23.220 - 01:09:24.300] tenemos esta raíz
+[01:09:24.300 - 01:09:25.300] cuadrada
+[01:09:25.300 - 01:09:26.180] sin embargo hay una cosa
+[01:09:26.180 - 01:09:26.780] que es curiosa
+[01:09:26.780 - 01:09:28.780] si tenemos
+[01:09:28.780 - 01:09:29.680] las funciones
+[01:09:29.680 - 01:09:30.580] de elevar al cuadrado
+[01:09:30.580 - 01:09:31.080] una cosa
+[01:09:31.080 - 01:09:32.480] son funciones
+[01:09:32.480 - 01:09:33.500] monotónicamente
+[01:09:33.500 - 01:09:34.760] crecientes
+[01:09:34.760 - 01:09:35.780] qué significa esto
+[01:09:35.780 - 01:09:36.460] que si sabemos
+[01:09:36.460 - 01:09:39.480] que si x
+[01:09:39.480 - 01:09:42.420] es mayor que y
+[01:09:42.420 - 01:09:44.060] x al cuadrado
+[01:09:44.060 - 01:09:45.680] va a ser mayor
+[01:09:45.680 - 01:09:47.320] que y cuadrado
+[01:09:47.320 - 01:09:48.520] eso siempre se cumple
+[01:09:48.520 - 01:09:49.120] no
+[01:09:49.120 - 01:09:50.880] si tenemos un número
+[01:09:50.880 - 01:09:51.920] y ese número a
+[01:09:51.920 - 01:09:53.520] es mayor que b
+[01:09:53.520 - 01:09:54.560] el cuadrado de a
+[01:09:54.560 - 01:09:55.760] siempre va a ser
+[01:09:55.760 - 01:09:57.380] mayor que b
+[01:09:57.380 - 01:09:58.720] entonces
+[01:09:58.720 - 01:10:00.080] calcular raíces cuadradas
+[01:10:00.080 - 01:10:01.760] en eso es una cosa más computacional
+[01:10:01.760 - 01:10:02.880] que otra cosa
+[01:10:02.880 - 01:10:03.980] calcular raíces cuadradas
+[01:10:03.980 - 01:10:06.080] en un programa es costoso
+[01:10:06.080 - 01:10:07.820] porque es un algoritmo mucho más complejo
+[01:10:07.820 - 01:10:09.660] que el de multiplicar cosas
+[01:10:09.660 - 01:10:10.420] entonces
+[01:10:10.420 - 01:10:12.180] generalmente nunca sacamos la raíz cuadrada
+[01:10:12.180 - 01:10:13.060] de las distancias
+[01:10:13.060 - 01:10:15.080] al no implementar un algoritmo
+[01:10:15.080 - 01:10:15.820] sino que
+[01:10:15.820 - 01:10:17.180] comparamos el cuadrado de esas distancias
+[01:10:17.180 - 01:10:19.640] y es mucho más económico
+[01:10:19.640 - 01:10:20.640] calcular eso
+[01:10:20.640 - 01:10:22.780] que andar sacando raíces cuadradas
+[01:10:22.780 - 01:10:26.380] no sé si queda claro esto
+[01:10:26.380 - 01:10:29.500] bien
+[01:10:29.500 - 01:10:36.320] seguimos con esto
+[01:10:36.320 - 01:10:39.520] el algoritmo de Lloyd
+[01:10:39.520 - 01:10:40.540] fue el que vimos ahorita
+[01:10:40.540 - 01:10:45.200] convergencia y costo
+[01:10:45.200 - 01:10:45.940] nos quedamos aquí
+[01:10:45.940 - 01:10:46.380] un ejemplo
+[01:10:46.380 - 01:10:47.500] mínimo local
+[01:10:47.500 - 01:10:48.260] en una dimensión
+[01:10:48.260 - 01:10:50.500] tenemos una serie de datos
+[01:10:50.500 - 01:10:53.140] 1, 2, 3, 8, 9, 10 y 25
+[01:10:53.140 - 01:10:54.720] donde k es igual a 2
+[01:10:54.720 - 01:10:55.920] es como el algoritmo de la imagen
+[01:10:55.920 - 01:10:56.420] pero con
+[01:10:56.420 - 01:10:57.260] solo poquitos datos
+[01:10:57.460 - 01:11:01.160] y decimos que tenemos
+[01:11:01.160 - 01:11:02.360] dos centros iniciales
+[01:11:02.360 - 01:11:02.680] tenemos
+[01:11:02.680 - 01:11:03.860] mu igual a 1
+[01:11:03.860 - 01:11:05.720] y mu2 igual a 2
+[01:11:05.720 - 01:11:07.920] en la iteración 0
+[01:11:07.920 - 01:11:09.600] los centros es 1 y 2
+[01:11:09.600 - 01:11:10.920] y los grupos
+[01:11:10.920 - 01:11:12.200] hay que ver
+[01:11:12.200 - 01:11:13.700] cuáles son los más cercanos a eso
+[01:11:13.700 - 01:11:16.500] si el 1 es el más cercano a 1
+[01:11:16.500 - 01:11:17.900] 1 menos 1
+[01:11:17.900 - 01:11:18.740] la distancia es 0
+[01:11:18.740 - 01:11:20.600] 2 menos 1
+[01:11:20.600 - 01:11:24.220] o el 2 va a estar más cercano al 2 que al 1
+[01:11:24.220 - 01:11:26.920] si calculamos las distancias
+[01:11:26.920 - 01:11:27.960] de cada uno de estos
+[01:11:27.960 - 01:11:29.420] contra el 1 y contra el 2
+[01:11:29.440 - 01:11:31.000] para sentar que solo el 1
+[01:11:31.000 - 01:11:31.960] es el más cercano al 1
+[01:11:31.960 - 01:11:33.200] y todos los demás
+[01:11:33.200 - 01:11:34.620] van a ser más cercanos al 2
+[01:11:34.620 - 01:11:38.650] digamos que la j
+[01:11:38.650 - 01:11:39.490] que es esa masa
+[01:11:39.490 - 01:11:40.810] que habíamos calculado antes
+[01:11:40.810 - 01:11:42.290] que es la cantidad de masa
+[01:11:42.290 - 01:11:43.070] que nosotros tenemos
+[01:11:43.070 - 01:11:43.690] o la inercia
+[01:11:43.690 - 01:11:44.850] que llaman
+[01:11:44.850 - 01:11:46.310] hacemos esto
+[01:11:46.310 - 01:11:47.090] cuando hacemos esto
+[01:11:47.090 - 01:11:48.190] y calculamos el promedio
+[01:11:48.190 - 01:11:49.890] el promedio del primer grupo
+[01:11:49.890 - 01:11:50.790] va a ser 1
+[01:11:50.790 - 01:11:52.330] el promedio del segundo grupo
+[01:11:52.330 - 01:11:53.550] va a ser la suma de estos
+[01:11:53.550 - 01:11:55.250] entre 6
+[01:11:55.250 - 01:11:56.990] y eso nos va a dar 9.5
+[01:11:56.990 - 01:12:00.110] aquí tenemos 1 y 9.5
+[01:12:00.110 - 01:12:01.970] resulta que hay 1, 2, 3
+[01:12:01.970 - 01:12:03.730] son más cercanos al 1
+[01:12:03.730 - 01:12:05.630] y 8, 9, 10 y 25
+[01:12:05.630 - 01:12:08.410] son más cercanos a 9.5
+[01:12:08.410 - 01:12:10.130] esos 3 son más cercanos al 1
+[01:12:10.130 - 01:12:12.890] y estos de acá son más cercanos al 9.5
+[01:12:12.890 - 01:12:15.330] la j que es la masa
+[01:12:15.330 - 01:12:16.930] la inercia que calculamos antes
+[01:12:16.930 - 01:12:17.650] disminuyó
+[01:12:17.650 - 01:12:20.210] y ejecutamos otra vez
+[01:12:20.210 - 01:12:22.770] y el promedio de estos
+[01:12:22.770 - 01:12:24.350] ahora nos va a quedar que es
+[01:12:24.350 - 01:12:26.270] 13
+[01:12:26.270 - 01:12:27.450] y este va a quedar en 2
+[01:12:27.450 - 01:12:29.110] y se redujo la masa
+[01:12:30.110 - 01:12:31.870] y después de dos iteraciones
+[01:12:31.870 - 01:12:34.250] el sistema se detiene
+[01:12:34.250 - 01:12:35.850] con una j igual a 196
+[01:12:35.850 - 01:12:38.690] sin embargo
+[01:12:38.690 - 01:12:39.990] hay una mejor solución
+[01:12:39.990 - 01:12:40.830] la solución
+[01:12:40.830 - 01:12:43.670] 1, 2, 3, 8, 9, 10 y 25
+[01:12:43.670 - 01:12:46.110] que es una mejor solución
+[01:12:46.110 - 01:12:48.490] tiene una masa
+[01:12:48.490 - 01:12:49.910] básicamente esta j nos dice
+[01:12:49.910 - 01:12:51.230] mientras menor sea este valor de j
+[01:12:51.230 - 01:12:51.810] a la inercia
+[01:12:51.810 - 01:12:52.650] es mejor
+[01:12:52.650 - 01:12:54.590] hay una mejor solución
+[01:12:54.590 - 01:12:55.910] de todas las posibles soluciones
+[01:12:55.910 - 01:12:57.310] hay una mejor solución
+[01:12:57.310 - 01:12:58.990] que tiene 77.5
+[01:12:58.990 - 01:13:00.750] que significa esto
+[01:13:00.750 - 01:13:01.810] que esta solución
+[01:13:01.810 - 01:13:03.290] no es la mejor solución
+[01:13:03.290 - 01:13:04.690] sino que es una solución
+[01:13:04.690 - 01:13:06.150] parcial
+[01:13:06.150 - 01:13:08.190] no llegamos a la solución ideal
+[01:13:08.190 - 01:13:09.370] sino que llegamos
+[01:13:09.370 - 01:13:10.510] a una solución
+[01:13:10.510 - 01:13:11.890] que no es la mejor
+[01:13:11.890 - 01:13:13.090] nos quedamos atorados
+[01:13:13.090 - 01:13:14.030] en un mínimo local
+[01:13:14.030 - 01:13:15.330] y eso como seguramente
+[01:13:15.330 - 01:13:16.190] yo era un aprendizaje supervisado
+[01:13:16.710 - 01:13:18.930] es una cosa que suele ocurrir
+[01:13:18.930 - 01:13:20.310] al momento de correr
+[01:13:20.310 - 01:13:21.290] un algoritmo interactivo
+[01:13:21.290 - 01:13:22.650] donde estamos buscando una solución
+[01:13:22.650 - 01:13:24.210] es posible que nos quedemos
+[01:13:24.210 - 01:13:24.790] atorados
+[01:13:24.790 - 01:13:26.490] en un mínimo local
+[01:13:26.490 - 01:13:28.370] y es por eso que muchas veces
+[01:13:28.370 - 01:13:30.930] una forma fácil en este caso, sobre todo
+[01:13:30.930 - 01:13:32.830] son algoritmos simples
+[01:13:32.830 - 01:13:34.730] lo que nosotros hacemos es que
+[01:13:34.730 - 01:13:36.250] inicializamos más de una vez
+[01:13:36.250 - 01:13:38.270] para tratar de explorar
+[01:13:38.270 - 01:13:40.690] como cada inicialización comenzamos con valores
+[01:13:40.690 - 01:13:42.810] iniciales diferentes, podemos
+[01:13:42.810 - 01:13:44.910] encontrar una mejor solución
+[01:13:44.910 - 01:13:45.650] en cada ocasión
+[01:13:45.650 - 01:13:50.900] en este caso podríamos decir que
+[01:13:50.900 - 01:13:52.780] este valor
+[01:13:52.780 - 01:13:54.660] 25 es un
+[01:13:54.660 - 01:13:56.700] valor atípico, porque 1, 2, 3
+[01:13:56.700 - 01:13:58.700] 8, 9 y 10, todos son
+[01:13:58.700 - 01:14:00.180] valores menores que 10 y de repente
+[01:14:00.180 - 01:14:02.120] 25 es el mayor
+[01:14:02.120 - 01:14:04.580] diferente de todos ellos, podríamos pensar
+[01:14:04.580 - 01:14:05.700] que es un número atípico
+[01:14:05.700 - 01:14:10.250] o realmente 25 es
+[01:14:10.250 - 01:14:11.710] un número que estaba ahí realmente
+[01:14:11.710 - 01:14:13.950] quizás está subrepresentado
+[01:14:13.950 - 01:14:16.130] la clase a la que pertenece
+[01:14:16.130 - 01:14:18.270] el 25 en esta muestra
+[01:14:18.270 - 01:14:19.230] de valores que tenemos
+[01:14:19.230 - 01:14:22.350] hay muchas formas que tendríamos
+[01:14:22.350 - 01:14:24.350] que tendríamos para validar
+[01:14:24.350 - 01:14:25.970] eso y es donde entra luego
+[01:14:25.970 - 01:14:27.430] el expertise para darnos cuenta
+[01:14:27.430 - 01:14:29.850] si realmente es un valor atípico
+[01:14:29.850 - 01:14:30.190] o no
+[01:14:30.190 - 01:14:33.030] tenía que haber un modelo atrás de esto
+[01:14:33.030 - 01:14:34.650] son colecciones de números
+[01:14:34.650 - 01:14:36.250] requeriríamos tener un modelo
+[01:14:36.250 - 01:14:38.230] que describa qué son esos números
+[01:14:38.230 - 01:14:40.950] que nos permitiría darnos una idea
+[01:14:40.950 - 01:14:42.490] de si funciona o no funciona
+[01:14:42.490 - 01:14:44.070] ¿vamos bien?
+[01:14:55.480 - 01:14:56.780] ahora viene la parte interesante
+[01:14:56.780 - 01:14:59.320] como yo les decía, la parte crucial del algoritmo
+[01:14:59.320 - 01:15:01.320] es cómo vamos a inicializar
+[01:15:01.320 - 01:15:03.300] inicializar nuestro algoritmo
+[01:15:03.300 - 01:15:05.260] tal como lo platicamos ahorita
+[01:15:05.260 - 01:15:06.960] la inicialización la hacíamos aleatorio
+[01:15:06.960 - 01:15:09.540] a cada dato le asignábamos una clase
+[01:15:10.680 - 01:15:13.720] aleatoria
+[01:15:13.720 - 01:15:15.700] y esa es básicamente elegir
+[01:15:15.700 - 01:15:17.540] cada observaciones al azar como centros
+[01:15:17.540 - 01:15:18.820] que es lo que hemos hecho hasta ahorita
+[01:15:18.820 - 01:15:22.020] o como lo planteamos que se hacía ahorita
+[01:15:22.020 - 01:15:23.880] hacer una partición aleatoria
+[01:15:23.880 - 01:15:25.700] asignar a cada punto
+[01:15:25.700 - 01:15:27.020] cada punto en grupo al azar
+[01:15:27.020 - 01:15:33.040] y calcular las medias
+[01:15:33.040 - 01:15:34.460] bueno, más bien esta partición aleatoria
+[01:15:34.460 - 01:15:35.800] fue la que hicimos ahorita
+[01:15:35.800 - 01:15:37.260] esta es otra forma que es
+[01:15:37.260 - 01:15:39.220] agarrar cada observaciones al azar
+[01:15:39.220 - 01:15:41.380] y decir que esas son como centros
+[01:15:41.380 - 01:15:43.180] si yo podría agarrar al azar
+[01:15:43.180 - 01:15:44.960] tengo 25 mil puntos
+[01:15:44.960 - 01:15:46.640] agarro al azar cuatro de esos si son
+[01:15:46.640 - 01:15:48.940] K es igual a 4, elijo cuatro puntos de esos
+[01:15:48.940 - 01:15:50.520] digo, esos van a ser mis centros
+[01:15:50.520 - 01:15:52.560] otra opción sería
+[01:15:52.560 - 01:15:54.640] bueno, a cada elemento le voy a asignar
+[01:15:54.640 - 01:15:55.540] una clase al azar
+[01:15:55.540 - 01:15:57.680] que es la segunda opción que es la partición aleatoria
+[01:15:57.680 - 01:15:59.780] y a partir de ahí espero
+[01:15:59.780 - 01:16:01.160] que funcione
+[01:16:01.160 - 01:16:04.020] con la partición aleatoria seguramente
+[01:16:04.020 - 01:16:05.740] todos los centroides van a estar
+[01:16:05.740 - 01:16:08.380] cercanos al promedio de los datos
+[01:16:08.380 - 01:16:14.400] vamos a ver un ejemplo
+[01:16:14.400 - 01:16:19.940] si nosotros
+[01:16:19.940 - 01:16:24.080] déjenme vengo acá
+[01:16:24.080 - 01:16:42.960] está haciendo el ejemplito que les iba a mostrar
+[01:16:43.400 - 01:17:00.310] es un programa
+[01:17:00.310 - 01:17:01.950] y esta rutina de aquí
+[01:17:01.950 - 01:17:05.510] define cuatro puntos aleatorios
+[01:17:05.510 - 01:17:07.750] en dos dimensiones que corresponden acá a clases
+[01:17:07.750 - 01:17:09.770] este es un ejemplo donde yo definí
+[01:17:09.770 - 01:17:13.540] una serie de clases aleatorias
+[01:17:13.540 - 01:17:14.380] en las gráficas
+[01:17:14.380 - 01:17:17.080] tenemos cuatro clases aleatorias
+[01:17:17.080 - 01:17:20.800] y lo que tenemos aquí es
+[01:17:20.800 - 01:17:23.760] la asignación de cada una de ellas
+[01:17:23.760 - 01:17:28.620] ahora bien yo lo que quiero hacer ahorita es
+[01:17:28.620 - 01:17:29.740] ya tenemos estas clases
+[01:17:29.740 - 01:17:32.580] esos valores están almacenados en esta variable p
+[01:17:32.580 - 01:17:36.660] y tenemos una clase
+[01:17:36.660 - 01:17:39.000] a la que pertenece cada uno
+[01:17:39.000 - 01:17:41.860] si le ponemos aquí
+[01:17:41.860 - 01:17:48.410] printp
+[01:17:48.410 - 01:17:49.590] lo que tenemos es que tenemos
+[01:17:49.590 - 01:17:50.950] bueno son un montón de valores
+[01:17:50.950 - 01:17:53.310] voy a ponerle valores más pequeños para que no sea tan grande
+[01:17:53.310 - 01:17:55.990] permítanme tantito
+[01:17:55.990 - 01:18:04.720] no, déjanos
+[01:18:04.720 - 01:18:05.600] mucho ruido
+[01:18:05.600 - 01:18:08.280] bueno tenemos p
+[01:18:08.280 - 01:18:09.200] p.shape
+[01:18:09.200 - 01:18:11.780] es
+[01:18:11.780 - 01:18:17.930] ahí tenemos 241 valores
+[01:18:17.930 - 01:18:20.910] puntos que son los que tenemos aquí almacenados
+[01:18:20.910 - 01:18:22.950] y vamos a definir una clase
+[01:18:22.950 - 01:18:25.610] que sea un conjunto de números aleatorios
+[01:18:25.610 - 01:18:27.750] que vamos a asignar a cada clase
+[01:18:27.750 - 01:18:28.710] vamos a ponerle
+[01:18:28.710 - 01:18:30.030] a esta cosa
+[01:18:30.030 - 01:18:31.230] vamos a ponerle que la clase
+[01:18:31.230 - 01:18:33.350] sea igual a
+[01:18:33.350 - 01:18:35.070] un número aleatorio
+[01:18:35.070 - 01:18:35.670] aleatorio
+[01:18:35.670 - 01:18:36.630] randint
+[01:18:36.630 - 01:18:38.770] sabemos que son cuatro clases
+[01:18:38.770 - 01:18:39.770] vamos a ponerle cuatro clases
+[01:18:39.770 - 01:18:40.690] que son las que están ahí
+[01:18:40.690 - 01:18:46.060] randint
+[01:18:46.060 - 01:18:48.080] queremos que los valores vayan
+[01:18:48.080 - 01:18:48.760] entre cero
+[01:18:48.760 - 01:18:51.040] y cuatro
+[01:18:51.040 - 01:18:53.100] y queremos que sean
+[01:18:53.100 - 01:18:55.020] 241 valores
+[01:18:55.020 - 01:19:02.030] print
+[01:19:02.030 - 01:19:06.530] clase.shape
+[01:19:06.530 - 01:19:10.100] entonces vemos que ya tenemos esta clase
+[01:19:10.100 - 01:19:11.940] es una asignación
+[01:19:11.940 - 01:19:14.480] de a qué clase
+[01:19:14.480 - 01:19:16.500] pertenece cada elemento
+[01:19:16.500 - 01:19:18.120] cada uno de los elementos
+[01:19:18.120 - 01:19:18.840] de nuestros datos
+[01:19:18.840 - 01:19:21.420] si le ponemos clase
+[01:19:21.420 - 01:19:23.860] no le imprima
+[01:19:23.860 - 01:19:25.640] vemos que son estos
+[01:19:25.640 - 01:19:26.980] cada uno de estos valores
+[01:19:26.980 - 01:19:27.120] es un número aleatorio
+[01:19:27.140 - 01:19:28.140] entonces el primer elemento
+[01:19:28.140 - 01:19:29.320] pertenece a la clase cero
+[01:19:29.320 - 01:19:29.860] este a la dos
+[01:19:29.860 - 01:19:30.280] a la dos
+[01:19:30.280 - 01:19:30.700] a la tres
+[01:19:30.700 - 01:19:31.220] a la cero
+[01:19:31.220 - 01:19:32.920] y es una asignación aleatoria
+[01:19:32.920 - 01:19:33.720] de a qué elemento
+[01:19:33.720 - 01:19:34.820] pertenece cada clase
+[01:19:34.820 - 01:19:37.300] cuando hacemos eso
+[01:19:37.300 - 01:19:38.020] vamos a calcular
+[01:19:38.020 - 01:19:38.760] el promedio
+[01:19:38.760 - 01:19:40.420] de cada una de estas clases
+[01:19:40.420 - 01:19:41.740] que sea una parte integral
+[01:19:41.740 - 01:19:42.500] del algoritmo
+[01:19:42.500 - 01:19:43.540] entonces vamos a poner aquí
+[01:19:43.540 - 01:19:45.460] promedio
+[01:19:45.460 - 01:19:46.900] va a ser igual a
+[01:19:46.900 - 01:19:48.740] np.min
+[01:19:48.740 - 01:19:52.800] np.ceros
+[01:19:52.800 - 01:19:54.200] de
+[01:19:54.200 - 01:19:55.740] pues de cuatro
+[01:19:55.740 - 01:19:55.920] ¿no?
+[01:20:01.530 - 01:20:02.010] un arreglo de cuatro
+[01:20:02.030 - 01:20:06.280] y vamos a ponerle aquí
+[01:20:06.280 - 01:20:07.360] que tengamos un contador
+[01:20:07.360 - 01:20:09.420] que también sea igual
+[01:20:09.420 - 01:20:13.500] a np.cuatro
+[01:20:13.500 - 01:20:15.360] np.ceros
+[01:20:15.360 - 01:20:16.820] de cuatro
+[01:20:16.820 - 01:20:20.660] y ahora vamos a calcular
+[01:20:20.660 - 01:20:21.180] los promedios
+[01:20:21.180 - 01:20:22.500] un poquito como lo hacíamos
+[01:20:22.500 - 01:20:23.920] cuando conocíamos
+[01:20:23.920 - 01:20:25.080] la sumatoria de
+[01:20:25.080 - 01:20:26.220] cuando hacíamos la
+[01:20:26.220 - 01:20:26.820] ¿cómo se dice?
+[01:20:28.060 - 01:20:29.200] cuando hacíamos en la
+[01:20:29.200 - 01:20:30.380] en la
+[01:20:30.380 - 01:20:32.280] umbralización
+[01:20:32.280 - 01:20:33.780] hacíamos un ciclo
+[01:20:33.780 - 01:20:35.180] por in
+[01:20:35.180 - 01:20:35.880] in
+[01:20:35.900 - 01:20:37.780] en este caso
+[01:20:37.780 - 01:20:41.080] range de doscientos cuarenta y uno
+[01:20:41.080 - 01:20:46.200] para cada uno de los cuarenta y un valores
+[01:20:46.200 - 01:20:47.540] que nosotros sabemos que tenemos
+[01:20:47.540 - 01:20:50.580] hay
+[01:20:50.580 - 01:20:53.900] doscientos cuarenta y uno
+[01:20:53.900 - 01:20:56.960] y aquí lo que vamos a hacer
+[01:20:56.960 - 01:20:57.560] es lo siguiente
+[01:20:57.560 - 01:20:58.540] vamos a ponerle
+[01:20:58.540 - 01:21:01.380] el promedio
+[01:21:01.380 - 01:21:03.440] bueno
+[01:21:03.440 - 01:21:04.960] la clase a la que pertenece
+[01:21:04.960 - 01:21:05.560] vamos a ponerle aquí
+[01:21:05.560 - 01:21:06.760] que sea el índice
+[01:21:06.760 - 01:21:08.160] va a ser igual
+[01:21:08.160 - 01:21:09.820] a la clase
+[01:21:09.820 - 01:21:11.900] en la posición
+[01:21:11.900 - 01:21:13.220] i
+[01:21:13.260 - 01:21:15.860] y ahora si ponemos
+[01:21:15.860 - 01:21:17.740] el promedio
+[01:21:17.740 - 01:21:22.190] de idx
+[01:21:22.190 - 01:21:25.050] le vamos a sumar
+[01:21:25.050 - 01:21:27.330] ah pues saben que
+[01:21:27.330 - 01:21:28.410] esto tiene que ser
+[01:21:28.410 - 01:21:29.410] una promedio
+[01:21:29.410 - 01:21:30.150] de
+[01:21:30.150 - 01:21:31.210] son vectores
+[01:21:31.210 - 01:21:32.650] entonces tenemos que ponerle que sea de
+[01:21:32.650 - 01:21:34.150] dos coma cuatro
+[01:21:34.150 - 01:21:37.520] promedio
+[01:21:37.520 - 01:21:38.900] de dos puntos
+[01:21:38.900 - 01:21:39.860] coma idx
+[01:21:39.860 - 01:21:42.060] y le vamos a sumar
+[01:21:42.060 - 01:21:43.240] p
+[01:21:43.240 - 01:21:44.720] de
+[01:21:44.720 - 01:21:46.080] e
+[01:21:46.080 - 01:21:47.840] e
+[01:21:48.000 - 01:21:49.000] a
+[01:21:49.000 - 01:21:51.700] dos puntos coma
+[01:21:51.700 - 01:21:54.070] i
+[01:21:54.070 - 01:21:55.530] y el contador
+[01:21:55.530 - 01:21:56.830] contador
+[01:21:56.830 - 01:21:58.750] de idx
+[01:21:58.750 - 01:22:02.660] lo vamos a incrementar
+[01:22:02.660 - 01:22:03.920] ya que hagamos esto
+[01:22:03.920 - 01:22:04.920] bueno decimos
+[01:22:04.920 - 01:22:07.800] el producto hacemos un
+[01:22:07.800 - 01:22:08.800] por i
+[01:22:08.800 - 01:22:11.840] in
+[01:22:11.840 - 01:22:13.080] range
+[01:22:13.080 - 01:22:14.080] cuatro
+[01:22:14.080 - 01:22:16.500] y hacemos que
+[01:22:16.500 - 01:22:19.920] el promedio
+[01:22:19.920 - 01:22:21.820] de la columna
+[01:22:21.820 - 01:22:22.820] i
+[01:22:22.820 - 01:22:24.220] sea igual al
+[01:22:24.220 - 01:22:24.720] y
+[01:22:24.720 - 01:22:25.720] al promedio
+[01:22:25.720 - 01:22:31.530] de la columna i
+[01:22:31.530 - 01:22:32.530] coma i
+[01:22:32.530 - 01:22:34.530] entre
+[01:22:34.530 - 01:22:35.530] el contador
+[01:22:35.530 - 01:22:37.530] de la columna
+[01:22:37.530 - 01:22:39.530] el iésimo contador
+[01:22:39.530 - 01:22:45.790] print
+[01:22:45.790 - 01:22:46.790] prom
+[01:22:46.790 - 01:22:52.340] que nos imprima los promedios
+[01:22:52.340 - 01:22:56.280] y aquí falla
+[01:22:56.280 - 01:22:58.280] ah porque le puse paréntesis
+[01:22:58.280 - 01:23:00.280] en vez de llaves
+[01:23:00.280 - 01:23:10.120] y
+[01:23:10.120 - 01:23:12.120] ah tiene que ser
+[01:23:12.120 - 01:23:14.120] tiene que ser esto
+[01:23:14.120 - 01:23:15.120] entre paréntesis
+[01:23:15.120 - 01:23:17.690] doble paréntesis
+[01:23:17.690 - 01:23:18.690] doble paréntesis
+[01:23:18.690 - 01:23:19.690] doble paréntesis
+[01:23:19.690 - 01:23:20.690] el de abajo si está bien
+[01:23:20.690 - 01:23:26.350] y nos calcula que los promedios son igual a cero
+[01:23:26.350 - 01:23:30.350] lo cual no está bien
+[01:23:30.350 - 01:23:52.950] aquí nada más lo sumé
+[01:23:52.950 - 01:23:54.950] y no hice nada con eso verdad
+[01:23:54.950 - 01:23:57.950] ese es el problema
+[01:23:57.950 - 01:23:58.950] nada más lo sumé
+[01:23:58.950 - 01:23:59.950] y no lo asigné a nada
+[01:23:59.950 - 01:24:00.950] era más igual
+[01:24:00.950 - 01:24:01.950] para que lo sumara
+[01:24:01.950 - 01:24:03.950] ahí está
+[01:24:03.950 - 01:24:04.950] ahora sí
+[01:24:04.950 - 01:24:06.950] si se fijan
+[01:24:06.950 - 01:24:09.950] estos promedios que nosotros tenemos acá
+[01:24:09.950 - 01:24:10.950] ¿cierto?
+[01:24:10.950 - 01:24:11.950] si yo agarro
+[01:24:11.950 - 01:24:13.950] en el eje uno que definimos allá arriba
+[01:24:13.950 - 01:24:15.950] y le pongo
+[01:24:15.950 - 01:24:18.480] y los grafico
+[01:24:18.480 - 01:24:22.480] estos píxeles están 423,363,473,364
+[01:24:22.480 - 01:24:26.480] 397,376,378,380
+[01:24:26.480 - 01:24:28.480] todos son muy cercanos
+[01:24:28.480 - 01:24:32.880] porque estamos calculando
+[01:24:32.880 - 01:24:34.880] digamos que cada una de las clases
+[01:24:34.880 - 01:24:36.880] como se definió al azar
+[01:24:36.880 - 01:24:38.880] tiene miembros de todas las partes
+[01:24:38.880 - 01:24:40.880] cuando nosotros usamos
+[01:24:40.880 - 01:24:42.880] esta estrategia que tenemos aquí
+[01:24:42.880 - 01:24:46.360] que es la de
+[01:24:46.360 - 01:24:47.360] partición aleatoria
+[01:24:47.360 - 01:24:49.360] asignarle a cada uno de estos
+[01:24:49.360 - 01:24:50.360] estamos haciendo que
+[01:24:50.360 - 01:24:52.360] que el promedio de cada clase
+[01:24:52.360 - 01:24:53.360] sea el promedio
+[01:24:53.360 - 01:24:55.360] de un subconjunto de todos
+[01:24:55.360 - 01:24:57.360] y como se elegimos al azar
+[01:24:57.360 - 01:24:58.360] pues realmente
+[01:24:58.360 - 01:24:59.360] todos los píxeles van a estar
+[01:24:59.360 - 01:25:00.360] más o menos centrados
+[01:25:00.360 - 01:25:01.360] y van a estar en el origen
+[01:25:01.360 - 01:25:02.360] y a partir de ahí
+[01:25:02.360 - 01:25:05.360] se deben separar hacia sus clases
+[01:25:05.360 - 01:25:07.360] y es por eso que ahorita que lo hicimos ahí
+[01:25:07.360 - 01:25:08.360] vimos que
+[01:25:08.360 - 01:25:10.360] tenemos cuatro objetos
+[01:25:10.360 - 01:25:14.360] si quieren lo podemos graficar
+[01:25:14.360 - 01:25:19.080] para que no quede ahí
+[01:25:19.080 - 01:25:21.080] donde estábamos
+[01:25:21.080 - 01:25:22.080] estábamos acá
+[01:25:22.080 - 01:25:23.080] y podemos graficar
+[01:25:23.080 - 01:25:25.080] lo podemos hacer aquí
+[01:25:25.080 - 01:25:40.930] en
+[01:25:40.930 - 01:25:42.930] ax1
+[01:25:42.930 - 01:25:58.580] y aquí sería prom
+[01:25:58.580 - 01:26:02.580] prom 0,2 puntos
+[01:26:02.580 - 01:26:04.580] contra
+[01:26:04.580 - 01:26:07.580] prom 1,2 puntos
+[01:26:07.580 - 01:26:09.580] y vamos a decirle que le ponga
+[01:26:09.580 - 01:26:14.680] un asterisco rojo
+[01:26:14.680 - 01:26:18.160] un asterisco rojo
+[01:26:18.160 - 01:26:19.160] y un asterisco rojo
+[01:26:19.160 - 01:26:23.200] y un asterisco rojo
+[01:26:23.200 - 01:26:24.200] y eso
+[01:26:24.200 - 01:26:25.200] no lo dibujo
+[01:26:25.200 - 01:26:33.350] déjame copiar todo esto
+[01:26:33.350 - 01:26:52.270] ay
+[01:26:52.270 - 01:27:12.920] te fijan
+[01:27:12.920 - 01:27:13.920] los cuatro centroides
+[01:27:13.920 - 01:27:14.920] aparecen
+[01:27:14.920 - 01:27:18.920] en el centro de la imagen
+[01:27:18.920 - 01:27:19.920] será para ver eso
+[01:27:19.920 - 01:27:21.920] entonces vemos que es estrategia
+[01:27:21.920 - 01:27:23.920] pues lo que hace es que nos pone todos juntos
+[01:27:23.920 - 01:27:25.920] y le destaca que a partir de ahí
+[01:27:25.920 - 01:27:26.920] migren
+[01:27:26.920 - 01:27:27.920] hacia
+[01:27:27.920 - 01:27:28.920] hacia
+[01:27:28.920 - 01:27:29.920] hacia el lugar a esquerdar
+[01:27:29.920 - 01:27:30.920] pero
+[01:27:30.920 - 01:27:32.920] puede ser que todos estén muy juntos
+[01:27:32.920 - 01:27:35.040] muy juntos y ambos en el camino se pierdan
+[01:27:35.040 - 01:27:36.840] y es posible que no a la larga
+[01:27:36.840 - 01:27:39.240] lleguemos al mínimo local o al mínimo
+[01:27:39.240 - 01:27:40.680] ideal que nosotros hubiéramos querido.
+[01:27:41.800 - 01:27:43.220] Lo último que se ha hecho
+[01:27:43.220 - 01:27:45.040] o la parte más moderna de K-Medios
+[01:27:45.040 - 01:27:47.100] es un algoritmo que se llama K-Means
+[01:27:47.100 - 01:27:48.980] más más, se lo pusieron los autores
+[01:27:48.980 - 01:27:51.120] de 2007, donde
+[01:27:51.120 - 01:27:52.540] lo que hacen es que se aseguran
+[01:27:52.540 - 01:27:54.720] realmente es el mismo algoritmo de K-Medios
+[01:27:54.720 - 01:27:56.920] pero lo que se aseguran es de que la
+[01:27:56.920 - 01:27:58.880] inicialización se haga de una manera
+[01:27:58.880 - 01:28:01.020] diferente. El K-Means más más
+[01:28:01.020 - 01:28:03.160] lo que hace es que elige el primer centro
+[01:28:03.160 - 01:28:04.940] uniformemente entre los datos
+[01:28:04.940 - 01:28:06.920] agarra un centro uniforme
+[01:28:06.920 - 01:28:08.900] y para cada punto
+[01:28:08.900 - 01:28:10.440] de Dx
+[01:28:10.440 - 01:28:13.240] calcula la distancia del centro
+[01:28:13.240 - 01:28:16.560] del centro que ya elegimos
+[01:28:16.560 - 01:28:17.400] más cercano
+[01:28:17.400 - 01:28:21.180] y calcula una probabilidad para cada punto
+[01:28:21.180 - 01:28:22.600] de que esa distancia
+[01:28:22.600 - 01:28:24.540] se cumpla de esta manera
+[01:28:24.540 - 01:28:26.700] y estos pasos se repiten
+[01:28:26.700 - 01:28:29.160] de una manera que se inicializan los pesos
+[01:28:29.160 - 01:28:30.900] es un algoritmo
+[01:28:30.900 - 01:28:32.840] relativamente simple que inicializa los pesos
+[01:28:32.840 - 01:28:34.080] al inicio del algoritmo
+[01:28:34.080 - 01:28:36.440] y a partir de ahí ya lanzamos
+[01:28:36.440 - 01:28:38.360] el algoritmo de K-Medios
+[01:28:38.360 - 01:28:40.720] para que converja. Y es digamos que es la
+[01:28:40.720 - 01:28:42.240] forma más robusta que tenemos
+[01:28:42.240 - 01:28:44.480] y garantiza que se converja
+[01:28:44.480 - 01:28:47.020] con una complejidad
+[01:28:47.020 - 01:28:47.960] del logaritmo de K
+[01:28:47.960 - 01:28:50.480] converge muy rápidamente
+[01:28:50.480 - 01:28:52.660] entonces pasamos un poco de tiempo
+[01:28:52.660 - 01:28:54.420] tratando de resolver
+[01:28:54.420 - 01:28:57.020] de elegir buenos puntos iniciales
+[01:28:57.020 - 01:28:57.820] para nuestros datos
+[01:28:57.820 - 01:28:59.760] y a partir de ahí
+[01:29:00.900 - 01:29:02.820] lo que hace es que el algoritmo de K-Medios
+[01:29:02.820 - 01:29:04.600] converge más rápidamente a los datos
+[01:29:04.600 - 01:29:08.510] que nosotros ya tenemos
+[01:29:08.510 - 01:29:11.730] en este caso son ejemplos de ejecuciones
+[01:29:11.730 - 01:29:13.790] cuando nosotros utilizamos
+[01:29:13.790 - 01:29:15.530] una inicialización aleatoria
+[01:29:15.530 - 01:29:16.670] que es como la que vimos ahorita
+[01:29:16.670 - 01:29:19.690] donde al principio asignamos una clase aleatoria
+[01:29:19.690 - 01:29:21.990] de cada elemento
+[01:29:21.990 - 01:29:24.150] y esta es la inercia final de cómo funcionan
+[01:29:24.150 - 01:29:25.870] y vemos que los aleatorios
+[01:29:25.870 - 01:29:27.490] hay varias corridas
+[01:29:27.490 - 01:29:29.430] y terminan con varias
+[01:29:29.430 - 01:29:31.310] inercias que son
+[01:29:31.310 - 01:29:32.250] no son muy buenas
+[01:29:32.250 - 01:29:33.750] sin embargo todas las corridas
+[01:29:33.750 - 01:29:37.550] que hicieron con K-Means
+[01:29:37.550 - 01:29:39.010] terminan más que nada eso
+[01:29:39.010 - 01:29:40.350] o sea básicamente la sumatoria
+[01:29:40.350 - 01:29:42.450] son 200 ejecuciones
+[01:29:42.450 - 01:29:45.290] y cuando no se utiliza aleatoria
+[01:29:45.290 - 01:29:50.430] una porción termina con una J menor que 1000
+[01:29:50.430 - 01:29:56.410] y así sucesivamente
+[01:29:56.410 - 01:29:57.570] el siguiente punto es
+[01:29:57.570 - 01:30:00.690] cómo elegimos la K
+[01:30:00.690 - 01:30:01.750] cómo elegimos la K
+[01:30:01.750 - 01:30:03.570] es una parte tequiñolosa
+[01:30:03.570 - 01:30:06.170] porque realmente no sabemos cuántos valores
+[01:30:06.170 - 01:30:07.050] cuál es el valor ideal de K que nosotros tenemos
+[01:30:07.050 - 01:30:08.010] y el valor ideal de K que nosotros tenemos
+[01:30:08.010 - 01:30:09.170] debiéramos tener
+[01:30:09.170 - 01:30:11.410] cuántas clases hay
+[01:30:11.410 - 01:30:12.830] o cuántas clases existen
+[01:30:12.830 - 01:30:14.470] realmente no lo sabemos
+[01:30:14.470 - 01:30:17.690] entonces lo que tenemos que hacer es adivinar
+[01:30:17.690 - 01:30:20.390] si conocemos el problema
+[01:30:20.390 - 01:30:21.870] por ejemplo si eres un
+[01:30:21.870 - 01:30:23.790] un biólogo que dices
+[01:30:23.790 - 01:30:24.630] bueno yo tengo
+[01:30:24.630 - 01:30:27.110] que tengo mediciones de estas
+[01:30:27.110 - 01:30:28.690] de estas especies de hojas
+[01:30:28.690 - 01:30:30.150] y yo sé que son
+[01:30:30.150 - 01:30:31.730] hay cuatro clases conocidas
+[01:30:31.730 - 01:30:33.450] digo bueno puedo clasificarlas en cuatro
+[01:30:33.450 - 01:30:36.930] si mi interés es encontrar nuevas especies
+[01:30:36.930 - 01:30:37.630] quizás
+[01:30:38.010 - 01:30:39.890] puedo probar con cinco
+[01:30:39.890 - 01:30:40.990] K igual a cinco
+[01:30:40.990 - 01:30:43.250] para decir bueno es que posiblemente
+[01:30:43.250 - 01:30:44.510] hay una nueva especie acá
+[01:30:44.510 - 01:30:45.770] y si puedo crear
+[01:30:45.770 - 01:30:47.970] encontrar que hay un grupo consistente
+[01:30:47.970 - 01:30:49.250] que es independiente de los demás
+[01:30:49.250 - 01:30:50.590] con una K igual a cinco
+[01:30:50.590 - 01:30:51.790] en ese caso
+[01:30:51.790 - 01:30:53.230] me vale la pena hacer
+[01:30:53.230 - 01:30:54.370] en muchos casos
+[01:30:54.370 - 01:30:55.610] si tú eres un experto
+[01:30:55.610 - 01:30:56.930] y tienes expectativas
+[01:30:56.930 - 01:30:59.170] de cuántas clases debieras encontrar
+[01:30:59.170 - 01:31:00.470] pues simplemente tú
+[01:31:00.470 - 01:31:01.410] por tu experiencia personal
+[01:31:01.410 - 01:31:03.530] o en función de qué es lo que buscas
+[01:31:03.530 - 01:31:04.830] puedes definir eso
+[01:31:04.830 - 01:31:06.210] pero en muchas ocasiones
+[01:31:06.210 - 01:31:07.670] tú no sabes qué K vas a elegir
+[01:31:07.670 - 01:31:09.850] entonces una forma de hacerlo
+[01:31:09.850 - 01:31:11.210] es probar con varias K
+[01:31:11.210 - 01:31:12.970] y ver cuál es mejor
+[01:31:12.970 - 01:31:16.930] la forma para saber cuál es mejor
+[01:31:16.930 - 01:31:18.350] hay dos técnicas básicas
+[01:31:18.350 - 01:31:19.310] para medir
+[01:31:19.310 - 01:31:22.270] cuando una solución es buena
+[01:31:22.270 - 01:31:23.070] o cuando no es buena
+[01:31:23.070 - 01:31:24.750] o cuál es la K ideal
+[01:31:24.750 - 01:31:27.530] y esas son el método del codo
+[01:31:27.530 - 01:31:28.890] y el método silhouette
+[01:31:28.890 - 01:31:30.810] que le ponen el coeficiente de la silueta
+[01:31:30.810 - 01:31:33.130] que básicamente es hacer varias mediciones
+[01:31:33.130 - 01:31:34.890] varias ejecuciones
+[01:31:34.890 - 01:31:35.870] y calcular
+[01:31:38.950 - 01:31:40.850] los valores de inercia
+[01:31:40.850 - 01:31:42.770] y cuando el método del codo es
+[01:31:42.770 - 01:31:44.570] calcula cuando el valor de inercia
+[01:31:44.570 - 01:31:47.790] lo calculamos para una K igual a dos
+[01:31:47.790 - 01:31:48.610] para K igual a tres
+[01:31:48.610 - 01:31:49.450] para K igual a cuatro
+[01:31:49.450 - 01:31:50.230] para K igual a cinco
+[01:31:50.230 - 01:31:51.290] y así hacemos varias pruebas
+[01:31:51.290 - 01:31:52.890] con diferentes valores de K
+[01:31:52.890 - 01:31:53.730] el método del codo
+[01:31:53.730 - 01:31:57.470] que dice que es cuando hay un cambio brusco
+[01:31:57.470 - 01:31:58.510] en la
+[01:31:58.510 - 01:31:59.350] en la cómo se dice
+[01:31:59.350 - 01:32:00.930] en esta curva
+[01:32:00.930 - 01:32:03.390] decimos aquí es el punto de K ideal
+[01:32:03.390 - 01:32:05.830] porque ya la inercia que tienes
+[01:32:05.830 - 01:32:08.930] ya no ya no se va disminuyendo de tal manera
+[01:32:08.950 - 01:32:12.310] y tenemos el coeficiente de la silueta
+[01:32:12.310 - 01:32:13.090] que es otra técnica
+[01:32:13.090 - 01:32:14.250] donde calcula
+[01:32:14.250 - 01:32:15.550] esa cosita de la silueta
+[01:32:15.550 - 01:32:17.530] calcula relaciones entre la compacidad
+[01:32:17.530 - 01:32:18.730] de los nodos
+[01:32:18.730 - 01:32:19.910] contra la compacidad general
+[01:32:19.910 - 01:32:21.590] un poquito lo que habíamos visto antes
+[01:32:21.590 - 01:32:24.030] y lo que hace es que calcula una coeficiente
+[01:32:24.030 - 01:32:25.370] para varios valores de K
+[01:32:25.370 - 01:32:27.870] y se asume que el coeficiente ideal
+[01:32:27.870 - 01:32:28.870] es cuando la K
+[01:32:28.870 - 01:32:31.250] cuando este coeficiente de la silueta es máxima
+[01:32:31.250 - 01:32:33.410] empiezas de valores de dos, tres, cuatro, cinco
+[01:32:33.410 - 01:32:35.530] hasta que encuentras una K máxima
+[01:32:35.530 - 01:32:37.130] y dices esta es la K ideal
+[01:32:37.130 - 01:32:38.430] que podríamos encontrar
+[01:32:38.430 - 01:32:42.930] y entonces
+[01:32:42.950 - 01:32:44.570] el coeficiente de K2
+[01:32:44.570 - 01:32:45.970] es muy fácil es calcular la inercia
+[01:32:45.970 - 01:32:47.890] la inercia es lo que habíamos visto
+[01:32:47.890 - 01:32:49.310] al inicio de todo esto
+[01:32:49.310 - 01:32:51.690] esta J
+[01:32:51.690 - 01:32:52.770] esto es la inercia
+[01:32:52.770 - 01:32:54.370] básicamente
+[01:32:54.370 - 01:32:56.950] esta es la inercia de la clase Z
+[01:32:56.950 - 01:33:01.010] o puedes calcularlo como de esta manera
+[01:33:01.010 - 01:33:06.600] en el método de la silueta
+[01:33:06.600 - 01:33:09.360] se utiliza esta métrica
+[01:33:09.360 - 01:33:10.420] para determinar esto
+[01:33:10.420 - 01:33:12.960] para dentro de un grupo
+[01:33:12.960 - 01:33:14.780] para cada elemento
+[01:33:14.780 - 01:33:15.200] dentro de un grupo
+[01:33:15.200 - 01:33:15.700] dentro de un grupo C
+[01:33:15.700 - 01:33:18.420] calculamos la distancia media
+[01:33:18.420 - 01:33:19.700] entre ese punto
+[01:33:19.700 - 01:33:21.820] y los demás puntos del grupo
+[01:33:21.820 - 01:33:23.020] que sería la cohesión
+[01:33:23.020 - 01:33:26.540] y calculamos la distancia menor
+[01:33:26.540 - 01:33:28.600] entre el punto I
+[01:33:28.600 - 01:33:30.320] y los puntos de otro grupo
+[01:33:30.320 - 01:33:31.280] la separación
+[01:33:31.280 - 01:33:35.640] y eso nos da esta medición
+[01:33:35.640 - 01:33:36.660] que es una SDI
+[01:33:36.660 - 01:33:38.780] que es lo que nosotros obtenemos
+[01:33:38.780 - 01:33:42.020] entonces si la SDI es aproximadamente igual a 1
+[01:33:42.020 - 01:33:44.340] decimos que esa es una buena asignación de un punto
+[01:33:44.340 - 01:33:46.660] si la SDI es aproximadamente 0
+[01:33:47.160 - 01:33:48.100] está en la frontera
+[01:33:48.100 - 01:33:50.360] y si la SDI es menor que 0
+[01:33:50.360 - 01:33:53.620] posiblemente esté mal asignada
+[01:33:53.620 - 01:33:55.180] y esta condición
+[01:33:55.180 - 01:33:56.600] lo que nosotros hacemos
+[01:33:56.600 - 01:33:57.800] es elegir
+[01:33:57.800 - 01:34:00.060] calculamos el valor de silueta
+[01:34:00.060 - 01:34:02.200] esa es la medición de silueta para cada punto
+[01:34:02.200 - 01:34:04.260] calculamos el promedio para todos los puntos
+[01:34:04.260 - 01:34:06.180] y en función del que tenga mayor K
+[01:34:06.180 - 01:34:07.240] es igual
+[01:34:07.240 - 01:34:09.320] entonces se fijan aquí
+[01:34:09.320 - 01:34:10.740] lo que nosotros tenemos
+[01:34:10.740 - 01:34:12.900] es
+[01:34:12.900 - 01:34:15.160] dos partes
+[01:34:15.160 - 01:34:16.340] esta A
+[01:34:16.340 - 01:34:17.160] que es la distancia media
+[01:34:17.160 - 01:34:18.160] de I
+[01:34:18.160 - 01:34:19.600] a todos los puntos de C
+[01:34:19.600 - 01:34:22.220] que podríamos describir de la siguiente manera
+[01:34:22.220 - 01:34:25.880] está aquí
+[01:34:25.880 - 01:34:28.960] tenemos
+[01:34:28.960 - 01:34:31.120] imagínense tenemos un punto aquí
+[01:34:31.120 - 01:34:31.900] un punto K
+[01:34:31.900 - 01:34:32.460] un punto K
+[01:34:32.460 - 01:34:32.980] un punto K
+[01:34:32.980 - 01:34:34.200] vamos a pensar que esto es una clase
+[01:34:34.200 - 01:34:35.640] tenemos un punto aquí
+[01:34:35.640 - 01:34:36.260] un punto K
+[01:34:36.260 - 01:34:36.840] un punto K
+[01:34:36.840 - 01:34:37.360] un punto K
+[01:34:37.360 - 01:34:37.960] un punto K
+[01:34:37.960 - 01:34:38.880] y esa es otra clase
+[01:34:38.880 - 01:34:40.840] y tenemos un punto aquí
+[01:34:40.840 - 01:34:41.660] un punto K
+[01:34:41.660 - 01:34:42.440] un punto K
+[01:34:42.440 - 01:34:43.160] un punto K
+[01:34:43.160 - 01:34:43.860] un punto K
+[01:34:43.860 - 01:34:44.640] un punto K
+[01:34:44.640 - 01:34:45.340] a cada clase
+[01:34:45.340 - 01:34:48.380] entonces como decíamos
+[01:34:48.380 - 01:34:49.680] la A
+[01:34:49.680 - 01:34:50.680] es la distancia menor
+[01:34:50.680 - 01:34:51.680] media de I
+[01:34:51.680 - 01:34:53.940] a todos los demás puntos de cohesión
+[01:34:53.940 - 01:34:57.100] de la clase que pertenece
+[01:34:57.100 - 01:34:58.780] entonces esa medición
+[01:34:58.780 - 01:34:59.940] lo que significa es que
+[01:34:59.940 - 01:35:01.280] para este punto
+[01:35:01.280 - 01:35:02.800] para el punto 1
+[01:35:02.800 - 01:35:03.240] por ejemplo
+[01:35:03.240 - 01:35:05.700] calculamos el promedio de la distancia
+[01:35:05.700 - 01:35:08.460] que va de aquí a K
+[01:35:08.460 - 01:35:09.260] de aquí a K
+[01:35:09.260 - 01:35:10.020] y de aquí a K
+[01:35:10.020 - 01:35:10.800] y ese promedio
+[01:35:10.800 - 01:35:11.900] va a ser un valor
+[01:35:11.900 - 01:35:12.800] que sería la A
+[01:35:12.800 - 01:35:14.380] para este punto en particular
+[01:35:14.380 - 01:35:17.010] y la B
+[01:35:17.010 - 01:35:20.270] sería la distancia menor media
+[01:35:20.270 - 01:35:21.890] del punto I
+[01:35:21.930 - 01:35:23.010] a los puntos
+[01:35:23.010 - 01:35:24.130] de otro grupo
+[01:35:24.130 - 01:35:28.960] y que es lo que tendríamos que hacer aquí
+[01:35:28.960 - 01:35:29.680] es que
+[01:35:29.680 - 01:35:31.320] calculamos
+[01:35:31.320 - 01:35:34.640] la distancia menor de este punto
+[01:35:34.640 - 01:35:35.800] a los puntos de este grupo
+[01:35:35.800 - 01:35:36.920] que seguramente sería
+[01:35:36.920 - 01:35:40.960] esta la distancia menor
+[01:35:40.960 - 01:35:42.900] y la distancia menor de este grupo
+[01:35:42.900 - 01:35:43.480] a este grupo
+[01:35:43.480 - 01:35:45.280] seguramente sería esta
+[01:35:45.280 - 01:35:46.600] entonces la B
+[01:35:46.600 - 01:35:48.340] sería el promedio de estas dos mediciones
+[01:35:48.340 - 01:35:49.120] que nosotros tenemos
+[01:35:49.120 - 01:35:52.430] y en base a esos dos valores
+[01:35:52.430 - 01:35:53.670] al promedio de las
+[01:35:53.670 - 01:35:56.030] de las distancias dentro del grupo
+[01:35:56.030 - 01:35:56.130] la B
+[01:35:56.150 - 01:35:58.390] y el promedio de las distancias mínimas
+[01:35:58.390 - 01:35:59.250] a los otros grupos
+[01:35:59.250 - 01:36:02.090] se define esta fórmula
+[01:36:02.090 - 01:36:04.270] y esta cosa que hicimos ahorita
+[01:36:04.270 - 01:36:06.010] la volvemos a calcular
+[01:36:06.010 - 01:36:08.030] para todos los elementos
+[01:36:08.030 - 01:36:10.070] para todos los puntos
+[01:36:10.070 - 01:36:11.730] que hay en nuestras clases
+[01:36:11.730 - 01:36:13.570] y a partir de eso
+[01:36:13.570 - 01:36:15.490] encontramos el valor promedio
+[01:36:15.490 - 01:36:17.010] si el valor promedio es
+[01:36:17.010 - 01:36:18.630] igual a 1 se viene asignado
+[01:36:18.630 - 01:36:20.190] o el valor K mayor
+[01:36:20.190 - 01:36:20.830] que encontremos
+[01:36:20.830 - 01:36:22.070] para diferentes valores de K
+[01:36:22.070 - 01:36:23.250] es el que utilizamos
+[01:36:23.250 - 01:36:24.230] para determinar eso
+[01:36:24.230 - 01:36:29.010] este es un diagrama de silueta
+[01:36:29.030 - 01:36:30.610] donde viene la SI
+[01:36:30.610 - 01:36:32.630] como va dando valores
+[01:36:32.630 - 01:36:41.330] nos queda poco tiempo
+[01:36:41.330 - 01:36:42.910] entonces quisiera pasar
+[01:36:42.910 - 01:36:44.050] para que veamos
+[01:36:44.050 - 01:36:45.010] cómo se utiliza
+[01:36:45.010 - 01:36:47.750] vamos a dejar esto aquí
+[01:36:47.750 - 01:36:48.590] para verlo después
+[01:36:48.590 - 01:36:49.750] a las limitaciones
+[01:36:49.750 - 01:36:50.870] básicamente
+[01:36:50.870 - 01:36:52.910] no funciona bien
+[01:36:52.910 - 01:36:54.110] con grupos anisotrópicos
+[01:36:54.110 - 01:36:55.310] anisotrópicos significa
+[01:36:55.310 - 01:36:57.070] que no son
+[01:36:57.070 - 01:36:59.110] la organización es igual
+[01:36:59.110 - 01:36:59.910] en todas partes
+[01:36:59.910 - 01:37:01.070] cuando decimos
+[01:37:01.070 - 01:37:01.830] que un objeto
+[01:37:01.830 - 01:37:02.690] o un conjunto de datos
+[01:37:02.690 - 01:37:03.570] es isotrópicos
+[01:37:03.570 - 01:37:04.690] es que se distribuye
+[01:37:04.690 - 01:37:05.290] uniformemente
+[01:37:05.290 - 01:37:06.050] en todas las direcciones
+[01:37:06.170 - 01:37:07.550] y anisotrópicos
+[01:37:07.550 - 01:37:08.050] significa
+[01:37:08.050 - 01:37:09.750] que no se distribuyen
+[01:37:09.750 - 01:37:10.070] igual
+[01:37:10.070 - 01:37:11.590] en todas las direcciones
+[01:37:11.590 - 01:37:12.170] por ejemplo
+[01:37:12.170 - 01:37:13.030] si tenemos un grupo
+[01:37:13.030 - 01:37:13.830] isotrópico
+[01:37:13.830 - 01:37:18.700] generalmente
+[01:37:18.700 - 01:37:20.040] son donde
+[01:37:20.040 - 01:37:20.940] los puntos
+[01:37:20.940 - 01:37:22.200] se distribuyen
+[01:37:22.200 - 01:37:24.480] de igual manera
+[01:37:24.480 - 01:37:27.180] alrededor de su promedio
+[01:37:27.180 - 01:37:29.180] que sea un grupo
+[01:37:29.180 - 01:37:30.360] anisotrópico
+[01:37:30.360 - 01:37:35.390] trópico
+[01:37:35.390 - 01:37:37.610] son aquellos
+[01:37:37.610 - 01:37:38.890] donde tenemos un promedio
+[01:37:38.890 - 01:37:39.890] pero los datos
+[01:37:39.890 - 01:37:41.230] no se distribuyen
+[01:37:41.230 - 01:37:42.330] de igual manera
+[01:37:42.330 - 01:37:43.410] en todas las direcciones
+[01:37:43.430 - 01:37:44.030] todos los datos
+[01:37:44.030 - 01:37:44.630] por ejemplo
+[01:37:44.630 - 01:37:45.310] en este caso
+[01:37:45.310 - 01:37:46.990] hay un eje mayor
+[01:37:46.990 - 01:37:47.850] donde hay una
+[01:37:47.850 - 01:37:49.730] distribución más
+[01:37:49.730 - 01:37:50.450] en una dirección
+[01:37:50.450 - 01:37:51.370] que en otra dirección
+[01:37:51.370 - 01:37:52.150] la variación no es
+[01:37:52.150 - 01:37:52.650] un mejor
+[01:37:52.650 - 01:37:53.990] entonces
+[01:37:53.990 - 01:37:55.130] el problema que tenemos
+[01:37:55.130 - 01:37:55.950] es que cuando tenemos
+[01:37:55.950 - 01:37:56.470] K medios
+[01:37:56.470 - 01:37:57.190] y tenemos grupos
+[01:37:57.190 - 01:37:58.050] anisotrópicos
+[01:37:58.050 - 01:37:59.810] pues esto
+[01:37:59.810 - 01:38:01.110] nos causa un problema
+[01:38:01.110 - 01:38:02.110] porque estos puntos
+[01:38:02.110 - 01:38:02.790] forman una clase
+[01:38:02.790 - 01:38:03.990] esos puntos forman otra clase
+[01:38:03.990 - 01:38:04.810] y eso es otra clase
+[01:38:04.810 - 01:38:05.810] y obviamente
+[01:38:05.810 - 01:38:06.990] aquí no funciona
+[01:38:06.990 - 01:38:08.050] si tenemos
+[01:38:08.050 - 01:38:09.490] hay mucha gran variación
+[01:38:09.490 - 01:38:10.430] entre las varianzas
+[01:38:10.430 - 01:38:12.310] pues puede causar problemas
+[01:38:12.310 - 01:38:12.610] por ejemplo
+[01:38:12.610 - 01:38:13.150] aquí nos dice
+[01:38:13.150 - 01:38:13.410] esto es un grupo anisotrópico
+[01:38:13.430 - 01:38:14.050] esto es una clase
+[01:38:14.050 - 01:38:14.930] esta es otra clase
+[01:38:14.930 - 01:38:15.770] y esta es otra clase
+[01:38:15.770 - 01:38:17.910] pero como hay tanta variación
+[01:38:17.910 - 01:38:18.790] en las distancias
+[01:38:18.790 - 01:38:20.930] eso no hace que funcione muy bien
+[01:38:20.930 - 01:38:22.370] cuando tenemos formas
+[01:38:22.370 - 01:38:23.450] que no son convexas
+[01:38:23.450 - 01:38:24.130] como esta
+[01:38:24.130 - 01:38:26.330] pues tampoco funciona muy bien
+[01:38:26.330 - 01:38:27.070] porque eso nos crea
+[01:38:27.070 - 01:38:27.870] una clase aquí
+[01:38:27.870 - 01:38:30.430] el hecho de que tengamos cosas
+[01:38:30.430 - 01:38:32.470] que sean compactas
+[01:38:32.470 - 01:38:33.530] hace que de repente
+[01:38:33.530 - 01:38:36.710] la dirección de las formas
+[01:38:36.710 - 01:38:37.510] o la dirección
+[01:38:37.510 - 01:38:38.910] las métricas que utilizamos
+[01:38:38.910 - 01:38:40.090] no son las mejores
+[01:38:40.090 - 01:38:41.670] y tamaños muy distintos
+[01:38:41.670 - 01:38:42.270] que es el ejemplo
+[01:38:42.270 - 01:38:43.150] que veíamos ayer
+[01:38:43.150 - 01:38:44.350] en la clase de pasada
+[01:38:44.350 - 01:38:45.390] cuando decíamos
+[01:38:45.390 - 01:38:46.510] que había escalas diferentes
+[01:38:46.510 - 01:38:48.090] puede causar estos problemas
+[01:38:48.090 - 01:38:49.810] cuando un eje es mayor que otro
+[01:38:49.810 - 01:38:51.030] aquí parece que está bien clasificado
+[01:38:51.030 - 01:38:52.470] pero se refiere más que nada
+[01:38:52.470 - 01:38:53.010] como el caso
+[01:38:53.010 - 01:38:53.990] que vimos el otro día
+[01:38:53.990 - 01:38:55.350] donde teníamos cantidades
+[01:38:55.350 - 01:38:56.810] variables que variaban en miles
+[01:38:56.810 - 01:38:58.210] y otra que variaba en decenas
+[01:38:58.210 - 01:38:58.890] o bien
+[01:38:58.890 - 01:38:59.690] cientos de miles
+[01:38:59.690 - 01:39:00.450] y otra en decenas
+[01:39:00.450 - 01:39:02.210] y eso causaba problemas
+[01:39:02.210 - 01:39:03.230] al momento de calcular
+[01:39:03.230 - 01:39:07.900] este caso
+[01:39:07.900 - 01:39:09.280] este caso
+[01:39:09.280 - 01:39:10.320] se pueden
+[01:39:10.320 - 01:39:11.340] este caso
+[01:39:11.340 - 01:39:12.620] se pueden resolver
+[01:39:12.620 - 01:39:13.500] si utilizamos
+[01:39:13.500 - 01:39:14.480] en vez de la instancia
+[01:39:14.500 - 01:39:15.040] ciclidiana
+[01:39:15.040 - 01:39:15.680] la distancia
+[01:39:15.680 - 01:39:16.460] en mahala novice
+[01:39:16.460 - 01:39:17.860] y al usar la distancia
+[01:39:17.860 - 01:39:18.600] en mahala novice
+[01:39:18.600 - 01:39:20.020] en realidad es otro
+[01:39:20.020 - 01:39:20.820] cambio de dios
+[01:39:20.820 - 01:39:21.820] con distancia en mahala novice
+[01:39:21.820 - 01:39:23.060] es otro método
+[01:39:23.060 - 01:39:23.440] que se llama
+[01:39:23.440 - 01:39:24.080] el algoritmo
+[01:39:24.080 - 01:39:26.740] de mezcla de gaussianas
+[01:39:26.740 - 01:39:27.680] que utiliza un algoritmo
+[01:39:27.680 - 01:39:27.960] que se llama
+[01:39:27.960 - 01:39:29.180] expectation maximization
+[01:39:29.180 - 01:39:30.920] que nosotros vamos a ver
+[01:39:30.920 - 01:39:32.260] más adelante
+[01:39:32.260 - 01:39:36.020] hay valores atípicos
+[01:39:36.020 - 01:39:36.640] puede haber ruido
+[01:39:36.640 - 01:39:37.580] valores que estén acá
+[01:39:37.580 - 01:39:38.520] y que nos creen
+[01:39:38.520 - 01:39:39.900] nos creen clases
+[01:39:39.900 - 01:39:41.480] que no existen en realidad
+[01:39:41.480 - 01:39:42.600] una forma de eso
+[01:39:42.600 - 01:39:43.340] es eliminar
+[01:39:43.340 - 01:39:44.300] esos valores atípicos
+[01:39:44.300 - 01:39:44.680] que de hecho
+[01:39:44.680 - 01:39:45.160] es el tema
+[01:39:45.160 - 01:39:45.620] el tercer
+[01:39:45.620 - 01:39:46.140] la tercera
+[01:39:46.160 - 01:39:46.780] la tercera unidad
+[01:39:46.780 - 01:39:47.360] de este curso
+[01:39:47.360 - 01:39:48.260] vamos a dedicar a eso
+[01:39:48.260 - 01:39:49.980] identificar valores atípicos
+[01:39:49.980 - 01:39:50.440] en datos
+[01:39:50.440 - 01:39:52.180] una solución
+[01:39:52.180 - 01:39:52.620] barata
+[01:39:52.620 - 01:39:53.540] si no quieres hacer eso
+[01:39:53.540 - 01:39:54.740] es añadirle clases
+[01:39:54.740 - 01:39:55.860] y que esas clases
+[01:39:55.860 - 01:39:57.360] agrupen esos valores atípicos
+[01:39:57.360 - 01:39:58.060] extras
+[01:39:58.060 - 01:39:59.340] pero lo ideal
+[01:39:59.340 - 01:39:59.660] sería
+[01:39:59.660 - 01:40:00.560] identificar
+[01:40:00.560 - 01:40:01.720] y limpiar nuestros datos
+[01:40:01.720 - 01:40:03.280] para que no hubiera valores atípicos
+[01:40:03.280 - 01:40:05.920] estandarizar
+[01:40:05.920 - 01:40:06.840] que es transformar
+[01:40:06.840 - 01:40:07.880] variables sesgadas
+[01:40:07.880 - 01:40:08.680] con logaritmo
+[01:40:08.680 - 01:40:11.480] varias estrategias
+[01:40:11.480 - 01:40:13.920] hay variantes
+[01:40:13.920 - 01:40:15.900] k-medioides
+[01:40:15.900 - 01:40:16.140] que son
+[01:40:16.160 - 01:40:17.880] que los centros
+[01:40:17.880 - 01:40:19.380] se restringen a observaciones
+[01:40:19.380 - 01:40:21.300] en vez de usar medias
+[01:40:21.300 - 01:40:22.240] utilizamos medianas
+[01:40:22.240 - 01:40:23.460] las medianas son más robustas
+[01:40:23.460 - 01:40:23.900] a outliers
+[01:40:23.900 - 01:40:25.580] pero cada
+[01:40:25.580 - 01:40:26.840] calcular una mediana
+[01:40:26.840 - 01:40:28.080] implica ordenar los datos
+[01:40:28.080 - 01:40:28.980] de mayor a menor
+[01:40:28.980 - 01:40:30.420] entonces eso puede ser costoso
+[01:40:30.420 - 01:40:32.800] hacerlo por
+[01:40:32.800 - 01:40:34.700] por paquetes
+[01:40:34.700 - 01:40:35.340] minibatches
+[01:40:35.340 - 01:40:35.760] medias
+[01:40:35.760 - 01:40:37.400] y utilizar
+[01:40:37.400 - 01:40:38.020] modas
+[01:40:38.020 - 01:40:38.780] o prototipos
+[01:40:38.780 - 01:40:39.840] de otro tipo de cosas
+[01:40:39.840 - 01:40:41.460] para datos categóricos
+[01:40:41.460 - 01:40:42.180] que lo que preguntaban
+[01:40:42.180 - 01:40:42.700] hace ratito
+[01:40:42.700 - 01:40:43.680] hay también
+[01:40:43.680 - 01:40:44.580] variantes para
+[01:40:44.580 - 01:40:45.680] medios
+[01:40:45.680 - 01:40:45.760] que son
+[01:40:46.160 - 01:40:46.780] categóricos
+[01:40:46.780 - 01:40:49.200] las limitaciones
+[01:40:49.200 - 01:40:49.820] como les decía
+[01:40:49.820 - 01:40:51.220] se ve con mezcla de gaussianas
+[01:40:51.220 - 01:40:51.900] que se hace cuatro
+[01:40:51.900 - 01:40:52.860] y métodos de densidad
+[01:40:52.860 - 01:40:53.500] y espectrales
+[01:40:53.500 - 01:40:53.940] que vamos a ver
+[01:40:53.940 - 01:40:54.780] en la sesión cinco
+[01:40:54.780 - 01:40:57.660] este es el ejemplo
+[01:40:57.660 - 01:40:58.720] ejemplo de cómo
+[01:40:58.720 - 01:40:59.460] implementar
+[01:40:59.460 - 01:41:00.760] el algoritmo de k-medios
+[01:41:00.760 - 01:41:02.320] en este caso
+[01:41:02.320 - 01:41:03.740] para utilizar
+[01:41:03.740 - 01:41:04.680] el algoritmo de k-medios
+[01:41:04.680 - 01:41:05.060] como bien
+[01:41:05.060 - 01:41:05.720] sklearn
+[01:41:05.720 - 01:41:07.540] es sklearn
+[01:41:07.540 - 01:41:08.180] cluster
+[01:41:08.180 - 01:41:09.260] importamos k-means
+[01:41:09.260 - 01:41:10.460] aquí declaramos
+[01:41:10.460 - 01:41:11.780] un objeto de tipo k-means
+[01:41:11.780 - 01:41:12.200] nos decimos
+[01:41:12.200 - 01:41:12.640] que va a tener
+[01:41:12.640 - 01:41:13.480] cuatro clusters
+[01:41:13.480 - 01:41:15.060] que se inicialicen
+[01:41:15.060 - 01:41:15.600] los datos
+[01:41:15.600 - 01:41:16.760] con k-means
+[01:41:16.760 - 01:41:17.260] más más
+[01:41:17.260 - 01:41:17.640] que es la
+[01:41:17.640 - 01:41:18.720] inicialización ideal
+[01:41:18.720 - 01:41:19.680] que podemos utilizar
+[01:41:19.680 - 01:41:20.580] o puede ser random
+[01:41:20.580 - 01:41:22.480] n-init
+[01:41:22.480 - 01:41:23.560] es el número de reinicios
+[01:41:23.560 - 01:41:24.180] cuántas veces
+[01:41:24.180 - 01:41:25.060] vamos a reiniciar
+[01:41:25.060 - 01:41:25.680] nuestro algoritmo
+[01:41:25.680 - 01:41:26.520] una y otra vez
+[01:41:26.520 - 01:41:27.880] para que haga
+[01:41:27.880 - 01:41:28.580] varias pruebas
+[01:41:28.580 - 01:41:30.100] entonces
+[01:41:30.100 - 01:41:32.420] puedes
+[01:41:32.420 - 01:41:33.480] ejecutar
+[01:41:33.480 - 01:41:33.940] eso significa
+[01:41:33.940 - 01:41:34.880] ejecutar el algoritmo
+[01:41:34.880 - 01:41:35.540] tantas veces
+[01:41:35.540 - 01:41:36.400] y te quedas
+[01:41:36.400 - 01:41:36.880] con el que tenga
+[01:41:36.880 - 01:41:37.620] la menor inercia
+[01:41:37.620 - 01:41:39.040] es una buena cosa
+[01:41:39.040 - 01:41:39.740] ponerle un valor
+[01:41:39.740 - 01:41:41.260] relativamente grande
+[01:41:41.260 - 01:41:42.060] no te quedes con uno
+[01:41:42.060 - 01:41:42.620] sino quédate
+[01:41:42.620 - 01:41:43.560] cuatro o cinco
+[01:41:43.560 - 01:41:44.720] para ver cuál sale mejor
+[01:41:44.720 - 01:41:46.240] definir un máximo
+[01:41:46.240 - 01:41:47.340] número de iteraciones
+[01:41:47.640 - 01:41:49.300] o una tolerancia
+[01:41:49.300 - 01:41:50.780] ambas cosas
+[01:41:50.780 - 01:41:52.080] te permiten definir
+[01:41:52.080 - 01:41:52.880] cuál es el máximo
+[01:41:52.880 - 01:41:53.380] de iteraciones
+[01:41:53.380 - 01:41:54.620] que vas a poder ejecutar
+[01:41:54.620 - 01:41:57.200] o la tolerancia
+[01:41:57.200 - 01:41:58.400] cuál es la diferencia
+[01:41:58.400 - 01:41:59.860] la diferencia
+[01:41:59.860 - 01:42:00.780] en los centros
+[01:42:00.780 - 01:42:01.420] de los clusters
+[01:42:01.420 - 01:42:02.380] si la diferencia
+[01:42:02.380 - 01:42:03.280] de cambio es menor
+[01:42:03.280 - 01:42:04.700] que uno por diez
+[01:42:04.700 - 01:42:05.400] a la menos cuatro
+[01:42:05.400 - 01:42:06.780] simplemente
+[01:42:06.780 - 01:42:08.240] se detiene el algoritmo
+[01:42:08.240 - 01:42:09.980] esto puede ser muy común
+[01:42:09.980 - 01:42:10.720] hay veces que tienes
+[01:42:10.720 - 01:42:11.240] algoritmos
+[01:42:11.240 - 01:42:12.240] que aunque converge
+[01:42:12.240 - 01:42:13.100] se ciclan
+[01:42:13.100 - 01:42:13.940] y nunca terminan
+[01:42:13.940 - 01:42:14.380] ¿por qué?
+[01:42:14.440 - 01:42:15.280] porque puede que quede
+[01:42:15.280 - 01:42:16.160] un punto
+[01:42:16.160 - 01:42:16.740] que está exactamente
+[01:42:16.740 - 01:42:17.280] en el centro
+[01:42:17.280 - 01:42:17.600] de los centros
+[01:42:17.600 - 01:42:18.420] los centroides
+[01:42:18.420 - 01:42:19.840] entonces en una iteración
+[01:42:19.840 - 01:42:20.520] se va a un lado
+[01:42:20.520 - 01:42:21.640] y luego en la siguiente
+[01:42:21.640 - 01:42:23.060] iteración regresa al otro
+[01:42:23.060 - 01:42:24.680] y se queda brincando
+[01:42:24.680 - 01:42:25.980] entre un lado y otro
+[01:42:25.980 - 01:42:26.600] y el algoritmo
+[01:42:26.600 - 01:42:27.640] aunque convergió
+[01:42:27.640 - 01:42:29.520] nunca termina
+[01:42:29.520 - 01:42:30.560] porque se queda brincando
+[01:42:30.560 - 01:42:30.760] ¿no?
+[01:42:30.900 - 01:42:31.180] entonces
+[01:42:31.180 - 01:42:32.380] estos límites
+[01:42:32.380 - 01:42:33.360] que podemos poner aquí
+[01:42:33.360 - 01:42:34.980] son cosas que nos pueden servir
+[01:42:34.980 - 01:42:35.920] para forzar
+[01:42:35.920 - 01:42:36.500] que termine
+[01:42:36.500 - 01:42:37.800] el algoritmo
+[01:42:37.800 - 01:42:37.940] ¿no?
+[01:42:38.560 - 01:42:39.280] el random state
+[01:42:39.280 - 01:42:40.720] básicamente es un valor numérico
+[01:42:40.720 - 01:42:41.880] que utilizamos
+[01:42:41.880 - 01:42:42.600] para
+[01:42:42.600 - 01:42:44.420] ¿cómo se dice?
+[01:42:45.360 - 01:42:46.360] que utilizamos
+[01:42:46.360 - 01:42:47.240] para inicializar
+[01:42:47.240 - 01:42:48.120] el generador
+[01:42:48.120 - 01:42:48.980] de números aleatorios
+[01:42:48.980 - 01:42:50.200] si queremos repetir
+[01:42:50.200 - 01:42:51.660] una ejecución
+[01:42:51.660 - 01:42:52.660] y que se ejecute
+[01:42:52.660 - 01:42:53.380] exactamente igual
+[01:42:53.380 - 01:42:53.780] cada vez
+[01:42:53.780 - 01:42:54.840] para cuestiones de depuración
+[01:42:54.840 - 01:42:55.180] y eso
+[01:42:55.180 - 01:42:56.580] usualmente podemos definir
+[01:42:56.580 - 01:42:57.340] un valor numérico
+[01:42:57.340 - 01:42:58.700] y usarlo aquí
+[01:42:58.700 - 01:42:59.840] y si lo ejecutamos
+[01:42:59.840 - 01:43:01.060] con ese mismo valor numérico
+[01:43:01.060 - 01:43:02.100] lo que va a provocar
+[01:43:02.100 - 01:43:02.500] es de que
+[01:43:02.500 - 01:43:03.720] se ejecute exactamente
+[01:43:03.720 - 01:43:05.240] sea determinista
+[01:43:05.240 - 01:43:06.760] realmente los números aleatorios
+[01:43:06.760 - 01:43:08.000] son pseudo aleatorios
+[01:43:08.000 - 01:43:08.620] entonces
+[01:43:08.620 - 01:43:09.780] si definimos una semilla
+[01:43:09.780 - 01:43:10.820] un valor aleatorio
+[01:43:10.820 - 01:43:12.300] constante
+[01:43:12.300 - 01:43:13.220] se van a ejecutar
+[01:43:13.220 - 01:43:14.000] una y otra vez
+[01:43:14.000 - 01:43:14.140] ¿no?
+[01:43:14.820 - 01:43:15.360] el algoritmo
+[01:43:15.360 - 01:43:16.000] es el algoritmo
+[01:43:16.000 - 01:43:16.440] de Lloyd
+[01:43:16.440 - 01:43:17.100] o el CAN
+[01:43:17.100 - 01:43:17.500] que básicamente
+[01:43:17.500 - 01:43:18.200] tiene que ver
+[01:43:18.200 - 01:43:18.920] son variantes
+[01:43:18.920 - 01:43:19.720] del mismo algoritmo
+[01:43:19.720 - 01:43:20.800] Lloyd es el estándar
+[01:43:20.800 - 01:43:21.660] yo el CAN
+[01:43:21.660 - 01:43:22.360] nunca lo he usado
+[01:43:22.360 - 01:43:23.380] realmente no lo conozco
+[01:43:23.380 - 01:43:24.840] y
+[01:43:24.840 - 01:43:25.760] bueno
+[01:43:25.760 - 01:43:27.080] los atributos
+[01:43:27.080 - 01:43:27.960] que tiene la clase
+[01:43:27.960 - 01:43:28.660] ¿qué means?
+[01:43:28.720 - 01:43:29.620] son las etiquetas
+[01:43:29.620 - 01:43:30.380] la asignación
+[01:43:30.380 - 01:43:31.100] eso básicamente
+[01:43:31.100 - 01:43:32.080] nos dice a qué clase
+[01:43:32.080 - 01:43:33.220] asignó cada elemento
+[01:43:33.220 - 01:43:34.160] de los datos
+[01:43:34.160 - 01:43:35.420] bueno
+[01:43:35.420 - 01:43:36.900] esa es la declaración
+[01:43:36.900 - 01:43:37.440] de la clase
+[01:43:37.440 - 01:43:38.060] aquí lo ponen
+[01:43:38.060 - 01:43:39.860] en toda una sola lista
+[01:43:39.860 - 01:43:41.120] y el fit
+[01:43:41.120 - 01:43:42.480] aquí lo que va a estar
+[01:43:42.480 - 01:43:42.960] en el fit
+[01:43:42.960 - 01:43:43.700] es
+[01:43:43.700 - 01:43:44.880] el
+[01:43:44.880 - 01:43:46.180] el dato
+[01:43:46.180 - 01:43:46.560] que los
+[01:43:46.560 - 01:43:46.880] la conjuntura
+[01:43:46.880 - 01:43:46.980] la conjuntura
+[01:43:46.980 - 01:43:47.080] la conjuntura
+[01:43:47.100 - 01:43:47.440] de datos
+[01:43:47.440 - 01:43:48.260] que vamos a clasificar
+[01:43:48.260 - 01:43:54.670] tenemos las etiquetas
+[01:43:54.670 - 01:43:55.390] los centros
+[01:43:55.390 - 01:43:56.370] de los centroides
+[01:43:56.370 - 01:43:56.670] los centros
+[01:43:56.670 - 01:43:57.370] de los centroides
+[01:43:57.370 - 01:43:58.510] el valor de j
+[01:43:58.510 - 01:43:59.750] la inercia final
+[01:43:59.750 - 01:44:00.890] el número de iteraciones
+[01:44:00.890 - 01:44:02.110] que se realizaron
+[01:44:02.110 - 01:44:05.310] eso es básicamente
+[01:44:05.310 - 01:44:06.610] la predicción
+[01:44:06.610 - 01:44:07.010] o sea
+[01:44:07.010 - 01:44:07.750] si nosotros ya tenemos
+[01:44:07.750 - 01:44:08.330] un modelo
+[01:44:08.330 - 01:44:09.450] entrenado
+[01:44:09.450 - 01:44:10.910] y nos dan un nuevo dato
+[01:44:10.910 - 01:44:12.070] este predict
+[01:44:12.070 - 01:44:12.750] básicamente
+[01:44:12.750 - 01:44:13.510] nos lo asigna
+[01:44:13.510 - 01:44:14.930] al que le corresponde
+[01:44:14.930 - 01:44:16.630] y transform
+[01:44:16.630 - 01:44:18.070] transform
+[01:44:18.070 - 01:44:18.870] transform
+[01:44:18.870 - 01:44:18.970] transform
+[01:44:18.970 - 01:44:18.990] transform
+[01:44:18.990 - 01:44:19.710] es esta
+[01:44:19.710 - 01:44:19.970] formación
+[01:44:19.970 - 01:44:20.190] transformamos
+[01:44:20.190 - 01:44:20.230] transformamos
+[01:44:20.230 - 01:44:20.330] transformamos
+[01:44:20.330 - 01:44:21.310] transformamos
+[01:44:21.310 - 01:44:22.110] nunca el usuario
+[01:44:22.110 - 01:44:22.650] para nada
+[01:44:22.650 - 01:44:23.810] pero bueno
+[01:44:23.810 - 01:44:24.630] básicamente esto
+[01:44:24.630 - 01:44:26.170] de
+[01:44:26.170 - 01:44:27.410] de práctica
+[01:44:27.410 - 01:44:28.070] no tarea
+[01:44:28.070 - 01:44:29.130] no lo voy a evaluar
+[01:44:29.130 - 01:44:29.870] pero práctica
+[01:44:29.870 - 01:44:30.670] les recomiendo
+[01:44:30.670 - 01:44:31.070] que hagan
+[01:44:31.070 - 01:44:32.090] el ejercicio
+[01:44:32.090 - 01:44:33.010] de
+[01:44:33.010 - 01:44:34.630] ال�as
+[01:44:34.630 - 01:44:35.350] con iris
+[01:44:35.350 - 01:44:36.190] básicamente
+[01:44:36.190 - 01:44:37.610] es cargar los datos
+[01:44:37.610 - 01:44:39.150] hagan en su casa
+[01:44:39.150 - 01:44:39.570] esto
+[01:44:39.570 - 01:44:40.830] y prueben
+[01:44:40.830 - 01:44:41.970] que es
+[01:44:41.970 - 01:44:43.090] lo que pasó
+[01:44:43.090 - 01:44:45.250] utilicen
+[01:44:45.250 - 01:44:45.870] en google
+[01:44:45.870 - 01:44:46.410] collab
+[01:44:46.410 - 01:44:47.250] o la plataforma
+[01:44:47.250 - 01:44:47.810] que utilicen
+[01:44:47.810 - 01:44:48.650] ustedes para eso
+[01:44:48.650 - 01:44:48.970] y
+[01:44:48.990 - 01:44:50.670] y prueben esto
+[01:44:50.670 - 01:44:52.810] y vean y grafiquen
+[01:44:52.810 - 01:44:54.930] qué fue lo que está
+[01:44:54.930 - 01:44:55.610] pasando aquí
+[01:44:55.610 - 01:45:00.910] y básicamente
+[01:45:00.910 - 01:45:04.920] la clase que entra, que es
+[01:45:04.920 - 01:45:06.640] mañana, vamos a ver
+[01:45:06.640 - 01:45:08.780] una técnica diferente de agrupamiento
+[01:45:08.780 - 01:45:10.520] que es una de mis favoritas
+[01:45:10.520 - 01:45:12.560] porque a diferencia de K medios
+[01:45:12.560 - 01:45:14.680] no depende de
+[01:45:14.680 - 01:45:17.930] de saber cuántas clases
+[01:45:17.930 - 01:45:19.850] existen, sino que empieza
+[01:45:19.850 - 01:45:22.070] ahorita el algoritmo como funciona es que
+[01:45:22.070 - 01:45:24.150] nosotros definimos, queremos que haya K clases
+[01:45:24.150 - 01:45:25.910] de partir de esas K clases
+[01:45:25.910 - 01:45:27.630] yo
+[01:45:27.630 - 01:45:30.190] construyo, ¿cómo se llama? a pesar de que tengamos
+[01:45:30.190 - 01:45:32.110] K clases, yo encuentro
+[01:45:32.110 - 01:45:34.190] clasifico los elementos, ¿no? y esa K puede ser
+[01:45:34.190 - 01:45:36.030] un poco arbitraria, en este
+[01:45:36.030 - 01:45:38.150] otro método, también cuestión es arbitraria
+[01:45:38.150 - 01:45:39.650] pero funciona al revés
+[01:45:39.650 - 01:45:42.170] a partir de los datos, yo empiezo
+[01:45:42.170 - 01:45:44.030] a agrupar aquellos que son similares entre
+[01:45:44.030 - 01:45:45.850] entonces construye de abajo hacia arriba
+[01:45:45.850 - 01:45:47.830] empieza a agrupar datos similares
+[01:45:47.830 - 01:45:49.610] para construir
+[01:45:49.610 - 01:45:51.990] grupos
+[01:45:51.990 - 01:45:53.990] para encontrar grupos, por los encuentros
+[01:45:54.150 - 01:45:55.890] de abajo hacia arriba, no de arriba hacia abajo
+[01:45:55.890 - 01:45:58.290] el de K medios, decimos hay tantas K clases
+[01:45:58.290 - 01:46:00.130] y tratamos de partir las clases
+[01:46:00.130 - 01:46:01.550] entre sí
+[01:46:01.550 - 01:46:03.910] en esta técnica de agrupamiento decimos, bueno
+[01:46:03.910 - 01:46:05.530] aquí hay grupos, hay datos
+[01:46:05.530 - 01:46:07.870] y podemos calcular las distancias entre ellos
+[01:46:07.870 - 01:46:09.830] y podemos agrupar aquellos que se van
+[01:46:09.830 - 01:46:11.130] siendo similares
+[01:46:11.130 - 01:46:13.830] y luego cada uno de los grupos pequeños que encontremos
+[01:46:13.830 - 01:46:16.010] los podemos unir entre sí y da una
+[01:46:16.010 - 01:46:17.810] estructura jerárquica muy interesante
+[01:46:17.810 - 01:46:20.010] pero eso si quieren ya lo vemos
+[01:46:20.010 - 01:46:22.050] lo vemos, no si quieren, lo vamos a ver mañana
+[01:46:22.050 - 01:46:23.550] no si quieren
+[01:46:24.150 - 01:46:25.070] lo vamos a ver mañana
+[01:46:25.070 - 01:46:27.050] y pues sería todo
+[01:46:27.050 - 01:46:30.070] si ustedes tengan alguna pregunta
+[01:46:30.070 - 01:46:30.710] alguna duda
+[01:46:30.710 - 01:46:33.770] si profe, de mi parte
+[01:46:33.770 - 01:46:35.690] perdón Ariana
+[01:46:35.690 - 01:46:38.090] si, buenas noches profesor
+[01:46:38.090 - 01:46:39.170] buenas noches
+[01:46:39.170 - 01:46:42.010] presentó dos
+[01:46:42.010 - 01:46:43.950] dos notebooks, una que se llama
+[01:46:43.950 - 01:46:44.850] ejemplo umbral
+[01:46:44.850 - 01:46:47.970] inicialization, creo que era imagen
+[01:46:47.970 - 01:46:49.650] y minicamins
+[01:46:49.650 - 01:46:51.870] ya revisé el repositorio pero
+[01:46:51.870 - 01:46:53.970] no veo que estén ahí, estos notebooks
+[01:46:54.150 - 01:46:55.090] también los va a compartir
+[01:46:55.090 - 01:46:56.790] si se los voy a compartir
+[01:46:56.790 - 01:46:59.610] los dos los hice, o sea
+[01:46:59.610 - 01:47:02.110] tenía las láminas que ya había hecho hace tiempo
+[01:47:02.110 - 01:47:03.710] pero quería
+[01:47:03.710 - 01:47:05.750] sobre todo por la cuestión de que me dijeron que
+[01:47:05.750 - 01:47:07.830] quieren algo un poco más intuitivo, traté de poner dos
+[01:47:07.830 - 01:47:08.750] ejemplos prácticos
+[01:47:08.750 - 01:47:11.070] y como se dice
+[01:47:11.070 - 01:47:14.110] y los hice hoy en la mañana, pero no los he subido
+[01:47:14.110 - 01:47:16.410] pero si los voy a subir, ambos ejemplos
+[01:47:16.410 - 01:47:17.830] ah de acuerdo profesor, muchas gracias
+[01:47:17.830 - 01:47:19.870] y también este, el de este
+[01:47:19.870 - 01:47:21.810] bueno es el CES, construyan ustedes a partir
+[01:47:21.810 - 01:47:23.950] de las láminas que también he subido, las voy a subir
+[01:47:24.150 - 01:47:26.290] ahorita, pero no lo hagan
+[01:47:26.290 - 01:47:28.270] de hoy a mañana, tienen el fin de semana quizás
+[01:47:28.270 - 01:47:30.370] para empezar a jugar con esto, pero yo voy
+[01:47:30.370 - 01:47:31.250] a subir los dos notebooks
+[01:47:31.250 - 01:47:37.760] muy bien, Andrés Arcos
+[01:47:37.760 - 01:47:38.800] tienes la mano levantada
+[01:47:38.800 - 01:47:45.610] yo tengo una consulta
+[01:47:45.610 - 01:47:46.390] hace ratito
+[01:47:46.390 - 01:47:49.190] que bueno en el ejemplo
+[01:47:49.190 - 01:47:50.890] del experto
+[01:47:50.890 - 01:47:55.390] estaba buscando nuevas especies
+[01:47:55.390 - 01:47:57.310] en ese caso
+[01:47:57.310 - 01:47:58.710] si tenemos un nuevo clúster
+[01:47:58.710 - 01:47:59.490] como
+[01:48:00.970 - 01:48:03.530] interpretamos o como sería
+[01:48:03.530 - 01:48:04.330] la forma de
+[01:48:04.330 - 01:48:07.810] identificar las características
+[01:48:07.810 - 01:48:08.830] de ese nuevo clúster
+[01:48:08.830 - 01:48:10.610] bueno pues es
+[01:48:10.610 - 01:48:12.230] el punto que eres el caso de las flores
+[01:48:12.230 - 01:48:14.730] tienes mediciones de flores y tú tienes muchas mediciones
+[01:48:14.730 - 01:48:16.670] de flores y tú sabes que hay
+[01:48:16.670 - 01:48:17.830] una especie
+[01:48:17.830 - 01:48:20.830] y de repente utilizas tu algoritmo
+[01:48:20.830 - 01:48:22.730] y dices bueno yo encuentro
+[01:48:22.730 - 01:48:24.950] que hay, si lo corro con tres especies
+[01:48:24.950 - 01:48:26.030] me crea tres grupos
+[01:48:26.030 - 01:48:28.930] y sé que hay tres grupos
+[01:48:28.930 - 01:48:30.850] de flores diferentes, pues es bueno
+[01:48:30.850 - 01:48:32.150] lo corro con cuatro
+[01:48:32.150 - 01:48:34.450] y me da cuatro, que hay cuatro clústers
+[01:48:34.450 - 01:48:37.110] y ves que dos de los, el clúster nuevo
+[01:48:37.110 - 01:48:38.130] que antes no aparecía
+[01:48:38.130 - 01:48:41.450] podrías ver que podría ser una partición
+[01:48:41.450 - 01:48:42.190] de otro clúster
+[01:48:42.190 - 01:48:45.230] y ahí es donde yo estoy inventando porque yo no soy biólogo
+[01:48:45.230 - 01:48:46.950] pero estoy inventando que
+[01:48:46.950 - 01:48:48.910] es una forma de explorar datos
+[01:48:48.910 - 01:48:51.130] es una forma que podría un biólogo quizás
+[01:48:51.130 - 01:48:53.630] decir este grupo es significativo
+[01:48:53.630 - 01:48:55.270] y es una diferencia
+[01:48:55.270 - 01:48:57.350] de este otro grupo, creo, entiendo
+[01:48:57.350 - 01:48:59.230] más que nada yo por lecturas que tengo
+[01:48:59.230 - 01:49:00.370] de libros de
+[01:49:00.850 - 01:49:01.970] de cómo se llama
+[01:49:01.970 - 01:49:03.270] de biología científica
+[01:49:03.270 - 01:49:05.530] y por mi contacto constante con globos
+[01:49:05.530 - 01:49:07.930] porque mi esposa es bióloga, mi hermano
+[01:49:07.930 - 01:49:10.090] es biólogo, los amigos de mi esposa
+[01:49:10.090 - 01:49:11.670] son biólogos y todo ese tipo de
+[01:49:11.670 - 01:49:13.930] me encanta mucho leer libros de
+[01:49:13.930 - 01:49:15.790] temas de biología, hay un gran escritor
+[01:49:15.790 - 01:49:18.030] que se llama Stephen Jay Gould que escribe muchos libros
+[01:49:18.030 - 01:49:20.070] de ciencia
+[01:49:20.070 - 01:49:21.970] de evolución científica pero él era palenteólogo
+[01:49:21.970 - 01:49:23.730] y en particular hacía cosas de evolución
+[01:49:23.730 - 01:49:25.910] entonces como que todo ese tipo
+[01:49:25.910 - 01:49:27.810] de cosas me ha permeado y por eso me atrevo
+[01:49:27.810 - 01:49:30.110] a decir eso aunque yo no soy especialista en el hecho
+[01:49:30.850 - 01:49:33.110] básicamente tú buscas que las especies
+[01:49:33.110 - 01:49:35.670] forman grupos compactos de propiedades
+[01:49:35.670 - 01:49:37.170] y de repente encuentras que hay una nueva especie
+[01:49:37.170 - 01:49:39.130] porque es casi igual pero diferente
+[01:49:39.130 - 01:49:41.470] entiendo que eso lo hacen actualmente no a nivel
+[01:49:41.470 - 01:49:43.050] de mediciones así sino incluso
+[01:49:43.050 - 01:49:45.550] con analizando ADN y ese tipo
+[01:49:45.550 - 01:49:47.510] de cosas pero bueno espero que
+[01:49:47.510 - 01:49:49.270] un biólogo no vea esto porque seguramente me
+[01:49:49.270 - 01:49:51.490] de muchas cosas pero lo que me
+[01:49:51.490 - 01:49:52.570] interesa más es el espíritu
+[01:49:52.570 - 01:49:55.330] un experto puede conocer cosas
+[01:49:55.330 - 01:49:57.010] y puede saber que hay un cierto número de grupos
+[01:49:57.010 - 01:49:59.210] y puede encontrar que hay un grupo nuevo
+[01:49:59.210 - 01:50:00.950] una gente que analiza emociones
+[01:50:00.950 - 01:50:01.750] o que analiza
+[01:50:01.750 - 01:50:04.970] cómo la gente se manifiesta en redes sociales
+[01:50:04.970 - 01:50:07.250] por ejemplo poder estar analizando datos de una red social
+[01:50:07.250 - 01:50:09.090] y decir bueno podemos agrupar
+[01:50:09.090 - 01:50:10.970] que tenemos estos grupos y de repente
+[01:50:10.970 - 01:50:13.050] entra un nuevo grupo que es
+[01:50:13.050 - 01:50:14.870] diferente a los demás pues
+[01:50:14.870 - 01:50:16.930] podrías yo hacer analogía un poquito
+[01:50:16.930 - 01:50:18.770] con eso ¿no? puedo probar con
+[01:50:18.770 - 01:50:20.850] yo sé que hay cuatro grupos y si
+[01:50:20.850 - 01:50:22.750] utilizo el algoritmo de K-Medios con esos datos
+[01:50:22.750 - 01:50:25.190] me va a clasificar muy bien esos cuatro grupos
+[01:50:25.190 - 01:50:27.070] pero si le meto un
+[01:50:27.070 - 01:50:28.390] cinco a lo mejor
+[01:50:28.390 - 01:50:31.150] lo que yo consideraba que era una clase
+[01:50:31.150 - 01:50:32.850] me va a dividir en
+[01:50:32.850 - 01:50:34.790] otra clase ¿no? y eso es
+[01:50:34.790 - 01:50:36.910] útil sobre todo cuando no podemos visualizar
+[01:50:36.910 - 01:50:38.910] los datos porque los datos tienen muchísimas
+[01:50:38.910 - 01:50:40.910] dimensiones entonces
+[01:50:40.910 - 01:50:42.990] el hecho de probar con varios valores
+[01:50:42.990 - 01:50:44.790] de K puede funcionar ¿no?
+[01:50:44.790 - 01:50:46.810] quizás la prueba de Silhouette o la prueba de esta
+[01:50:46.810 - 01:50:48.430] eventualmente me sale que sí
+[01:50:48.430 - 01:50:50.910] que el número ideal no es cuatro como yo pensaba
+[01:50:50.910 - 01:50:53.110] sino sigo como yo pensaba y en ese sentido
+[01:50:53.110 - 01:50:54.990] es el valor del algoritmo de K-Medios
+[01:50:54.990 - 01:50:56.490] que es una herramienta para
+[01:50:56.490 - 01:50:57.750] explorar cosas
+[01:50:58.390 - 01:50:59.230] no sé si quedó claro
+[01:50:59.230 - 01:51:01.730] Adrián, Adrián era Andrés
+[01:51:01.730 - 01:51:05.830] Andrés, Andrés, sí profe
+[01:51:05.830 - 01:51:06.410] sí de acuerdo
+[01:51:06.410 - 01:51:08.390] Iván, ¿qué pasó Iván?
+[01:51:09.130 - 01:51:10.270] ¿qué tal profe? buenas noches
+[01:51:10.270 - 01:51:12.830] entonces bueno, lo que dice ahorita
+[01:51:12.830 - 01:51:14.470] ¿es clasificación?
+[01:51:14.990 - 01:51:16.970] ¿o es agrupación? ¿o sería ambos?
+[01:51:17.130 - 01:51:18.470] ¿o tiene la capacidad de ser ambos?
+[01:51:19.170 - 01:51:20.830] cuando comienzas, comienzas con un conjunto
+[01:51:20.830 - 01:51:22.010] de datos que no conoces
+[01:51:22.010 - 01:51:24.650] y cuando corres el algoritmo de K-Medios
+[01:51:24.650 - 01:51:26.090] los agrupas en clases
+[01:51:26.090 - 01:51:28.750] entonces en ese sentido creas las clases
+[01:51:28.750 - 01:51:30.170] no es que tú decidas las clases sino que
+[01:51:30.210 - 01:51:31.210] se crean unas clases
+[01:51:31.210 - 01:51:34.430] y ya que tienen esas clases tú puedes hacer clasificación
+[01:51:34.430 - 01:51:36.310] te llega un nuevo dato
+[01:51:36.310 - 01:51:37.910] y dices bueno, este dato
+[01:51:37.910 - 01:51:39.830] ¿a cuál de las clases te parece más?
+[01:51:39.990 - 01:51:42.430] la distancia entre este nuevo dato y las clases
+[01:51:42.430 - 01:51:43.150] que conozco
+[01:51:43.150 - 01:51:46.610] ¿a cuál se parece más? entonces puedes empezar a asignar
+[01:51:46.610 - 01:51:47.990] a clases que ya conoces
+[01:51:47.990 - 01:51:50.210] pero primero tienes que
+[01:51:50.210 - 01:51:51.450] construir esas clases
+[01:51:51.450 - 01:51:53.430] entonces en ambas cosas
+[01:51:53.430 - 01:51:56.450] primero haces agrupamiento y ya que tienes un conjunto
+[01:51:56.450 - 01:51:58.530] de datos agrupado puedes ocuparlo
+[01:51:58.530 - 01:52:00.090] para clasificar datos que
+[01:52:00.210 - 01:52:01.730] nuevos que te van llegando
+[01:52:01.730 - 01:52:04.090] quizás eventualmente valdría la pena
+[01:52:04.090 - 01:52:05.890] ya que recibes muchos datos quizás
+[01:52:05.890 - 01:52:07.490] volver a ejecutar el algoritmo otra vez
+[01:52:07.490 - 01:52:10.170] para ver si hubo modificaciones o no
+[01:52:10.170 - 01:52:11.010] pero nada más
+[01:52:11.010 - 01:52:14.430] si está abierto el algoritmo
+[01:52:14.430 - 01:52:15.770] a recibir nuevos datos
+[01:52:15.770 - 01:52:17.910] no tanto el algoritmo
+[01:52:17.910 - 01:52:19.070] el algoritmo nada más se entrena
+[01:52:19.070 - 01:52:21.190] pero el uso que le demos al algoritmo
+[01:52:21.190 - 01:52:22.450] nos permite hacer eso
+[01:52:22.450 - 01:52:25.610] es que estoy tratando de ubicar
+[01:52:25.610 - 01:52:26.950] la línea de tiempo del
+[01:52:26.950 - 01:52:29.330] proceso ¿no? o sea
+[01:52:29.330 - 01:52:30.770] siempre recibes el dataset
+[01:52:30.770 - 01:52:32.870] terminas con una clasificación
+[01:52:32.870 - 01:52:35.650] terminas, lo voy a decir de nuevo, terminas con un agrupamiento
+[01:52:35.650 - 01:52:37.510] y obviamente
+[01:52:37.510 - 01:52:39.570] si tu dataset se
+[01:52:39.570 - 01:52:41.710] renueva, se incrementa, cambia
+[01:52:41.710 - 01:52:43.190] puedes volverlo a correr
+[01:52:43.190 - 01:52:45.130] y obviamente vas a poder recibir
+[01:52:45.130 - 01:52:47.570] crear otro nuevo
+[01:52:47.570 - 01:52:48.230] agrupamiento
+[01:52:48.230 - 01:52:50.030] ¿estoy entendiendo bien?
+[01:52:51.010 - 01:52:53.550] bueno, esa es la forma en que uno podría utilizarlo
+[01:52:53.550 - 01:52:54.950] aunque el algoritmo así
+[01:52:54.950 - 01:52:56.730] es hasta encontrar las clases
+[01:52:56.730 - 01:52:59.650] ok
+[01:53:00.770 - 01:53:03.390] muy bien
+[01:53:03.390 - 01:53:04.790] ¿podemos seguir con Dobani?
+[01:53:07.900 - 01:53:08.280] Dobani
+[01:53:08.280 - 01:53:10.260] si profe, buenas noches
+[01:53:10.260 - 01:53:13.660] ¿dónde puedo consultar las grabaciones de las clases?
+[01:53:14.460 - 01:53:15.760] las grabaciones de las clases
+[01:53:15.760 - 01:53:18.420] se las voy a estar enviando por correo electrónico
+[01:53:18.420 - 01:53:20.200] a la lista que tengo
+[01:53:20.200 - 01:53:22.000] las envié a las de la clase anterior
+[01:53:22.000 - 01:53:23.240] se las envié por correo a todos
+[01:53:23.240 - 01:53:25.180] si a alguno no le han llegado mis correos
+[01:53:25.180 - 01:53:27.080] escríbanme a
+[01:53:27.080 - 01:53:27.740] erromero
+[01:53:27.740 - 01:53:28.640] arroba correo
+[01:53:28.640 - 01:53:29.920] guadi.mx
+[01:53:29.920 - 01:53:31.960] erromero
+[01:53:31.960 - 01:53:33.080] arroba
+[01:53:33.080 - 01:53:34.420] guadi
+[01:53:34.420 - 01:53:37.520] correo.guadi.mx
+[01:53:37.520 - 01:53:39.520] correcto
+[01:53:39.520 - 01:53:41.400] muchas gracias
+[01:53:41.400 - 01:53:44.700] si alguien no le ha llegado
+[01:53:44.700 - 01:53:46.600] las clases es
+[01:53:46.600 - 01:53:48.300] erromero de espinosa romero
+[01:53:48.300 - 01:53:50.100] que es mi primer apellido
+[01:53:50.100 - 01:53:51.980] espinosa romero
+[01:53:51.980 - 01:53:52.920] arroba
+[01:53:52.920 - 01:54:00.200] correo.guadi.mx
+[01:54:00.200 - 01:54:01.380] no las subo a la plataforma
+[01:54:01.380 - 01:54:03.500] porque el zoom te genera
+[01:54:03.500 - 01:54:03.980] la liga
+[01:54:03.980 - 01:54:04.900] y una password
+[01:54:04.900 - 01:54:06.000] en particular
+[01:54:06.000 - 01:54:07.680] entonces como que me da cosa
+[01:54:07.680 - 01:54:09.880] subir a una página pública
+[01:54:09.880 - 01:54:10.640] password
+[01:54:10.640 - 01:54:12.540] sino la gente va a estar descargando
+[01:54:12.540 - 01:54:13.580] todo de zoom
+[01:54:13.580 - 01:54:15.480] y me van a cobrar más en zoom
+[01:54:15.480 - 01:54:15.880] entonces
+[01:54:15.880 - 01:54:17.940] mejor se las envío directamente
+[01:54:17.940 - 01:54:19.660] a los miembros del grupo
+[01:54:19.660 - 01:54:22.580] ok
+[01:54:22.580 - 01:54:23.600] entonces si tienen duda
+[01:54:23.600 - 01:54:25.480] no les llegan mis correos
+[01:54:25.480 - 01:54:26.960] escríbanme a esto
+[01:54:26.960 - 01:54:29.740] y si no les llegan mis correos
+[01:54:29.740 - 01:54:31.040] si aún así no les contesto
+[01:54:31.040 - 01:54:33.200] escríbanle al coordinador de posgrado
+[01:54:33.200 - 01:54:35.100] es posgrado.fmat
+[01:54:35.100 - 01:54:35.820] arroba correo guadi.mx
+[01:54:35.840 - 01:54:38.500] para que él me envíe sus correos
+[01:54:38.500 - 01:54:39.780] luego pasan cosas raras
+[01:54:39.780 - 01:54:40.760] que el correo de la guadi
+[01:54:40.760 - 01:54:42.040] filtra correos
+[01:54:42.040 - 01:54:43.160] pero si no les llega
+[01:54:43.160 - 01:54:44.700] envíenlos por allá
+[01:54:44.700 - 01:54:48.380] muy bien
+[01:54:48.380 - 01:54:49.640] alguna otra pregunta
+[01:54:49.640 - 01:54:52.200] solo una muy rápida
+[01:54:52.200 - 01:54:52.420] maestro
+[01:54:52.420 - 01:54:53.120] para lo de
+[01:54:53.120 - 01:54:54.760] la práctica de iris
+[01:54:54.760 - 01:54:56.940] en el material ya viene todo lo que
+[01:54:56.940 - 01:54:58.360] no, no puedes hablar un poco más fuerte
+[01:54:58.360 - 01:54:59.360] no te alcanzo a escuchar
+[01:54:59.360 - 01:55:01.720] sí que para el caso de la práctica
+[01:55:01.720 - 01:55:02.600] que vamos a hacer con iris
+[01:55:02.600 - 01:55:04.120] ahí en el material está todo el dataset
+[01:55:04.120 - 01:55:05.400] y todo para que podamos hacer
+[01:55:05.400 - 01:55:07.440] la experimentación con eso
+[01:55:07.440 - 01:55:08.220] si te gusta el video
+[01:55:08.240 - 01:55:09.480] si tienen instalado
+[01:55:09.480 - 01:55:12.280] el dataset
+[01:55:12.280 - 01:55:13.600] forma parte de SKLearn
+[01:55:13.600 - 01:55:15.320] entonces lo pueden utilizar directamente
+[01:55:15.320 - 01:55:17.880] esta no es una cosa que yo les voy a evaluar
+[01:55:17.880 - 01:55:20.300] simplemente es recomendable que lo hagan
+[01:55:20.300 - 01:55:22.020] va a haber un proyecto donde si van a
+[01:55:22.020 - 01:55:22.900] sí voy a evaluar
+[01:55:22.900 - 01:55:25.140] pero esto básicamente está al final
+[01:55:25.140 - 01:55:25.500] de las
+[01:55:25.500 - 01:55:32.160] láminas que voy a subir al rato
+[01:55:32.160 - 01:55:35.500] y
+[01:55:35.500 - 01:55:37.960] háblanos en viente de trabajo
+[01:55:37.960 - 01:55:38.220] con
+[01:55:38.240 - 01:55:46.620] con júpiter con colab con lo que sea que utilicen con condas lo que sea y prueben el programa y lo que está ahí y vean cómo funciona
+[01:55:46.620 - 01:55:49.300] de acuerdo gracias
+[01:55:49.300 - 01:55:50.540] muy bien
+[01:55:50.540 - 01:55:52.960] alguna otra pregunta
+[01:55:52.960 - 01:56:01.810] bueno pues si no es todo nos vemos mañana a las seis
+[01:56:01.810 - 01:56:07.130] y pues gusto de otra vez estar con ustedes voy a detener la graduación ahorita
+[01:56:07.130 - 01:56:09.190] muchas gracias
+[01:56:09.190 - 01:56:11.230] nos vemos mañana
+[01:56:11.230 - 01:56:12.450] hasta mañana profe
+[01:56:12.450 - 01:56:13.850] hasta mañana profe
+[01:56:14.290 - 01:56:14.790] saludos
